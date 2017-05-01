@@ -1,4 +1,4 @@
-# bramble
+# bramble 🌱
 
 ### A IF editor, starting with a Twine-like interface in its first iteration
 
