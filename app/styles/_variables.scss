@@ -1,0 +1,30 @@
+
+// TODO: default theme based on tiy-d17-todo app
+// TODO: put colors in separate .scss file from evertying else, for easy re-theming (& separate .css file for each theme?)
+
+// colors
+$color-white: #fff;
+$color-light: #ebe8ee;
+$color-medium: #c2bec7;
+$color-dark: #49484b;
+
+
+$color-link: #c594e7;
+$color-link-hover: #5b4094;
+
+
+// measurements
+$radius-standard: .3rem;
+
+
+// other properties
+$speed-transition-standard: .35s;
+$speed-transition-hover: .1s;
+
+
+
+
+
+// measurements
+$border-width-meaurement: .3rem;
+$border-radius-measurement: .5rem;

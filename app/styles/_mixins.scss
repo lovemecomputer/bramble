@@ -1,0 +1,29 @@
+@mixin shadow-box-interactive {
+  box-shadow: 0 .3rem .2rem 0 rgba($color-background, .8),
+              0 .3rem .8rem -.4rem rgba($color-link, 1),
+              0 .8rem 1rem -.6rem rgba($color-shadow-mix, .2);
+  transition: .3s box-shadow ease;
+  &:hover {
+    box-shadow: 0 .6rem .2rem -.2rem rgba($color-background, .2),
+                0 1rem 1.8rem -1rem rgba($color-link, 1),
+                0 1rem 1.8rem -.4rem rgba($color-shadow-mix, .6);
+    transition: .15s box-shadow ease;
+  }
+}
+
+
+@mixin shadow-box-static {
+  box-shadow: 0 .6rem .2rem -.2rem rgba($color-background, .2),
+              0 1rem 1.8rem -1rem rgba($color-link, 1),
+              0 1rem 1.8rem -.4rem rgba($color-shadow-mix, .3),
+              0 0 .1rem 0 rgba($color-shadow-mix, .3);
+}
+
+
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}

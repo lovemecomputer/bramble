@@ -1,0 +1,90 @@
+html {
+  font-size: 0.625rem; /* 10px equivalent thanks to default of 16px */
+  height: 100vh; /* make full heigh so bg strecthes */
+  * {
+    box-sizing: border-box;
+  }
+}
+
+body {
+  font-size: 1.6rem; /* 16px equivalent */
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 400;
+  color: $color-dark;
+}
+
+a {
+  transition: $speed-transition-standard ease all;
+  text-decoration: none;
+  color: $color-link;
+
+  &:hover {
+    transition: $speed-transition-hover ease all;
+    color: $color-link-hover;
+  }
+}
+
+/* http://mobileinputtypes.com/ */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="password"], textarea {
+  appearance: none;
+  border-radius: $radius-standard;
+  padding: 1.35rem;
+  border: 1px solid $color-light;
+}
+
+button, input[type="button"], input[type="submit"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: $radius-standard;
+  padding: 1.35rem 1.3rem;
+  // font-size: 2rem;
+  // line-height: 2rem;
+  cursor: pointer;
+  transition: $speed-transition-standard ease all;
+  color: $color-dark;
+  background: $color-light;
+  border: 1px solid $color-medium;
+  box-shadow: 0 .2rem 0 0 $color-medium;
+
+
+  &:hover {
+    /* TODO: install bourbon and shade the buttons down on hover */
+    transition: $speed-transition-hover ease all;
+    color: $color-white;
+    background: $color-dark;
+    border-color: #000;
+    box-shadow: 0 .2rem 0 0 #000;
+  }
+
+  &:disabled {
+    color: #bbb;
+    background: #f0f0f0;
+    box-shadow: 0 .2rem 0 0 #ddd;
+
+  }
+}
+
+button:focus, input:focus {
+  outline: none;
+  border-color: pink;
+  z-index: 100;
+}
+
+
+hr {
+  border: none;
+  background: none;
+  height: 0;
+  border-top: .1rem solid $color-light;
+  margin: 2rem 0;
+}
+
+em {
+  color: #77d98d;
+  font-weight: bold;
+  font-style: normal;
+}

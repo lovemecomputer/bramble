@@ -1,0 +1,10 @@
+$color-background: #E8DEFE;
+$color-background-b: #CFD7FC;
+$color-accent-yellow: #FFFBD8;
+$color-accent-pink: #FCE4FB;
+
+
+html {
+  background: $color-background;
+  background: linear-gradient(to bottom, $color-background, $color-background-b);
+}
