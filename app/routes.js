@@ -6,7 +6,6 @@ import App from './containers/App';
 import Header from './components/Header.js';
 
 import HomePage from './containers/HomePage';
-import CounterPage from './containers/CounterPage';
 
 export default () => (
   <Router>
@@ -14,7 +13,6 @@ export default () => (
       <Header />
       <Switch>
         <Route path="/" component={HomePage} />
-        <Route path="/counter" component={CounterPage} />
       </Switch>
     </App>
   </Router>
