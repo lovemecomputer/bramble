@@ -8,21 +8,28 @@ import PatchPreview from './PatchPreview.js';
 // import container from '../../containers/all.js';
 
 class Patchboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.openPatchEdit = this.openPatchEdit.bind(this);
+  }
+  openPatchEdit(patchId) {
+    console.log(`double clicked ${patchId}`);
+    this.props.history.push(`/patch-edit/${patchId}`);
+  }
+
   render() {
+    console.log('\n rendering Patchboard');
+    console.log('>>> location:', this.props.history.location.pathname);
     return (
       <section className="patchboard">
-        <PatchPreview
-          name="patch test"
-          id="manualID"
-          body="manually typed body text"
-        />
         {this.props.bramble.patches.map((patch, index) => {
           return (
             <PatchPreview
-              key={patch.id}
+              key={patch.patchId}
               name={patch.name}
-              id={patch.id}
+              patchId={patch.patchId}
               body={patch.body}
+              openPatchEdit={() => this.openPatchEdit(patch.patchId)}
             />
           );
         })}

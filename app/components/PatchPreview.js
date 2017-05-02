@@ -1,10 +1,15 @@
 // @flow
 import React from 'react';
+// import { Route } from 'react-router-dom';
 
 class PatchPreview extends React.Component {
   render() {
     return (
-      <div className="patch-preview">
+      <div
+        className="patch-preview"
+        id={`patch-preview-${this.props.patchId}`}
+        onClick={this.props.openPatchEdit}
+      >
         <header>
           <h4 className="patch-title">{this.props.name}</h4>
         </header>
@@ -12,7 +17,7 @@ class PatchPreview extends React.Component {
           {this.props.body}
         </section>
         <footer className="patch-footer">
-          {this.props.id}
+          {this.props.patchId}
         </footer>
       </div>
     );
