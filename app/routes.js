@@ -4,6 +4,7 @@ import { HashRouter as Router } from 'react-router-dom';
 import { Switch, Route } from 'react-router';
 import App from './containers/App';
 import Header from './components/Header.js';
+import Patchboard from './components/patchboard.js';
 
 import HomePage from './containers/HomePage';
 
@@ -12,7 +13,7 @@ export default () => (
     <App>
       <Header />
       <Switch>
-        <Route path="/" component={HomePage} />
+        <Route path="/" component={Patchboard} />
       </Switch>
     </App>
   </Router>
