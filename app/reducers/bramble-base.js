@@ -11,7 +11,7 @@ const initialState = {
   patches: [examplePatch]
 };
 
-export default function brambleBase(currentState, action) {
+export default function bramble(currentState, action) {
   if (currentState === undefined) {
     console.log('! currentState undefined >>>>>', initialState);
     return initialState;
