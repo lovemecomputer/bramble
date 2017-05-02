@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 
-class Patch extends React.Component {
+class PatchPreview extends React.Component {
   render() {
     return (
       <div className="patch-preview">
@@ -19,11 +19,14 @@ class Patch extends React.Component {
   }
 }
 
-/* TODO: propTypes is deprecated? */
-Patch.propTypes = {
-  id: React.PropTypes.string.isRequired,
-  name: React.PropTypes.string.isRequired,
-  body: React.PropTypes.string.isRequired
-};
+/*
+TODO: propTypes is deprecated,
+consult docs for updated library
+ */
+// Patch.propTypes = {
+//   id: React.PropTypes.string.isRequired,
+//   name: React.PropTypes.string.isRequired,
+//   body: React.PropTypes.string.isRequired
+// };
 
-export default Patch;
+export default PatchPreview;

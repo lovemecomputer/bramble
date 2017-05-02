@@ -8,7 +8,8 @@ const examplePatch = new Patch({
 });
 
 const initialState = {
-  patches: [examplePatch]
+  patches: [examplePatch],
+  patchCounter: 0
 };
 
 export default function bramble(currentState, action) {
@@ -20,8 +21,9 @@ export default function bramble(currentState, action) {
   switch (action.type) {
     case 'ADD_PATCH':
       let newState = Object.assign({}, currentState);
-      console.log('FUCCCK', newState);
       newState.patches.push(action.newPatch);
+      newState.patchCounter += 1;
+      console.log(newState);
       // let updatedPatches = currentState.bramble.patches.slice();
       // patches.push(action.newPatch);
       // _.set(newState, 'bramble.patches', updatedPatches);
