@@ -1,10 +1,19 @@
 // @flow
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import newPatch from '../actions/new-patch.js';
 
-export default class Header extends Component {
+class Header extends React.Component {
   constructor(props) {
     super(props);
+    this.clickNewPatch = this.clickNewPatch.bind(this);
   }
+
+  clickNewPatch() {
+    console.log('gonna make a new patch!');
+    this.props.dispatch(newPatch());
+  }
+
   render() {
     return (
       <div className="app-top-area">
@@ -12,9 +21,13 @@ export default class Header extends Component {
           <h1 className="app-title">bramble</h1>
         </header>
         <div className="header-controls">
-          <button type="button">+ new patch</button>
+          <button type="button" onClick={this.clickNewPatch}>
+            + new patch
+          </button>
         </div>
       </div>
     );
   }
 }
+
+export default connect()(Header);
