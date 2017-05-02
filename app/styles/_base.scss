@@ -1,6 +1,6 @@
 html {
   font-size: 0.625rem; /* 10px equivalent thanks to default of 16px */
-  height: 100vh; /* make full heigh so bg strecthes */
+  min-height: 100vh; /* make full heigh so bg strecthes */
   * {
     box-sizing: border-box;
   }

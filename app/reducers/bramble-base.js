@@ -18,8 +18,14 @@ export default function bramble(currentState, action) {
   }
 
   switch (action.type) {
-    case 'ACTION':
-      return currentState;
+    case 'ADD_PATCH':
+      let newState = Object.assign({}, currentState);
+      console.log('FUCCCK', newState);
+      newState.patches.push(action.newPatch);
+      // let updatedPatches = currentState.bramble.patches.slice();
+      // patches.push(action.newPatch);
+      // _.set(newState, 'bramble.patches', updatedPatches);
+      return newState;
 
     default:
       console.log(
