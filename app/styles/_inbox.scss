@@ -1,12 +1,15 @@
 .app-header {
-  background: #fff;
+  background: rgba(255,255,255,.2);
   padding: 1rem;
+  @include clearfix;
+}
+.app-title {
+  margin: 0;
+  font-size: 1.4rem;
   opacity: .2;
-
-  .app-title {
-    margin: 0;
-    font-size: 1.4rem;
-  }
+}
+.header-controls {
+  float: right;
 }
 
 

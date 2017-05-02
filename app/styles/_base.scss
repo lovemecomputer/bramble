@@ -32,6 +32,7 @@ input[type="tel"],
 input[type="number"],
 input[type="password"], textarea {
   appearance: none;
+  font-size: inherit;
   border-radius: $radius-standard;
   padding: 1.35rem;
   border: 1px solid $color-light;
@@ -40,6 +41,7 @@ input[type="password"], textarea {
 button, input[type="button"], input[type="submit"] {
   -webkit-appearance: none;
   appearance: none;
+  font-size: inherit;
   border-radius: $radius-standard;
   padding: 1.35rem 1.3rem;
   // font-size: 2rem;
