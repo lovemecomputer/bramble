@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 10000;
+  z-index: 1000;
 }
 
 .app-header {
@@ -43,6 +43,8 @@
 
 
 .patch-preview {
+  -webkit-user-select: none;
+  cursor: pointer;
   display: inline-block;
   width: 20rem;
   margin: 2rem;
@@ -68,6 +70,19 @@
     padding: .5rem 1rem;
     border-top: .1rem solid $color-light;
   }
+}
+
+
+.overlay-shade {
+  background: rgba($color-dark, .3);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw
+  z-index: 2000;
 }
 
 

@@ -2,7 +2,7 @@
 import Patch from '../models/patch.js';
 
 const examplePatch = new Patch({
-  id: 'patch0',
+  patchId: 'patch0',
   name: 'Test Patch',
   body: 'testing: example text'
 });
