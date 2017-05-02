@@ -1,2 +1,45 @@
+.app-header {
+  background: #fff;
+  padding: 1rem;
+  opacity: .2;
+
+  .app-title {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+}
+
+
+.patch-preview {
+  display: inline-block;
+  width: 20rem;
+  margin: 2rem;
+  background: #fff;
+  box-shadow: 0 .6rem .2rem -.2rem rgba($color-dark, .2);
+
+  header {
+    padding: .5rem 1rem;
+    border-bottom: .1rem solid $color-light;
+  }
+
+  .patch-title {
+    margin: 0;
+    padding: 0;
+  }
+
+  .patch-body {
+    padding: 1rem;
+  }
+
+  .patch-footer {
+    font-size: 1.2rem;
+    padding: .5rem 1rem;
+    border-top: .1rem solid $color-light;
+  }
+}
+
+
+
+
 @media (min-width: 700px) {
 }
