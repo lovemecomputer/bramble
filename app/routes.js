@@ -11,10 +11,12 @@ import HomePage from './containers/HomePage';
 export default () => (
   <Router>
     <App>
-      <Header />
-      <Switch>
-        <Route path="/" component={Patchboard} />
-      </Switch>
+      <div className="app-wrapper">
+        <Header />
+        <Switch>
+          <Route path="/" component={Patchboard} />
+        </Switch>
+      </div>
     </App>
   </Router>
 );

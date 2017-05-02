@@ -14,7 +14,6 @@ const initialState = {
 
 export default function bramble(currentState, action) {
   if (currentState === undefined) {
-    console.log('! currentState undefined >>>>>', initialState);
     return initialState;
   }
 
@@ -23,7 +22,6 @@ export default function bramble(currentState, action) {
       let newState = Object.assign({}, currentState);
       newState.patches.push(action.newPatch);
       newState.patchCounter += 1;
-      console.log(newState);
       // let updatedPatches = currentState.bramble.patches.slice();
       // patches.push(action.newPatch);
       // _.set(newState, 'bramble.patches', updatedPatches);

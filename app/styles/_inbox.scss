@@ -1,7 +1,22 @@
+.app-wrapper {
+  padding-top: 4rem;
+}
+
+.app-top-area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+}
+
 .app-header {
   background: rgba(255,255,255,.2);
+  box-shadow: 0 .6rem .1rem -.3rem rgba($color-dark, .05);
   padding: 1rem;
   @include clearfix;
+  z-index: 10001;
+
 
   // make it draggable since we're removing chrome
   -webkit-user-select: none;
@@ -23,6 +38,7 @@
 }
 .header-controls {
   float: right;
+  padding: 2rem 2rem 0 0;
 }
 
 
