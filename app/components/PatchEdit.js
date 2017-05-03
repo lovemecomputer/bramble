@@ -93,6 +93,7 @@ class PatchEdit extends React.Component {
               <section className="patch-entry">
                 <textarea
                   onChange={this.enterBodyText}
+                  autoFocus
                   className="patch-input"
                   id="patch-raw-text"
                   name="patch raw text in markdown"
@@ -100,7 +101,7 @@ class PatchEdit extends React.Component {
                   cols="60"
                   value={currentPatch.body}
                   ref="patchInput"
-                  placeholder="type in markdown…"
+                  placeholder="patch body, type in plain text or markdown…"
                 />
                 <p>patch id: {currentPatch.patchId}</p>
               </section>

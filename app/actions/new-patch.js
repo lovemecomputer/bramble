@@ -5,7 +5,7 @@ export default function newPatch() {
     const newPatch = new Patch({
       patchId: Number(getState().bramble.patchCounter + 1),
       name: 'New Patch',
-      body: 'example text'
+      body: ''
     });
     dispatch({
       type: 'ADD_PATCH',
