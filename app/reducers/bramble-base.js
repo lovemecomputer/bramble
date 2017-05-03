@@ -40,7 +40,7 @@ export default function bramble(currentState, action) {
           )
         ]
       );
-      console.log('updated patch:', updatedPatch);
+      updatedPatch.body = action.body;
       return Object.assign({}, currentState);
 
     default:

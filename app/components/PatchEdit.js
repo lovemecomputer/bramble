@@ -24,8 +24,8 @@ class PatchEdit extends React.Component {
     this.auto_grow(e.target);
     this.props.dispatch({
       type: 'UPDATE_PATCH',
-      patchId: this.props.match.params.patchId,
-      rawText: e.target.value
+      patchId: Number(this.props.match.params.patchId),
+      body: e.target.value
     });
     // this.props.dispatch(updatePatchBody(e));
   }
