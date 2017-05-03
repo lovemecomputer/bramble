@@ -22,26 +22,25 @@ export default function bramble(currentState, action) {
     case 'ADD_PATCH':
       var updatedPatches = currentState.patches.slice();
       updatedPatches.push(action.newPatch);
-      let updatedPatchCounter = (currentState.patchCounter += 1);
+      let updatedPatchCounter = updatedPatches.length;
       return Object.assign({}, currentState, {
         patches: updatedPatches,
         patchCounter: updatedPatchCounter
       });
 
     case 'UPDATE_PATCH':
-      // var updatedPatches = currentState.patches.slice();
-      var updatedPatch = Object.assign(
-        {},
-        currentState.patches[
-          utils.indexOfObjectWithPropertyValue(
-            'patchId',
-            action.patchId,
-            currentState.patches
-          )
-        ]
+      var targetIndex = utils.indexOfObjectWithPropertyValue(
+        'patchId',
+        action.patchId,
+        currentState.patches
       );
+      var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
       updatedPatch.body = action.body;
-      return Object.assign({}, currentState);
+      var updatedPatches = currentState.patches.slice();
+      updatedPatches[targetIndex] = updatedPatch;
+      return Object.assign({}, currentState, {
+        patches: updatedPatches
+      });
 
     default:
       console.log(
