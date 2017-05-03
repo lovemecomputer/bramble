@@ -30,12 +30,14 @@ input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="number"],
-input[type="password"], textarea {
+input[type="password"],
+textarea {
   appearance: none;
-  font-size: inherit;
+  font-size: 1.9rem;
   border-radius: $radius-standard;
   padding: 1.35rem;
   border: 1px solid $color-light;
+  font-family: 'Source Code Pro', monospace;
 }
 
 button, input[type="button"], input[type="submit"] {

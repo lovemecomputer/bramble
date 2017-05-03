@@ -20,12 +20,14 @@ class PatchEdit extends React.Component {
     this.props.history.push('/');
   }
 
-  enterText(e) {
-    this.auto_grow(e.target);
+  handleKeyPress(event) {}
+
+  enterText(event) {
+    this.auto_grow(event.target);
     this.props.dispatch({
       type: 'UPDATE_PATCH',
       patchId: Number(this.props.match.params.patchId),
-      body: e.target.value
+      body: event.target.value
     });
     // this.props.dispatch(updatePatchBody(e));
   }
@@ -59,7 +61,7 @@ class PatchEdit extends React.Component {
                   ref="patchInput"
                   placeholder="type in markdown…"
                 />
-                <button type="submit">Submit post</button>
+                <p>patch id: {currentPatch.patchId}</p>
               </section>
               {/*<section className="markdown-preview-section">
                 <article
