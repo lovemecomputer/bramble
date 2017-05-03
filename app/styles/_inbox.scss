@@ -86,6 +86,10 @@
   }
 }
 
+.patch-id {
+  color: $color-medium;
+}
+
 .overlay-wrapper {
   position: fixed;
   top: 0;
@@ -119,6 +123,10 @@
   h2 {
     margin: 0;
   }
+}
+
+.patch-editor-controls {
+  text-align: right;
 }
 
 .patch-input-and-preview-container{

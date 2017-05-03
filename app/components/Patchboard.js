@@ -15,8 +15,13 @@ class Patchboard extends React.Component {
     this.openPatchEdit = this.openPatchEdit.bind(this);
     this.clickNewPatch = this.clickNewPatch.bind(this);
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'SHOWING_PATCHBOARD',
+      onNewPatchShortcut: this.clickNewPatch
+    });
+  }
   clickNewPatch() {
-    console.log('add!');
     this.props.dispatch(newPatch());
   }
   openPatchEdit(patchId) {

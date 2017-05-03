@@ -25,6 +25,9 @@ class PatchEdit extends React.Component {
     this.enterNameText = this.enterNameText.bind(this);
     this.auto_grow = this.auto_grow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
+    this.toggleMarkdownPreview = this.toggleMarkdownPreview.bind(this);
+
+    this.renderMarkdownPreview = this.renderMarkdownPreview.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +63,12 @@ class PatchEdit extends React.Component {
     // this.props.dispatch(updatePatchBody(e));
   }
 
+  toggleMarkdownPreview() {
+    this.props.dispatch({
+      type: 'TOGGLE_MARKDOWN_PREVIEW'
+    });
+  }
+
   createMarkup(rawText) {
     return { __html: marked(rawText) };
   }
@@ -67,6 +76,19 @@ class PatchEdit extends React.Component {
   auto_grow(element) {
     element.style.height = '5px';
     element.style.height = element.scrollHeight + 'px';
+  }
+
+  renderMarkdownPreview(currentPatch) {
+    if (this.props.bramble.displayMarkdownPreview) {
+      return (
+        <section className="markdown-preview-section">
+          <article
+            className="markdown-article"
+            dangerouslySetInnerHTML={this.createMarkup(currentPatch.body)}
+          />
+        </section>
+      );
+    }
   }
 
   render() {
@@ -89,6 +111,9 @@ class PatchEdit extends React.Component {
               placeholder="patch name…"
             />
             <hr />
+            <div className="patch-editor-controls">
+              <a onClick={this.toggleMarkdownPreview}>Markdown Preview</a>
+            </div>
             <div className="patch-input-and-preview-container">
               <section className="patch-entry">
                 <textarea
@@ -101,16 +126,15 @@ class PatchEdit extends React.Component {
                   cols="60"
                   value={currentPatch.body}
                   ref="patchInput"
-                  placeholder="patch body, type in plain text or markdown…"
+                  placeholder="plain text or markdown…"
                 />
-                <p>patch id: {currentPatch.patchId}</p>
+                <p>
+                  <span className="patch-id">
+                    patch id: {currentPatch.patchId}
+                  </span>
+                </p>
               </section>
-              <section className="markdown-preview-section">
-                <article
-                  className="markdown-article"
-                  dangerouslySetInnerHTML={this.createMarkup(currentPatch.body)}
-                />
-              </section>
+              {this.renderMarkdownPreview(currentPatch)}
             </div>
           </div>
         </div>

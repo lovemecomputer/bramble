@@ -17,7 +17,7 @@ class PatchPreview extends React.Component {
           {this.props.body}
         </section>
         <footer className="patch-footer">
-          patch id: {this.props.patchId}
+          <span className="patch-id">patch id: {this.props.patchId}</span>
         </footer>
       </div>
     );

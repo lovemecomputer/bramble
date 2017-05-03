@@ -18,6 +18,7 @@ a {
   transition: $speed-transition-standard ease all;
   text-decoration: none;
   color: $color-link;
+  cursor: pointer;
 
   &:hover {
     transition: $speed-transition-hover ease all;

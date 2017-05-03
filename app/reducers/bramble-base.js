@@ -11,7 +11,7 @@ const examplePatch = new Patch({
 const initialState = {
   patches: [examplePatch],
   patchCounter: 0,
-  onClose: () => {}
+  displayMarkdownPreview: false
 };
 
 export default function bramble(currentState, action) {
@@ -57,13 +57,24 @@ export default function bramble(currentState, action) {
         patches: updatedPatches
       });
 
+    case 'TOGGLE_MARKDOWN_PREVIEW':
+      return Object.assign({}, currentState, {
+        displayMarkdownPreview: !currentState.displayMarkdownPreview
+      });
+
     case 'SHOWING_PATCH':
       return Object.assign({}, currentState, { onEscape: action.onEscape });
+    case 'SHOWING_PATCHBOARD':
+      return Object.assign({}, currentState, {
+        onNewPatchShortcut: action.onNewPatchShortcut
+      });
 
     case 'HOTKEY':
       let functionToRun;
       if (action.key === 'Escape') {
         functionToRun = currentState.onEscape;
+      } else if (action.key === 'n' && action.withMeta) {
+        functionToRun = currentState.onNewPatchShortcut;
       }
       if (functionToRun) {
         setTimeout(() => {
