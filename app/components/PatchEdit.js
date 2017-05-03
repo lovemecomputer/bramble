@@ -3,6 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
+import marked from 'marked';
 import utils from '../utils.js';
 // import updatePatchBody from '../actions/update-patch-body.js';
 // import { Route, Link, NavLink } from 'react-router-dom';
@@ -22,6 +23,7 @@ class PatchEdit extends React.Component {
     this.closePatchEditor = this.closePatchEditor.bind(this);
     this.enterText = this.enterText.bind(this);
     this.auto_grow = this.auto_grow.bind(this);
+    this.createMarkup = this.createMarkup.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +49,10 @@ class PatchEdit extends React.Component {
     // this.props.dispatch(updatePatchBody(e));
   }
 
+  createMarkup(rawText) {
+    return { __html: marked(rawText) };
+  }
+
   auto_grow(element) {
     element.style.height = '5px';
     element.style.height = element.scrollHeight + 'px';
@@ -57,6 +63,7 @@ class PatchEdit extends React.Component {
     let currentPatchId = this.props.match.params.patchId;
     let currentPatch = lookup[currentPatchId];
 
+    var marked = require('marked');
     return (
       <div className="overlay-wrapper">
         <div className="overlay-shade" onClick={this.closePatchEditor} />
@@ -78,12 +85,12 @@ class PatchEdit extends React.Component {
                 />
                 <p>patch id: {currentPatch.patchId}</p>
               </section>
-              {/*<section className="markdown-preview-section">
+              <section className="markdown-preview-section">
                 <article
                   className="markdown-article"
                   dangerouslySetInnerHTML={this.createMarkup(currentPatch.body)}
                 />
-              </section>*/}
+              </section>
             </div>
           </div>
         </div>
