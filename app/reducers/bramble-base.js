@@ -4,8 +4,8 @@ import utils from '../utils.js';
 
 const examplePatch = new Patch({
   patchId: 0,
-  name: 'Test Patch',
-  body: 'testing: example text'
+  name: 'First Patch',
+  body: 'example text'
 });
 
 const initialState = {
@@ -29,7 +29,21 @@ export default function bramble(currentState, action) {
         patchCounter: updatedPatchCounter
       });
 
-    case 'UPDATE_PATCH':
+    case 'UPDATE_PATCH_NAME':
+      var targetIndex = utils.indexOfObjectWithPropertyValue(
+        'patchId',
+        action.patchId,
+        currentState.patches
+      );
+      var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
+      updatedPatch.name = action.name;
+      var updatedPatches = currentState.patches.slice();
+      updatedPatches[targetIndex] = updatedPatch;
+      return Object.assign({}, currentState, {
+        patches: updatedPatches
+      });
+
+    case 'UPDATE_PATCH_BODY':
       var targetIndex = utils.indexOfObjectWithPropertyValue(
         'patchId',
         action.patchId,
