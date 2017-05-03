@@ -3,6 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
+import utils from '../utils.js';
 // import { Route, Link, NavLink } from 'react-router-dom';
 // import container from '../../containers/all.js';
 
@@ -18,11 +19,42 @@ class PatchEdit extends React.Component {
   }
 
   render() {
-    console.log('\n rendering PatchEdit');
-    console.log(this.props.history.location.pathname);
+    let lookup = utils.indexesToIds(this.props.bramble.patches);
+    let currentPatchId = this.props.match.params.patchId;
+    let currentPatch = lookup[currentPatchId];
+    console.log(currentPatch);
+
     return (
-      <div className="overlay-shade" onClick={this.onClickToClose}>
-        <h1>Patch Edit</h1>
+      <div className="overlay-wrapper">
+        <div className="overlay-shade" onClick={this.onClickToClose} />
+        <div className="patch-editor-wrapper">
+          <div className="patch-editor">
+            <h2 className="patch-editor-heading">{currentPatch.name}</h2>
+            <div className="editor-container">
+              <section className="patch-entry">
+                <textarea
+                  className="patch-input"
+                  id="patch-raw-text"
+                  name="patch raw text in markdown"
+                  rows="12"
+                  cols="60"
+                  value={currentPatch.body}
+                  ref="patchInput"
+                  placeholder="type in markdown…"
+                />
+                <button type="submit">Submit post</button>
+              </section>
+              {/*<section className="markdown-preview-section">
+              <article
+                className="markdown-article"
+                dangerouslySetInnerHTML={this.createMarkup(
+                  this.props.markdownApp.draft
+                )}
+              />
+            </section>*/}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

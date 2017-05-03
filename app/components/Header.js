@@ -10,7 +10,6 @@ class Header extends React.Component {
   }
 
   clickNewPatch() {
-    console.log('gonna make a new patch!');
     this.props.dispatch(newPatch());
   }
 
