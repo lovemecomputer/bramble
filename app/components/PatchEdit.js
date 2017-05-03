@@ -27,6 +27,7 @@ class PatchEdit extends React.Component {
     this.createMarkup = this.createMarkup.bind(this);
     this.toggleMarkdownPreview = this.toggleMarkdownPreview.bind(this);
 
+    this.renderPatchEditor = this.renderPatchEditor.bind(this);
     this.renderMarkdownPreview = this.renderMarkdownPreview.bind(this);
   }
 
@@ -78,28 +79,9 @@ class PatchEdit extends React.Component {
     element.style.height = element.scrollHeight + 'px';
   }
 
-  renderMarkdownPreview(currentPatch) {
-    if (this.props.bramble.displayMarkdownPreview) {
+  renderPatchEditor(currentPatch) {
+    if (currentPatch !== undefined) {
       return (
-        <section className="markdown-preview-section">
-          <article
-            className="markdown-article"
-            dangerouslySetInnerHTML={this.createMarkup(currentPatch.body)}
-          />
-        </section>
-      );
-    }
-  }
-
-  render() {
-    let lookup = utils.indexesToIds(this.props.bramble.patches);
-    let currentPatchId = this.props.match.params.patchId;
-    let currentPatch = lookup[currentPatchId];
-
-    var marked = require('marked');
-    return (
-      <div className="overlay-wrapper">
-        <div className="overlay-shade" onClick={this.closePatchEditor} />
         <div className="patch-editor-wrapper">
           <div className="patch-editor">
             {/*<h2 className="patch-editor-heading">{currentPatch.name}</h2>*/}
@@ -138,6 +120,35 @@ class PatchEdit extends React.Component {
             </div>
           </div>
         </div>
+      );
+    }
+  }
+
+  renderMarkdownPreview(currentPatch) {
+    if (this.props.bramble.displayMarkdownPreview) {
+      return (
+        <section className="markdown-preview-section">
+          <article
+            className="markdown-article"
+            dangerouslySetInnerHTML={this.createMarkup(currentPatch.body)}
+          />
+        </section>
+      );
+    }
+  }
+
+  render() {
+    let lookup = utils.indexesToIds(this.props.bramble.patches);
+    let currentPatchId = this.props.match.params.patchId;
+    let currentPatch = lookup[currentPatchId];
+    console.log('>>>>CURRENT PATCH', currentPatch);
+
+    var marked = require('marked');
+    return (
+      <div className="overlay-wrapper">
+        <div className="overlay-shade" onClick={this.closePatchEditor} />
+        {this.renderPatchEditor(currentPatch)}
+
       </div>
     );
   }
