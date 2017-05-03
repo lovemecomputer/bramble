@@ -3,7 +3,7 @@ import Patch from '../models/patch.js';
 export default function newPatch() {
   return (dispatch, getState) => {
     const newPatch = new Patch({
-      patchId: `patch${getState().bramble.patchCounter + 1}`,
+      patchId: getState().bramble.patchCounter + 1,
       name: 'New Patch',
       body: 'example text'
     });

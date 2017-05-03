@@ -15,7 +15,7 @@ export default () => (
       <div className="app-wrapper">
         <Header />
         <Route path="/" component={Patchboard} />
-        <Route path="/patch-edit" component={PatchEdit} />
+        <Route path="/patch-edit/:patchId" component={PatchEdit} />
       </div>
     </App>
   </Router>

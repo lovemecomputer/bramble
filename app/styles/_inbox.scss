@@ -49,7 +49,8 @@
   width: 20rem;
   margin: 2rem;
   background: #fff;
-  box-shadow: 0 .6rem .2rem -.2rem rgba($color-dark, .2);
+  // box-shadow: 0 .6rem .2rem -.2rem rgba($color-dark, .2);
+  @include shadow-box-interactive;
 
   header {
     padding: .5rem 1rem;
@@ -72,17 +73,45 @@
   }
 }
 
-
-.overlay-shade {
-  background: rgba($color-dark, .3);
+.overlay-wrapper {
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   height: 100vh;
-  width: 100vw
+  width: 100vw;
   z-index: 2000;
+}
+.overlay-shade {
+  background: rgba($color-medium, .8);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+}
+.patch-editor-wrapper {
+  padding: 6rem 4rem 4rem 4rem;
+}
+.patch-editor {
+  background: #fff;
+  max-width: 60rem;
+  margin:0 auto;
+  position: relative;
+  padding: 4rem;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.patch-input {
+  display: block;
+  font-family: monospace;
+  width: 100%;
 }
 
 
