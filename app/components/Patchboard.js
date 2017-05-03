@@ -13,13 +13,10 @@ class Patchboard extends React.Component {
     this.openPatchEdit = this.openPatchEdit.bind(this);
   }
   openPatchEdit(patchId) {
-    console.log(`double clicked ${patchId}`);
     this.props.history.push(`/patch-edit/${patchId}`);
   }
 
   render() {
-    console.log('\n rendering Patchboard');
-    console.log('>>> location:', this.props.history.location.pathname);
     return (
       <section className="patchboard">
         {this.props.bramble.patches.map((patch, index) => {

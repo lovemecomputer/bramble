@@ -8,6 +8,18 @@ const utils = {
       lookup[array[i].patchId] = array[i];
     }
     return lookup; // now can use lookup[id]
+  },
+  indexOfObjectWithPropertyValue: (
+    propertyToMatch,
+    desiredValue,
+    arrayToSearch
+  ) => {
+    console.log('arguments', propertyToMatch, desiredValue, arrayToSearch);
+    function propertyMatch(object) {
+      console.log('testing', object, object[propertyToMatch]);
+      return object[propertyToMatch] === desiredValue;
+    }
+    return arrayToSearch.findIndex(propertyMatch);
   }
 };
 
