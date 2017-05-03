@@ -38,6 +38,8 @@ textarea {
   padding: 1.35rem;
   border: 1px solid $color-light;
   font-family: 'Source Code Pro', monospace;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 
   &:focus {
     outline: none;
@@ -76,14 +78,14 @@ button, input[type="button"], input[type="submit"] {
     background: #f0f0f0;
     box-shadow: 0 .2rem 0 0 #ddd;
   }
-}
 
-button:focus {
-  outline: none;
-  border-color: pink;
-  z-index: 100;
+  &:focus {
+    outline: none;
+    border-color: pink;
+    z-index: 100;
+    overflow-wrap: break-word;
+  }
 }
-
 
 hr {
   border: none;
