@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import utils from '../utils.js';
-import updatePatchBody from '../actions/update-patch-body.js';
+// import updatePatchBody from '../actions/update-patch-body.js';
 // import { Route, Link, NavLink } from 'react-router-dom';
 // import container from '../../containers/all.js';
 
@@ -17,14 +17,17 @@ class PatchEdit extends React.Component {
   }
 
   onClickToClose() {
-    console.log('closing patch edit!');
     this.props.history.push('/');
   }
 
   enterText(e) {
     this.auto_grow(e.target);
-    // this.props.dispatch({ type: 'UPDATE_CURRENT_PATCH', rawText: e.target.value });
-    this.props.dispatch(updatePatchBody(e));
+    this.props.dispatch({
+      type: 'UPDATE_PATCH',
+      patchId: this.props.match.params.patchId,
+      rawText: e.target.value
+    });
+    // this.props.dispatch(updatePatchBody(e));
   }
 
   auto_grow(element) {
@@ -36,7 +39,6 @@ class PatchEdit extends React.Component {
     let lookup = utils.indexesToIds(this.props.bramble.patches);
     let currentPatchId = this.props.match.params.patchId;
     let currentPatch = lookup[currentPatchId];
-    console.log(currentPatch);
 
     return (
       <div className="overlay-wrapper">
