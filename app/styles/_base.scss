@@ -38,6 +38,12 @@ textarea {
   padding: 1.35rem;
   border: 1px solid $color-light;
   font-family: 'Source Code Pro', monospace;
+
+  &:focus {
+    outline: none;
+    border-color: pink;
+    z-index: 100;
+  }
 }
 
 button, input[type="button"], input[type="submit"] {
@@ -69,11 +75,10 @@ button, input[type="button"], input[type="submit"] {
     color: #bbb;
     background: #f0f0f0;
     box-shadow: 0 .2rem 0 0 #ddd;
-
   }
 }
 
-button:focus, input:focus {
+button:focus {
   outline: none;
   border-color: pink;
   z-index: 100;

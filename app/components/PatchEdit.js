@@ -21,7 +21,8 @@ class PatchEdit extends React.Component {
   constructor(props) {
     super(props);
     this.closePatchEditor = this.closePatchEditor.bind(this);
-    this.enterText = this.enterText.bind(this);
+    this.enterBodyText = this.enterBodyText.bind(this);
+    this.enterNameText = this.enterNameText.bind(this);
     this.auto_grow = this.auto_grow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
   }
@@ -31,6 +32,7 @@ class PatchEdit extends React.Component {
       type: 'SHOWING_PATCH',
       onEscape: this.closePatchEditor
     });
+    this.auto_grow(this.refs.patchInput);
   }
 
   closePatchEditor() {
@@ -39,10 +41,19 @@ class PatchEdit extends React.Component {
     }
   }
 
-  enterText(event) {
+  enterNameText(event) {
+    this.props.dispatch({
+      type: 'UPDATE_PATCH_NAME',
+      patchId: Number(this.props.match.params.patchId),
+      name: event.target.value
+    });
+    // this.props.dispatch(updatePatchBody(e));
+  }
+
+  enterBodyText(event) {
     this.auto_grow(event.target);
     this.props.dispatch({
-      type: 'UPDATE_PATCH',
+      type: 'UPDATE_PATCH_BODY',
       patchId: Number(this.props.match.params.patchId),
       body: event.target.value
     });
@@ -69,11 +80,19 @@ class PatchEdit extends React.Component {
         <div className="overlay-shade" onClick={this.closePatchEditor} />
         <div className="patch-editor-wrapper">
           <div className="patch-editor">
-            <h2 className="patch-editor-heading">{currentPatch.name}</h2>
-            <div className="editor-container">
+            {/*<h2 className="patch-editor-heading">{currentPatch.name}</h2>*/}
+            <input
+              onChange={this.enterNameText}
+              type="text"
+              name="patch name"
+              value={currentPatch.name}
+              placeholder="patch name…"
+            />
+            <hr />
+            <div className="patch-input-and-preview-container">
               <section className="patch-entry">
                 <textarea
-                  onChange={this.enterText}
+                  onChange={this.enterBodyText}
                   className="patch-input"
                   id="patch-raw-text"
                   name="patch raw text in markdown"

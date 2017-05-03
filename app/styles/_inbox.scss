@@ -110,7 +110,7 @@
 }
 .patch-editor {
   background: #fff;
-  max-width: 60rem;
+  max-width: 120rem;
   margin:0 auto;
   position: relative;
   padding: 4rem;
@@ -120,11 +120,23 @@
   }
 }
 
+.patch-input-and-preview-container{
+  display: flex;
+  padding-top: 2rem 0 0 0;
+}
+.patch-entry {
+  flex: 1;
+}
 .patch-input {
   display: block;
   word-break: break-all;
   font-family: monospace;
   width: 100%;
+}
+.markdown-preview-section {
+  flex: 1;
+  padding-left: 4rem;
+  font-size: .8em;
 }
 
 
