@@ -23,6 +23,14 @@ class Patchboard extends React.Component {
   }
   clickNewPatch() {
     this.props.dispatch(newPatch());
+    if (this.props.history.location.pathname.includes('patch-edit')) {
+      this.props.history.push(
+        `/patch-edit/${this.props.bramble.patches[this.props.bramble.patches.length - 1]}`
+      );
+      // console.log(
+      //   this.props.bramble.patches[this.props.bramble.patches.length - 1]
+      // );
+    }
   }
   openPatchEdit(patchId) {
     this.props.history.push(`/patch-edit/${patchId}`);
