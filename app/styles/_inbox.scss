@@ -36,11 +36,17 @@
   font-size: 1.4rem;
   opacity: .2;
 }
+
+
+.patchboard-wrapper {
+  position: relative;
+}
 .header-controls {
-  float: right;
+  position: fixed;
+  top: 4rem;
+  right: 0;
   padding: 2rem 2rem 0 0;
 }
-
 .patchboard{
   font-size: 1rem;
 }
