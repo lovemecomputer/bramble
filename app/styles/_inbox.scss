@@ -44,6 +44,7 @@
 
 .patch-preview {
   -webkit-user-select: none;
+  word-break: break-all;
   cursor: pointer;
   display: inline-block;
   width: 20rem;
@@ -110,6 +111,7 @@
 
 .patch-input {
   display: block;
+  word-break: break-all;
   font-family: monospace;
   width: 100%;
 }
