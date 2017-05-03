@@ -8,6 +8,14 @@ import './app.global.scss';
 
 const store = configureStore();
 
+const listenToPresses = e => {
+  console.log(e);
+  store.dispatch({ type: 'HOTKEY', key: e.key, withMeta: e.metaKey });
+  // e.stopPropagation();
+  // TODO: PREVENT SOME KEYSTOKES WITH ELECTION API
+};
+document.addEventListener('keydown', listenToPresses);
+
 render(
   <AppContainer>
     <Root store={store} history={history} />

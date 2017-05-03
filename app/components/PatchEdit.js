@@ -8,19 +8,34 @@ import utils from '../utils.js';
 // import { Route, Link, NavLink } from 'react-router-dom';
 // import container from '../../containers/all.js';
 
+const changeURL = history => {
+  return () => {
+    if (window.location.hash !== '#/') {
+      return history.push('/');
+    }
+  };
+};
+
 class PatchEdit extends React.Component {
   constructor(props) {
     super(props);
-    this.onClickToClose = this.onClickToClose.bind(this);
+    this.closePatchEditor = this.closePatchEditor.bind(this);
     this.enterText = this.enterText.bind(this);
     this.auto_grow = this.auto_grow.bind(this);
   }
 
-  onClickToClose() {
-    this.props.history.push('/');
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'SHOWING_PATCH',
+      onEscape: this.closePatchEditor
+    });
   }
 
-  handleKeyPress(event) {}
+  closePatchEditor() {
+    if (this.props.match.url !== '/') {
+      this.props.dispatch(changeURL(this.props.history));
+    }
+  }
 
   enterText(event) {
     this.auto_grow(event.target);
@@ -44,7 +59,7 @@ class PatchEdit extends React.Component {
 
     return (
       <div className="overlay-wrapper">
-        <div className="overlay-shade" onClick={this.onClickToClose} />
+        <div className="overlay-shade" onClick={this.closePatchEditor} />
         <div className="patch-editor-wrapper">
           <div className="patch-editor">
             <h2 className="patch-editor-heading">{currentPatch.name}</h2>

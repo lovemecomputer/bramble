@@ -10,7 +10,8 @@ const examplePatch = new Patch({
 
 const initialState = {
   patches: [examplePatch],
-  patchCounter: 0
+  patchCounter: 0,
+  onClose: () => {}
 };
 
 export default function bramble(currentState, action) {
@@ -41,6 +42,22 @@ export default function bramble(currentState, action) {
       return Object.assign({}, currentState, {
         patches: updatedPatches
       });
+
+    case 'SHOWING_PATCH':
+      return Object.assign({}, currentState, { onEscape: action.onEscape });
+
+    case 'HOTKEY':
+      let functionToRun;
+      if (action.key === 'Escape') {
+        functionToRun = currentState.onEscape;
+      }
+      if (functionToRun) {
+        setTimeout(() => {
+          functionToRun();
+        }, 0);
+      }
+
+      return currentState;
 
     default:
       console.log(
