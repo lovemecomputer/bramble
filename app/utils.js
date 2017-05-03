@@ -14,12 +14,17 @@ const utils = {
     desiredValue,
     arrayToSearch
   ) => {
-    console.log('arguments', propertyToMatch, desiredValue, arrayToSearch);
     function propertyMatch(object) {
-      console.log('testing', object, object[propertyToMatch]);
       return object[propertyToMatch] === desiredValue;
     }
-    return arrayToSearch.findIndex(propertyMatch);
+    let foundIndex = arrayToSearch.findIndex(propertyMatch);
+    // findIndex() returns -1 if no match
+    if (foundIndex !== -1) {
+      return foundIndex;
+    } else {
+      console.log('⚠️ utils.indexOfObjectWithPropertyValue found nothing!!');
+      return false;
+    }
   }
 };
 
