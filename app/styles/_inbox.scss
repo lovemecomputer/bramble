@@ -41,6 +41,9 @@
   padding: 2rem 2rem 0 0;
 }
 
+.patchboard{
+  font-size: 1rem;
+}
 
 .patch-preview {
   -webkit-user-select: none;
@@ -50,6 +53,7 @@
   width: 20rem;
   margin: 2rem;
   background: #fff;
+  font-size: 1.4em;
   // box-shadow: 0 .6rem .2rem -.2rem rgba($color-dark, .2);
   @include shadow-box-interactive;
 
@@ -65,10 +69,11 @@
 
   .patch-body {
     padding: 1rem;
+    font-family: 'Source Code Pro', monospace;
   }
 
   .patch-footer {
-    font-size: 1.2rem;
+    font-size: 1em;
     padding: .5rem 1rem;
     border-top: .1rem solid $color-light;
   }
