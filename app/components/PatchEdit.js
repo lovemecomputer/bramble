@@ -25,6 +25,7 @@ class PatchEdit extends React.Component {
     this.enterNameText = this.enterNameText.bind(this);
     this.auto_grow = this.auto_grow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
+    this.handleDeletePatch = this.handleDeletePatch.bind(this);
     this.toggleMarkdownPreview = this.toggleMarkdownPreview.bind(this);
 
     this.renderPatchEditor = this.renderPatchEditor.bind(this);
@@ -64,6 +65,11 @@ class PatchEdit extends React.Component {
       body: event.target.value
     });
     // this.props.dispatch(updatePatchBody(e));
+  }
+
+  handleDeletePatch(patchId) {
+    this.props.dispatch({ type: 'DELETE_PATCH', patchId: patchId });
+    this.closePatchEditor();
   }
 
   toggleMarkdownPreview() {
@@ -125,6 +131,15 @@ class PatchEdit extends React.Component {
                     patch id: {currentPatch.patchId}
                   </span>
                 </p>
+                <p>
+                  <a
+                    onClick={() => {
+                      this.handleDeletePatch(currentPatch.patchId);
+                    }}
+                  >
+                    Delete patch
+                  </a>
+                </p>
               </section>
               {this.renderMarkdownPreview(currentPatch)}
             </div>
@@ -151,7 +166,6 @@ class PatchEdit extends React.Component {
     let lookup = utils.indexesToIds(this.props.bramble.patches);
     let currentPatchId = this.props.match.params.patchId;
     let currentPatch = lookup[currentPatchId];
-    console.log('>>>>CURRENT PATCH', currentPatch);
 
     var marked = require('marked');
     return (

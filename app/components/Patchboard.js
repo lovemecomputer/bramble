@@ -14,6 +14,7 @@ class Patchboard extends React.Component {
     super(props);
     this.openPatchEdit = this.openPatchEdit.bind(this);
     this.handleNewPatch = this.handleNewPatch.bind(this);
+    this.handlePreview = this.handlePreview.bind(this);
   }
   componentDidMount() {
     this.props.dispatch({
@@ -31,6 +32,10 @@ class Patchboard extends React.Component {
     }
   }
 
+  handlePreview() {
+    console.log('>>> PREVIEWING STORY! >>>');
+  }
+
   handleDeletePatch(patchId) {
     this.props.dispatch({ type: 'DELETE_PATCH', patchId: patchId });
   }
@@ -45,6 +50,9 @@ class Patchboard extends React.Component {
         <div className="header-controls">
           <button type="button" onClick={this.handleNewPatch} tabIndex="1">
             + new patch
+          </button>
+          <button type="button" onClick={this.handlePreview} tabIndex="1">
+            preview story
           </button>
         </div>
         <section className="patchboard">
