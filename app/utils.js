@@ -23,7 +23,7 @@ const utils = {
       return foundIndex;
     } else {
       console.log('⚠️ utils.indexOfObjectWithPropertyValue found nothing!!');
-      return false;
+      return null;
     }
   }
 };
