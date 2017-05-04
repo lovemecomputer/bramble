@@ -118,6 +118,9 @@ export default function bramble(currentState, action) {
 
       return currentState;
 
+    case 'LOCATION_CHANGE':
+      return currentState;
+
     default:
       console.log(
         '⚠️ unhandled action in reducers/bramble-base.js! \n ::>',

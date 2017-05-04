@@ -46,6 +46,10 @@
   top: 4rem;
   right: 0;
   padding: 2rem 2rem 0 0;
+
+  button {
+    margin-left: 1rem;
+  }
 }
 .patchboard{
   font-size: 1rem;
@@ -83,6 +87,11 @@
     font-size: 1em;
     padding: .5rem 1rem;
     border-top: .1rem solid $color-light;
+  }
+
+  .delete-button {
+    display: inline-block;
+    float: right;
   }
 }
 

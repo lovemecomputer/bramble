@@ -17,8 +17,8 @@ class PatchPreview extends React.Component {
 
   renderDeleteButton() {
     return (
-      <a onClick={this.props.deletePatch}>
-        Delete patch
+      <a className="delete-button" onClick={this.props.deletePatch}>
+        delete
       </a>
     );
   }
