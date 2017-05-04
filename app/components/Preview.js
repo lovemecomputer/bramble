@@ -21,6 +21,21 @@ class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.closePreview = this.closePreview.bind(this);
+    this.state = {
+      currentPatch: this.props.bramble.patches[this.props.match.params.id || 0]
+    };
+  }
+  componentWillUpdate(nextProps) {
+    console.log('old props', this.props);
+    console.log('new props', nextProps);
+    let currPatchID = this.props.match.params.id;
+    let newPatchID = nextProps.match.params.id;
+
+    if (currPatchID !== newPatchID && newPatchID !== undefined) {
+      this.setState({
+        currentPatch: this.props.bramble.patches[newPatchID]
+      });
+    }
   }
 
   componentDidMount() {
@@ -38,8 +53,17 @@ class Preview extends React.Component {
     }
   }
 
-  createMarkup(rawText) {
-    return { __html: marked(rawText) };
+  createMarkup(patch) {
+    if (patch === undefined) {
+      return { __html: '' };
+    }
+    let renderedHTML = marked(patch.body);
+
+    let htmlWithLinks = renderedHTML.replace(
+      /@([^:]+):(\d)/g,
+      "<a href='#/preview/$2'>$1</a>"
+    );
+    return { __html: htmlWithLinks };
   }
 
   render() {
@@ -50,7 +74,13 @@ class Preview extends React.Component {
         <div className="patch-editor-wrapper">
           <div className="patch-editor">
             <div className="story-preview-wrapper">
-              {this.props.bramble.patches.map((patch, index) => {
+              <div
+                className="patch-body"
+                dangerouslySetInnerHTML={this.createMarkup(
+                  this.state.currentPatch
+                )}
+              />
+              {/*this.props.bramble.patches.map((patch, index) => {
                 return (
                   <div
                     key={patch.patchId}
@@ -58,7 +88,7 @@ class Preview extends React.Component {
                     dangerouslySetInnerHTML={this.createMarkup(patch.body)}
                   />
                 );
-              })}
+              })*/}
             </div>
           </div>
         </div>

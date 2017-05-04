@@ -5,12 +5,24 @@ import utils from '../utils.js';
 const examplePatch = new Patch({
   patchId: 0,
   name: 'First Patch',
-  body: 'example text'
+  body: 'example text, @link:1'
+});
+
+const examplePatch2 = new Patch({
+  patchId: 1,
+  name: 'Second Patch',
+  body: '@Omg:2 like... go @back:0 now.'
+});
+
+const examplePatch3 = new Patch({
+  patchId: 2,
+  name: 'Final Patch',
+  body: 'Omg DUN DUN DUN @back:1 now.'
 });
 
 const initialState = {
-  patches: [examplePatch],
-  patchCounter: 0,
+  patches: [examplePatch, examplePatch2, examplePatch3],
+  patchCounter: 1,
   displayMarkdownPreview: false
 };
 
