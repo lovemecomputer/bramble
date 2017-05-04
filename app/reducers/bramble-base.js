@@ -88,9 +88,11 @@ export default function bramble(currentState, action) {
         onCmdEnter: action.onCmdEnter,
         onToggleMarkdownPreview: action.onToggleMarkdownPreview
       });
+
     case 'SHOWING_PATCHBOARD':
       return Object.assign({}, currentState, {
-        onNewPatchShortcut: action.onNewPatchShortcut
+        onNewPatchShortcut: action.onNewPatchShortcut,
+        onCmdP: action.initiatePreview
       });
 
     case 'HOTKEY':
@@ -103,6 +105,11 @@ export default function bramble(currentState, action) {
       } else if (action.key === 'n' && action.withMeta) {
         // cmd + n for new patch
         functionToRun = currentState.onNewPatchShortcut;
+      } else if (
+        (action.key === 'p' || action.key === 'P') &&
+        action.withMeta
+      ) {
+        functionToRun = currentState.onCmdP;
       } else if (
         (action.key === 'm' || action.key === 'M') &&
         action.withShift &&
