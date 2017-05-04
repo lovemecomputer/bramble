@@ -14,12 +14,13 @@ class Patchboard extends React.Component {
     super(props);
     this.openPatchEdit = this.openPatchEdit.bind(this);
     this.handleNewPatch = this.handleNewPatch.bind(this);
-    this.handlePreview = this.handlePreview.bind(this);
+    this.handleInitiatePreview = this.handleInitiatePreview.bind(this);
   }
   componentDidMount() {
     this.props.dispatch({
       type: 'SHOWING_PATCHBOARD',
-      onNewPatchShortcut: this.handleNewPatch
+      onNewPatchShortcut: this.handleNewPatch,
+      initiatePreview: this.handleInitiatePreview
     });
   }
 
@@ -32,8 +33,9 @@ class Patchboard extends React.Component {
     }
   }
 
-  handlePreview() {
+  handleInitiatePreview() {
     console.log('>>> PREVIEWING STORY! >>>');
+    this.props.history.push('/preview');
   }
 
   handleDeletePatch(patchId) {
@@ -51,7 +53,11 @@ class Patchboard extends React.Component {
           <button type="button" onClick={this.handleNewPatch} tabIndex="1">
             + new patch
           </button>
-          <button type="button" onClick={this.handlePreview} tabIndex="1">
+          <button
+            type="button"
+            onClick={this.handleInitiatePreview}
+            tabIndex="1"
+          >
             preview story
           </button>
         </div>
