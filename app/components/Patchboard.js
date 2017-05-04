@@ -34,8 +34,7 @@ class Patchboard extends React.Component {
   }
 
   handleInitiatePreview() {
-    console.log('>>> PREVIEWING STORY! >>>');
-    this.props.history.push('/preview');
+    this.props.history.push('/preview/0');
   }
 
   handleDeletePatch(patchId) {

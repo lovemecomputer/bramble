@@ -18,6 +18,7 @@ export default () => (
         <Route path="/" component={Patchboard} />
         <Route path="/patch-edit/:patchId" component={PatchEdit} />
         <Route exact path="/preview" component={Preview} />
+        <Route exact path="/preview/:id" component={Preview} />
       </div>
     </App>
   </Router>
