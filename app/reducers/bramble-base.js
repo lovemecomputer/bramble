@@ -49,13 +49,33 @@ export default function bramble(currentState, action) {
         action.patchId,
         currentState.patches
       );
-      var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
-      updatedPatch.body = action.body;
-      var updatedPatches = currentState.patches.slice();
-      updatedPatches[targetIndex] = updatedPatch;
-      return Object.assign({}, currentState, {
-        patches: updatedPatches
-      });
+      if (targetIndex !== null) {
+        var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
+        updatedPatch.body = action.body;
+        var updatedPatches = currentState.patches.slice();
+        updatedPatches[targetIndex] = updatedPatch;
+        return Object.assign({}, currentState, {
+          patches: updatedPatches
+        });
+      } else {
+        return currentState;
+      }
+
+    case 'DELETE_PATCH':
+      var targetIndex = utils.indexOfObjectWithPropertyValue(
+        'patchId',
+        action.patchId,
+        currentState.patches
+      );
+      if (targetIndex !== null) {
+        var updatedPatches = currentState.patches.slice();
+        updatedPatches.splice(targetIndex, 1);
+        return Object.assign({}, currentState, {
+          patches: updatedPatches
+        });
+      } else {
+        return currentState;
+      }
 
     case 'TOGGLE_MARKDOWN_PREVIEW':
       return Object.assign({}, currentState, {
@@ -63,7 +83,11 @@ export default function bramble(currentState, action) {
       });
 
     case 'SHOWING_PATCH':
-      return Object.assign({}, currentState, { onEscape: action.onEscape });
+      return Object.assign({}, currentState, {
+        onEscape: action.onEscape,
+        onCmdEnter: action.onCmdEnter,
+        onToggleMarkdownPreview: action.onToggleMarkdownPreview
+      });
     case 'SHOWING_PATCHBOARD':
       return Object.assign({}, currentState, {
         onNewPatchShortcut: action.onNewPatchShortcut
@@ -72,9 +96,19 @@ export default function bramble(currentState, action) {
     case 'HOTKEY':
       let functionToRun;
       if (action.key === 'Escape') {
+        // escape key to close
         functionToRun = currentState.onEscape;
+      } else if (action.key === 'Enter' && action.withMeta) {
+        functionToRun = currentState.onCmdEnter;
       } else if (action.key === 'n' && action.withMeta) {
+        // cmd + n for new patch
         functionToRun = currentState.onNewPatchShortcut;
+      } else if (
+        (action.key === 'm' || action.key === 'M') &&
+        action.withShift &&
+        action.withCtrl
+      ) {
+        functionToRun = currentState.onToggleMarkdownPreview;
       }
       if (functionToRun) {
         setTimeout(() => {

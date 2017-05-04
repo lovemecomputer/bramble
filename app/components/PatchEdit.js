@@ -34,7 +34,9 @@ class PatchEdit extends React.Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'SHOWING_PATCH',
-      onEscape: this.closePatchEditor
+      onEscape: this.closePatchEditor,
+      onCmdEnter: this.closePatchEditor,
+      onToggleMarkdownPreview: this.toggleMarkdownPreview
     });
     this.auto_grow(this.refs.patchInput);
   }
@@ -78,6 +80,14 @@ class PatchEdit extends React.Component {
     element.style.height = '5px';
     element.style.height = element.scrollHeight + 'px';
   }
+
+  // renderDeleteButton () {
+  //   return (
+  //     <button onClick={this.props.deletePatch}>
+  //       Delete patch
+  //     </button>
+  //   );
+  // }
 
   renderPatchEditor(currentPatch) {
     if (currentPatch !== undefined) {

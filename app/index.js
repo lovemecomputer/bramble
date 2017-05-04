@@ -10,7 +10,13 @@ const store = configureStore();
 
 const listenToPresses = e => {
   console.log(e);
-  store.dispatch({ type: 'HOTKEY', key: e.key, withMeta: e.metaKey });
+  store.dispatch({
+    type: 'HOTKEY',
+    key: e.key,
+    withMeta: e.metaKey,
+    withShift: e.shiftKey,
+    withCtrl: e.ctrlKey
+  });
   // e.stopPropagation();
   // TODO: PREVENT SOME KEYSTOKES WITH ELECTION API
 };

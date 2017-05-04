@@ -13,25 +13,28 @@ class Patchboard extends React.Component {
   constructor(props) {
     super(props);
     this.openPatchEdit = this.openPatchEdit.bind(this);
-    this.clickNewPatch = this.clickNewPatch.bind(this);
+    this.handleNewPatch = this.handleNewPatch.bind(this);
   }
   componentDidMount() {
     this.props.dispatch({
       type: 'SHOWING_PATCHBOARD',
-      onNewPatchShortcut: this.clickNewPatch
+      onNewPatchShortcut: this.handleNewPatch
     });
   }
-  clickNewPatch() {
+
+  handleNewPatch() {
     this.props.dispatch(newPatch());
     if (this.props.history.location.pathname.includes('patch-edit')) {
       this.props.history.push(
-        `/patch-edit/${this.props.bramble.patches[this.props.bramble.patches.length - 1]}`
+        `/patch-edit/${this.props.bramble.patches[this.props.bramble.patches.length - 1].patchId}`
       );
-      // console.log(
-      //   this.props.bramble.patches[this.props.bramble.patches.length - 1]
-      // );
     }
   }
+
+  handleDeletePatch(patchId) {
+    this.props.dispatch({ type: 'DELETE_PATCH', patchId: patchId });
+  }
+
   openPatchEdit(patchId) {
     this.props.history.push(`/patch-edit/${patchId}`);
   }
@@ -40,7 +43,7 @@ class Patchboard extends React.Component {
     return (
       <div className="patchboard-wrapper">
         <div className="header-controls">
-          <button type="button" onClick={this.clickNewPatch}>
+          <button type="button" onClick={this.handleNewPatch} tabIndex="1">
             + new patch
           </button>
         </div>
@@ -53,6 +56,7 @@ class Patchboard extends React.Component {
                 patchId={patch.patchId}
                 body={patch.body}
                 openPatchEdit={() => this.openPatchEdit(patch.patchId)}
+                deletePatch={() => this.handleDeletePatch(patch.patchId)}
               />
             );
           })}

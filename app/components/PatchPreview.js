@@ -3,12 +3,33 @@ import React from 'react';
 // import { Route } from 'react-router-dom';
 
 class PatchPreview extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.renderDeleteButton = this.renderDeleteButton.bind(this);
+  }
+
+  handleKeyPress(target) {
+    if (target.charCode == 13) {
+      this.props.openPatchEdit();
+    }
+  }
+
+  renderDeleteButton() {
+    return (
+      <a onClick={this.props.deletePatch}>
+        Delete patch
+      </a>
+    );
+  }
   render() {
     return (
       <div
         className="patch-preview"
         id={`patch-preview-${this.props.patchId}`}
         onClick={this.props.openPatchEdit}
+        onKeyPress={this.handleKeyPress}
+        tabIndex="2"
       >
         <header>
           <h4 className="patch-title">{this.props.name}</h4>
@@ -18,6 +39,7 @@ class PatchPreview extends React.Component {
         </section>
         <footer className="patch-footer">
           <span className="patch-id">patch id: {this.props.patchId}</span>
+          {this.renderDeleteButton()}
         </footer>
       </div>
     );
