@@ -83,7 +83,7 @@ class PatchEdit extends React.Component {
   }
 
   auto_grow(element) {
-    element.style.height = '5px';
+    element.style.height = '1.6rem';
     element.style.height = element.scrollHeight + 'px';
   }
 
@@ -172,7 +172,6 @@ class PatchEdit extends React.Component {
       <div className="overlay-wrapper">
         <div className="overlay-shade" onClick={this.closePatchEditor} />
         {this.renderPatchEditor(currentPatch)}
-
       </div>
     );
   }
