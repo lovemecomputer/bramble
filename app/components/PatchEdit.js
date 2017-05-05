@@ -26,7 +26,7 @@ class PatchEdit extends React.Component {
     this.auto_grow = this.auto_grow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
     this.handleDeletePatch = this.handleDeletePatch.bind(this);
-    this.toggleMarkdownPreview = this.toggleMarkdownPreview.bind(this);
+    this.toggleFormattedPreview = this.toggleFormattedPreview.bind(this);
 
     this.renderPatchEditor = this.renderPatchEditor.bind(this);
     this.renderMarkdownPreview = this.renderMarkdownPreview.bind(this);
@@ -34,10 +34,10 @@ class PatchEdit extends React.Component {
 
   componentDidMount() {
     this.props.dispatch({
-      type: 'SHOWING_PATCH',
+      type: 'SHOWING_PATCH_EDIT',
       onEscape: this.closePatchEditor,
       onCmdEnter: this.closePatchEditor,
-      onToggleMarkdownPreview: this.toggleMarkdownPreview
+      onCtrlShiftM: this.toggleFormattedPreview
     });
     this.auto_grow(this.refs.patchInput);
   }
@@ -72,14 +72,23 @@ class PatchEdit extends React.Component {
     this.closePatchEditor();
   }
 
-  toggleMarkdownPreview() {
+  toggleFormattedPreview() {
     this.props.dispatch({
       type: 'TOGGLE_MARKDOWN_PREVIEW'
     });
   }
 
-  createMarkup(rawText) {
-    return { __html: marked(rawText) };
+  createMarkup(patch) {
+    if (patch === undefined) {
+      return { __html: '' };
+    }
+    let renderedHTML = marked(patch.body);
+
+    let htmlWithLinks = renderedHTML.replace(
+      /@([^:]+):(\d)/g,
+      "<a href='#/patch-edit/$2'>$1</a>"
+    );
+    return { __html: htmlWithLinks };
   }
 
   auto_grow(element) {
@@ -110,7 +119,7 @@ class PatchEdit extends React.Component {
             />
             <hr />
             <div className="patch-editor-controls">
-              <a onClick={this.toggleMarkdownPreview}>Markdown Preview</a>
+              <a onClick={this.toggleFormattedPreview}>Formatted preview</a>
             </div>
             <div className="patch-input-and-preview-container">
               <section className="patch-entry">
@@ -155,7 +164,7 @@ class PatchEdit extends React.Component {
         <section className="markdown-preview-section">
           <article
             className="markdown-article"
-            dangerouslySetInnerHTML={this.createMarkup(currentPatch.body)}
+            dangerouslySetInnerHTML={this.createMarkup(currentPatch)}
           />
         </section>
       );
