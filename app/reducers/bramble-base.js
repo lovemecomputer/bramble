@@ -22,7 +22,7 @@ const examplePatch3 = new Patch({
 
 const initialState = {
   patches: [examplePatch, examplePatch2, examplePatch3],
-  patchCounter: 1,
+  patchCounter: 2,
   displayMarkdownPreview: false
 };
 
