@@ -1,13 +1,9 @@
 // @flow
-// import React, { Component } from 'react';
 import React from 'react';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import PatchPreview from './PatchPreview.js';
 import newPatch from '../actions/new-patch.js';
-
-// import { Route, Link, NavLink } from 'react-router-dom';
-// import container from '../../containers/all.js';
 
 class Patchboard extends React.Component {
   constructor(props) {
@@ -16,6 +12,7 @@ class Patchboard extends React.Component {
     this.handleNewPatch = this.handleNewPatch.bind(this);
     this.handleInitiatePreview = this.handleInitiatePreview.bind(this);
   }
+
   componentDidMount() {
     this.props.dispatch({
       type: 'SHOWING_PATCHBOARD',

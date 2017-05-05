@@ -29,7 +29,7 @@ class PatchEdit extends React.Component {
     this.toggleFormattedPreview = this.toggleFormattedPreview.bind(this);
 
     this.renderPatchEditor = this.renderPatchEditor.bind(this);
-    this.renderMarkdownPreview = this.renderMarkdownPreview.bind(this);
+    this.renderFormattedPreview = this.renderFormattedPreview.bind(this);
   }
 
   componentDidMount() {
@@ -143,35 +143,37 @@ class PatchEdit extends React.Component {
                   ref="patchInput"
                   placeholder="plain text or markdown…"
                 />
-                <p>
-                  <span className="patch-id">
-                    patch id: {currentPatch.patchId}
-                  </span>
-                </p>
-                <p>
-                  <a
-                    onClick={() => {
-                      this.handleDeletePatch(currentPatch.patchId);
-                    }}
-                  >
-                    Delete patch
-                  </a>
-                </p>
               </section>
-              {this.renderMarkdownPreview(currentPatch)}
+              {this.renderFormattedPreview(currentPatch)}
             </div>
+            <footer>
+              <p>
+                <span className="patch-id">
+                  patch id: {currentPatch.patchId}
+                </span>
+              </p>
+              <p>
+                <a
+                  onClick={() => {
+                    this.handleDeletePatch(currentPatch.patchId);
+                  }}
+                >
+                  Delete patch
+                </a>
+              </p>
+            </footer>
           </div>
         </div>
       );
     }
   }
 
-  renderMarkdownPreview(currentPatch) {
+  renderFormattedPreview(currentPatch) {
     if (this.props.bramble.displayFormattedPreview) {
       return (
-        <section className="markdown-preview-section">
+        <section className="formatted-preview-section">
           <article
-            className="markdown-article"
+            className="formatted-article"
             dangerouslySetInnerHTML={this.createMarkup(currentPatch)}
           />
         </section>

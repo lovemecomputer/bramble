@@ -40,6 +40,8 @@
 
 .patchboard-wrapper {
   position: relative;
+  height:2000px;
+  width: 2000px;
 }
 .header-controls {
   position: fixed;
@@ -51,8 +53,65 @@
     margin-left: 1rem;
   }
 }
+
+$gridLineOpacity: .2;
+$gidLineColor: rgba(255, 255, 255, $gridLineOpacity);
+$majorGridLineOpacity: .6;
+$majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 .patchboard{
   font-size: 1rem;
+  height: 100%;
+  background-color: transparent;
+  background-image:
+    // horizontal
+    linear-gradient(
+      0deg,
+      $majorGidLineColor 0%,
+      $majorGidLineColor .5%,
+      transparent 1%,
+      transparent 19%,
+      $gidLineColor 20%,
+      $gidLineColor 20.5%,
+      transparent 21%,
+      transparent 39%,
+      $gidLineColor 40%,
+      $gidLineColor 40.5%,
+      transparent 41%,
+      transparent 59%,
+      $gidLineColor 60%,
+      $gidLineColor 60.5%,
+      transparent 61%,
+      transparent 79%,
+      $gidLineColor 80%,
+      $gidLineColor 80.5%,
+      transparent 81%,
+      transparent
+      ),
+    // vertical
+    linear-gradient(
+      90deg,
+      $majorGidLineColor 0%,
+      $majorGidLineColor .5%,
+      transparent 1%,
+      transparent 19%,
+      $gidLineColor 20%,
+      $gidLineColor 20.5%,
+      transparent 21%,
+      transparent 39%,
+      $gidLineColor 40%,
+      $gidLineColor 40.5%,
+      transparent 41%,
+      transparent 59%,
+      $gidLineColor 60%,
+      $gidLineColor 60.5%,
+      transparent 61%,
+      transparent 79%,
+      $gidLineColor 80%,
+      $gidLineColor 80.5%,
+      transparent 81%,
+      transparent
+      );
+  background-size: 10em;
 }
 
 .patch-preview {
@@ -60,10 +119,10 @@
   overflow-wrap: break-word;
   cursor: pointer;
   display: inline-block;
-  width: 20rem;
+  width: 18rem;
   margin: 2rem;
   background: #fff;
-  font-size: 1.4em;
+  font-size: 1.3em;
   // box-shadow: 0 .6rem .2rem -.2rem rgba($color-dark, .2);
   @include shadow-box-interactive;
 
@@ -80,7 +139,7 @@
   .patch-body {
     padding: 1rem;
     font-family: 'Source Code Pro', monospace;
-    letter-spacing: -.1rem;
+    letter-spacing: -.05rem;
   }
 
   .patch-footer {
@@ -151,19 +210,21 @@
   font-family: monospace;
   width: 100%;
 }
-.markdown-preview-section {
+.formatted-preview-section {
   flex: 1;
   padding-left: 4rem;
   font-size: .8em;
 }
 
-.markdown-article {
+.formatted-article {
   overflow-wrap: break-word;
   word-wrap: break-word;
   -webkit-hyphens: auto;
   -ms-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+  padding: 4rem;
+  border: .1rem solid $color-light;
 }
 
 
