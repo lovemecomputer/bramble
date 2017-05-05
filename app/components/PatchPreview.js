@@ -6,6 +6,7 @@ class PatchPreview extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
   }
 
@@ -15,9 +16,19 @@ class PatchPreview extends React.Component {
     }
   }
 
+  handleDeleteClick(deleteFunction, eventToStop) {
+    deleteFunction();
+  }
+
   renderDeleteButton() {
     return (
-      <a className="delete-button" onClick={this.props.deletePatch}>
+      <a
+        className="delete-button"
+        onClick={event => {
+          event.stopPropagation();
+          this.props.deletePatch();
+        }}
+      >
         delete
       </a>
     );

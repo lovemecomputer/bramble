@@ -5,7 +5,7 @@ import utils from '../utils.js';
 const examplePatch = new Patch({
   patchId: 0,
   name: 'Example Patch',
-  body: 'Welcome to **Bramble**.\n\nThis is a link to another patch: @Move ahead:1'
+  body: 'Welcome to **Bramble** — an app to create interactive fiction, text-based games, or whatever you come up with.\n\nEach individual unit is called a *patch*.\n\nThis is a link to another patch: @Move ahead:1'
 });
 
 const examplePatch2 = new Patch({

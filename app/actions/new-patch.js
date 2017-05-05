@@ -4,7 +4,7 @@ export default function newPatch() {
   return (dispatch, getState) => {
     const newPatch = new Patch({
       patchId: Number(getState().bramble.patchCounter + 1),
-      name: 'New Patch',
+      name: '',
       body: ''
     });
     dispatch({
