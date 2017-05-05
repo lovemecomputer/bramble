@@ -94,11 +94,11 @@ export default function bramble(currentState, action) {
         displayMarkdownPreview: !currentState.displayMarkdownPreview
       });
 
-    case 'SHOWING_PATCH':
+    case 'SHOWING_PATCH_EDIT':
       return Object.assign({}, currentState, {
         onEscape: action.onEscape,
         onCmdEnter: action.onCmdEnter,
-        onToggleMarkdownPreview: action.onToggleMarkdownPreview
+        onCtrlShiftM: action.onCtrlShiftM
       });
 
     case 'SHOWING_PATCHBOARD':
