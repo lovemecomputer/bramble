@@ -4,26 +4,26 @@ import utils from '../utils.js';
 
 const examplePatch = new Patch({
   patchId: 0,
-  name: 'First Patch',
-  body: 'example text, @link:1'
+  name: 'Example Patch',
+  body: 'Welcome to **Bramble**.\n\nThis is a link to another patch: @Move ahead:1'
 });
 
 const examplePatch2 = new Patch({
   patchId: 1,
-  name: 'Second Patch',
-  body: '@Omg:2 like... go @back:0 now.'
+  name: 'Second Example Patch',
+  body: '## Next steps\n\nIf you are outputting to web, **Bramble** will allow you to *format* your text with Markdown.\n\n---\n\n@Go back.:0\n\n**@Keep going.:2**'
 });
 
 const examplePatch3 = new Patch({
   patchId: 2,
-  name: 'Final Patch',
-  body: 'Omg DUN DUN DUN @back:1 now.'
+  name: 'Third Example Patch',
+  body: '# Tell a story~\n\n**Bramble** will allow you to publish in a format that can be easily shared to anyone that can browse the internet.\n\nOr, use **Bramble** as an authoring tool, and export your data do use in other systems.\n\n@Go back to the first patch:0 or @the second patch:1 woohoo.'
 });
 
 const initialState = {
   patches: [examplePatch, examplePatch2, examplePatch3],
   patchCounter: 2,
-  displayMarkdownPreview: false
+  displayFormattedPreview: true
 };
 
 export default function bramble(currentState, action) {
@@ -89,9 +89,9 @@ export default function bramble(currentState, action) {
         return currentState;
       }
 
-    case 'TOGGLE_MARKDOWN_PREVIEW':
+    case 'TOGGLE_FORMATTED_PREVIEW':
       return Object.assign({}, currentState, {
-        displayMarkdownPreview: !currentState.displayMarkdownPreview
+        displayFormattedPreview: !currentState.displayFormattedPreview
       });
 
     case 'SHOWING_PATCH_EDIT':
@@ -127,7 +127,7 @@ export default function bramble(currentState, action) {
         action.withShift &&
         action.withCtrl
       ) {
-        functionToRun = currentState.onToggleMarkdownPreview;
+        functionToRun = currentState.onCtrlShiftM;
       }
       if (functionToRun) {
         setTimeout(() => {

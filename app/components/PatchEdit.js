@@ -42,6 +42,14 @@ class PatchEdit extends React.Component {
     this.auto_grow(this.refs.patchInput);
   }
 
+  componentDidUpdate(nextProps) {
+    this.auto_grow(this.refs.patchInput);
+    // if (nextProps.match.url !== this.props.match.url) {
+    //   console.log('auto growing!!');
+    //   this.auto_grow(this.refs.patchInput);
+    // }
+  }
+
   closePatchEditor() {
     if (this.props.match.url !== '/') {
       this.props.dispatch(changeURL(this.props.history));
@@ -74,7 +82,7 @@ class PatchEdit extends React.Component {
 
   toggleFormattedPreview() {
     this.props.dispatch({
-      type: 'TOGGLE_MARKDOWN_PREVIEW'
+      type: 'TOGGLE_FORMATTED_PREVIEW'
     });
   }
 
@@ -159,7 +167,7 @@ class PatchEdit extends React.Component {
   }
 
   renderMarkdownPreview(currentPatch) {
-    if (this.props.bramble.displayMarkdownPreview) {
+    if (this.props.bramble.displayFormattedPreview) {
       return (
         <section className="markdown-preview-section">
           <article
