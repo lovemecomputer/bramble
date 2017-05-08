@@ -9,6 +9,7 @@ const utils = {
     }
     return lookup; // now can use lookup[id]
   },
+  // TODO: can use lowdash for fancier selection methods
   indexOfObjectWithPropertyValue: (
     propertyToMatch,
     desiredValue,
