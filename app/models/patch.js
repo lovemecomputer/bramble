@@ -9,21 +9,32 @@ export default function Patch(attributes) {
   };
   this.editor = {
     position: {
-      x: () => {
-        if (attributes.editor.position.x)
-        return Number(attributes.editor.position.x) || 0;
-      },
-      y: () => {
-        if (attributes.editor.position.y)
-        return Number(attributes.editor.position.y) || 0;
-      },
+      x: (
+          attributes.editor
+          && attributes.editor.position
+          && attributes.editor.position.x // QUESTION: returns the x value if all are true, but i don't understand why??
+        ) || 0,
+      y: (
+          attributes.editor
+          && attributes.editor.position
+          && attributes.editor.position.y
+        ) || 0
+      // x: () => {
+      //   if (attributes.editor.position.x) {
+      //     return Number(attributes.editor.position.x);
+      //   } else {
+      //     return 0;
+      //   }
+      // },
+      // y: () => {
+      //   if (attributes.editor.position.y) {
+      //     return Number(attributes.editor.position.y);
+      //   } else {
+      //     return 0;
+      //   }
+      // }
     }
-  } || {
-    position: {
-      x: 0,
-      y: 0
-    }
-  };
+  }
 }
 
 /* TODO:
