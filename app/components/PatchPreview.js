@@ -40,6 +40,7 @@ class PatchPreview extends React.Component {
         id={`patch-preview-${this.props.patchId}`}
         onClick={this.props.openPatchEdit}
         onKeyPress={this.handleKeyPress}
+        style={{ top: this.props.yPos, left: this.props.xPos}}
         tabIndex="2"
       >
         <header>
