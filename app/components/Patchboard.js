@@ -67,6 +67,8 @@ class Patchboard extends React.Component {
                 body={patch.content.body}
                 openPatchEdit={() => this.openPatchEdit(patch.patchId)}
                 deletePatch={() => this.handleDeletePatch(patch.patchId)}
+                xPos={patch.editor.position.x}
+                yPos={patch.editor.position.y}
               />
             );
           })}
