@@ -90,7 +90,7 @@ class PatchEdit extends React.Component {
     if (patch === undefined) {
       return { __html: '' };
     }
-    let renderedHTML = marked(patch.body);
+    let renderedHTML = marked(patch.content.body);
 
     let htmlWithLinks = renderedHTML.replace(
       /@([^:]+):(\d)/g,
@@ -122,7 +122,7 @@ class PatchEdit extends React.Component {
               onChange={this.enterNameText}
               type="text"
               name="patch name"
-              value={currentPatch.name}
+              value={currentPatch.content.name}
               placeholder="patch name…"
             />
             <hr />
@@ -139,7 +139,7 @@ class PatchEdit extends React.Component {
                   name="patch raw text in markdown"
                   rows="12"
                   cols="60"
-                  value={currentPatch.body}
+                  value={currentPatch.content.body}
                   ref="patchInput"
                   placeholder="plain text or markdown…"
                 />
