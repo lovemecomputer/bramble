@@ -57,7 +57,7 @@ app.on('ready', async () => {
 
   mainWindow.titleBarStyle = 'hidden';
 
-  // @TODO: Use 'ready-to-show' event
+  // TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
   mainWindow.webContents.on('did-finish-load', () => {
     if (!mainWindow) {
