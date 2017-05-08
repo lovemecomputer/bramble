@@ -57,7 +57,7 @@ class Preview extends React.Component {
     if (patch === undefined) {
       return { __html: '' };
     }
-    let renderedHTML = marked(patch.body);
+    let renderedHTML = marked(patch.content.body);
 
     let htmlWithLinks = renderedHTML.replace(
       /@([^:]+):(\d)/g,
