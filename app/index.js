@@ -18,7 +18,7 @@ const listenToPresses = e => {
     withCtrl: e.ctrlKey
   });
   // e.stopPropagation();
-  // TODO: PREVENT SOME KEYSTOKES WITH ELECTION API
+  // TODO: PREVENT SOME KEYSTOKES WITH ELECTRON API
 };
 document.addEventListener('keydown', listenToPresses);
 
