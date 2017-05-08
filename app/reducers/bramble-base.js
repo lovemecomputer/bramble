@@ -2,27 +2,47 @@
 import Patch from '../models/patch.js';
 import utils from '../utils.js';
 
+// const examplePatch = new Patch({
+//   patchId: 0,
+//   content: {
+//     name: 'Example Patch',
+//     body: 'Welcome to **Bramble** — an app to create interactive fiction, text-based games, or whatever you come up with.\n\nEach individual unit is called a *patch*.\n\nThis is a link to another patch: @Move ahead:1'
+//   },
+//   editor: {
+//     position: {}
+//   }
+// });
+
 const examplePatch = new Patch({
   patchId: 0,
-  name: 'Example Patch',
-  body: 'Welcome to **Bramble** — an app to create interactive fiction, text-based games, or whatever you come up with.\n\nEach individual unit is called a *patch*.\n\nThis is a link to another patch: @Move ahead:1'
+  content: {
+    name: 'Example Patch',
+    body: 'Welcome to **Bramble** — an app to create interactive fiction, text-based games, or whatever you come up with.\n\nEach individual unit is called a *patch*.\n\nThis is a link to another patch: @Move ahead:1'
+  }
 });
 
 const examplePatch2 = new Patch({
   patchId: 1,
-  name: 'Second Example Patch',
-  body: '## Next steps\n\nIf you are outputting to web, **Bramble** will allow you to *format* your text with Markdown.\n\n---\n\n@Go back.:0\n\n**@Keep going.:2**'
+  content: {
+    name: 'Second Example Patch',
+    body: '## Next steps\n\nIf you are outputting to web, **Bramble** will allow you to *format* your text with Markdown.\n\n---\n\n@Go back.:0\n\n**@Keep going.:2**'
+  }
 });
 
 const examplePatch3 = new Patch({
   patchId: 2,
-  name: 'Third Example Patch',
-  body: '# Tell a story~\n\n**Bramble** will allow you to publish in a format that can be easily shared to anyone that can browse the internet.\n\nOr, use **Bramble** as an authoring tool, and export your data do use in other systems.\n\n@Go back to the first patch:0 or @the second patch:1 woohoo.'
+  content: {
+    name: 'Third Example Patch',
+    body: '# Tell a story~\n\n**Bramble** will allow you to publish in a format that can be easily shared to anyone that can browse the internet.\n\nOr, use **Bramble** as an authoring tool, and export your data do use in other systems.\n\n@Go back to the first patch:0 or @the second patch:1 woohoo.'
+  }
 });
 
 const initialState = {
   patches: [examplePatch, examplePatch2, examplePatch3],
+  // patches: [examplePatch],
+  // patches: [],
   patchCounter: 2,
+  // patchCounter: 0,
   displayFormattedPreview: true
 };
 
@@ -48,7 +68,7 @@ export default function bramble(currentState, action) {
         currentState.patches
       );
       var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
-      updatedPatch.name = action.name;
+      updatedPatch.content.name = action.name;
       var updatedPatches = currentState.patches.slice();
       updatedPatches[targetIndex] = updatedPatch;
       return Object.assign({}, currentState, {
@@ -63,7 +83,7 @@ export default function bramble(currentState, action) {
       );
       if (targetIndex !== null) {
         var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
-        updatedPatch.body = action.body;
+        updatedPatch.content.body = action.body;
         var updatedPatches = currentState.patches.slice();
         updatedPatches[targetIndex] = updatedPatch;
         return Object.assign({}, currentState, {

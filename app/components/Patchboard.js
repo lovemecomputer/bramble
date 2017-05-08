@@ -62,9 +62,9 @@ class Patchboard extends React.Component {
             return (
               <PatchPreview
                 key={patch.patchId}
-                name={patch.name}
                 patchId={patch.patchId}
-                body={patch.body}
+                name={patch.content.name}
+                body={patch.content.body}
                 openPatchEdit={() => this.openPatchEdit(patch.patchId)}
                 deletePatch={() => this.handleDeletePatch(patch.patchId)}
               />
