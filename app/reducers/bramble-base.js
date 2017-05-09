@@ -3,22 +3,17 @@ import BrambleProject from '../models/BrambleProject.js';
 import Patch from '../models/patch.js';
 import utils from '../utils.js';
 
-// const examplePatch = new Patch({
-//   patchId: 0,
-//   content: {
-//     name: 'Example Patch',
-//     body: 'Welcome to **Bramble** — an app to create interactive fiction, text-based games, or whatever you come up with.\n\nEach individual unit is called a *patch*.\n\nThis is a link to another patch: @Move ahead:1'
-//   },
-//   editor: {
-//     position: {}
-//   }
-// });
-
 let examplePatch = new Patch({
   patchId: 0,
   content: {
     name: 'Example Patch',
     body: 'Welcome to **Bramble** — an app to create interactive fiction, text-based games, or whatever you come up with.\n\nEach individual unit is called a *patch*.\n\nThis is a link to another patch: @Move ahead:1'
+  },
+  editor: {
+    position: {
+      x: 20,
+      y: 60
+    }
   }
 });
 
@@ -27,6 +22,12 @@ let examplePatch2 = new Patch({
   content: {
     name: 'Second Example Patch',
     body: '## Next steps\n\nIf you are outputting to web, **Bramble** will allow you to *format* your text with Markdown.\n\n---\n\n@Go back.:0\n\n**@Keep going.:2**'
+  },
+  editor: {
+    position: {
+      x: 220,
+      y: 60
+    }
   }
 });
 
@@ -35,6 +36,12 @@ let examplePatch3 = new Patch({
   content: {
     name: 'Third Example Patch',
     body: '# Tell a story~\n\n**Bramble** will allow you to publish in a format that can be easily shared to anyone that can browse the internet.\n\nOr, use **Bramble** as an authoring tool, and export your data do use in other systems.\n\n@Go back to the first patch:0 or @the second patch:1 woohoo.'
+  },
+  editor: {
+    position: {
+      x: 420,
+      y: 60
+    }
   }
 });
 
@@ -44,16 +51,16 @@ let ExampleProject = new BrambleProject({
   content: {
     patches: [examplePatch, examplePatch2, examplePatch3]
   },
-  editorSettings: {
+  editor: {
+    patchCounter: 2,
     displayFormattedPreview: true,
     zoomLevel: 0
   }
 });
 
 const initialState = {
-  brambleProject: ExampleProject,
+  project: ExampleProject,
   patches: ExampleProject.content.patches,
-  patchCounter: 2,
   displayFormattedPreview: true
 };
 
@@ -66,10 +73,15 @@ export default function bramble(currentState, action) {
     case 'ADD_PATCH':
       var updatedPatches = currentState.patches.slice();
       updatedPatches.push(action.newPatch);
-      let updatedPatchCounter = currentState.patchCounter + 1;
+      let updatedPatchCounter = currentState.project.editor.patchCounter + 1;
       return Object.assign({}, currentState, {
-        patches: updatedPatches,
-        patchCounter: updatedPatchCounter
+        patches: updatedPatches
+        // ,
+        // project: Object.assign({}, currentState.project, {
+        //   editor: Object.assign({}, currentState.project.editor, {
+        //     patchCounter: updatedPatchCounter
+        //   })
+        // })
       });
 
     case 'UPDATE_PATCH_POSITION':
