@@ -130,6 +130,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   perspective: 1000px;
 
   .patch-node-wrapper {
+    flex-direction: column;
     background: #fff;
     box-shadow: 0 .3rem .2rem 0 rgba($color-background, .8),
                 0 .3rem .8rem -.4rem rgba($color-link, 1),
@@ -137,7 +138,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     transition: .3s;
   }
 
-  header {
+  .patch-header {
     padding: .5rem 1rem;
     border-bottom: .1rem solid $color-light;
   }
