@@ -26,7 +26,7 @@ class Patchboard extends React.Component {
     this.props.dispatch(newPatch());
     if (this.props.history.location.pathname.includes('patch-edit')) {
       this.props.history.push(
-        `/patch-edit/${this.props.bramble.patches[this.props.bramble.patches.length - 1].patchId}`
+        `/patch-edit/${this.props.bramble.project.content.patches[this.props.bramble.project.content.patches.length - 1].patchId}`
       );
     }
   }
@@ -68,7 +68,7 @@ class Patchboard extends React.Component {
           </button>
         </div>
         <section className="patchboard">
-          {this.props.bramble.patches.map((patch, index) => {
+          {this.props.bramble.project.content.patches.map((patch, index) => {
             return (
               <PatchNodeView
                 key={patch.patchId}
@@ -77,9 +77,6 @@ class Patchboard extends React.Component {
                 body={patch.content.body}
                 openPatchEdit={() => this.openPatchEdit(patch.patchId)}
                 deletePatch={() => this.handleDeletePatch(patch.patchId)}
-                dragFunction={() => {
-                  this.handleDragPatch(patch.patchId);
-                }}
                 xPos={patch.editor.position.x}
                 yPos={patch.editor.position.y}
                 updatePosition={this.dispatchPositionUpdate}

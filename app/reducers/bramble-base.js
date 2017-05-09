@@ -60,7 +60,7 @@ let ExampleProject = new BrambleProject({
 
 const initialState = {
   project: ExampleProject,
-  patches: ExampleProject.content.patches,
+  // patches: ExampleProject.content.patches,
   displayFormattedPreview: true
 };
 
@@ -71,17 +71,14 @@ export default function bramble(currentState, action) {
 
   switch (action.type) {
     case 'ADD_PATCH':
-      var updatedPatches = currentState.patches.slice();
-      updatedPatches.push(action.newPatch);
-      let updatedPatchCounter = currentState.project.editor.patchCounter + 1;
+      // var updatedPatches = currentState.patches.slice();
+      // updatedPatches.push(action.newPatch);
+      // return Object.assign({}, currentState, {
+      //   project: currentState.project.incrementPatchCounter(),
+      //   patches: updatedPatches
+      // });
       return Object.assign({}, currentState, {
-        patches: updatedPatches
-        // ,
-        // project: Object.assign({}, currentState.project, {
-        //   editor: Object.assign({}, currentState.project.editor, {
-        //     patchCounter: updatedPatchCounter
-        //   })
-        // })
+        project: currentState.project.addPatch(action.newPatch)
       });
 
     case 'UPDATE_PATCH_POSITION':
@@ -125,6 +122,7 @@ export default function bramble(currentState, action) {
         var updatedPatches = currentState.patches.slice();
         updatedPatches[targetIndex] = updatedPatch;
         return Object.assign({}, currentState, {
+          project: Object.assign(currentState.project),
           patches: updatedPatches
         });
       } else {
