@@ -9,39 +9,14 @@ export default function Patch(attributes) {
   };
   this.editor = {
     position: {
-      x: (
-          attributes.editor
-          && attributes.editor.position
-          && attributes.editor.position.x // QUESTION: returns the x value if all are true, but i don't understand why??
-        ) || 0,
-      y: (
-          attributes.editor
-          && attributes.editor.position
-          && attributes.editor.position.y
-        ) || 0
-      // x: () => {
-      //   if (attributes.editor.position.x) {
-      //     return Number(attributes.editor.position.x);
-      //   } else {
-      //     return 0;
-      //   }
-      // },
-      // y: () => {
-      //   if (attributes.editor.position.y) {
-      //     return Number(attributes.editor.position.y);
-      //   } else {
-      //     return 0;
-      //   }
-      // }
+      x: (attributes.editor &&
+        attributes.editor.position &&
+        attributes.editor.position.x) ||
+        0,
+      y: (attributes.editor &&
+        attributes.editor.position &&
+        attributes.editor.position.y) ||
+        0
     }
-  }
+  };
 }
-
-/* TODO:
-- add property to keep track of position,
-  look at trello cards for reference
-- add method to set the position more easily!
-  (maybe this can be done without reducer?
-  and then it would dispatch a reducer action
-  after raising the mouse button?)
-*/
