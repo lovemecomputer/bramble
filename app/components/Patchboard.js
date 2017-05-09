@@ -38,6 +38,10 @@ class Patchboard extends React.Component {
     this.props.dispatch({ type: 'DELETE_PATCH', patchId: patchId });
   }
 
+  handleDragPatch(patchId) {
+    console.log('>>>>> MOUSE DOWN >>>', patchId);
+  }
+
   openPatchEdit(patchId) {
     this.props.history.push(`/patch-edit/${patchId}`);
   }
@@ -67,6 +71,9 @@ class Patchboard extends React.Component {
                 body={patch.content.body}
                 openPatchEdit={() => this.openPatchEdit(patch.patchId)}
                 deletePatch={() => this.handleDeletePatch(patch.patchId)}
+                dragFunction={() => {
+                  this.handleDragPatch(patch.patchId);
+                }}
                 xPos={patch.editor.position.x}
                 yPos={patch.editor.position.y}
               />
