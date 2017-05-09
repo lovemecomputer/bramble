@@ -11,6 +11,7 @@ class Patchboard extends React.Component {
     this.openPatchEdit = this.openPatchEdit.bind(this);
     this.handleNewPatch = this.handleNewPatch.bind(this);
     this.handleInitiatePreview = this.handleInitiatePreview.bind(this);
+    this.dispatchPositionUpdate = this.dispatchPositionUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -38,8 +39,13 @@ class Patchboard extends React.Component {
     this.props.dispatch({ type: 'DELETE_PATCH', patchId: patchId });
   }
 
-  handleDragPatch(patchId) {
-    console.log('>>>>> MOUSE DOWN >>>', patchId);
+  dispatchPositionUpdate(patchId, newPosition) {
+    this.props.dispatch({
+      type: 'UPDATE_PATCH_POSITION',
+      patchId: patchId,
+      x: newPosition.x,
+      y: newPosition.y
+    });
   }
 
   openPatchEdit(patchId) {
@@ -76,6 +82,7 @@ class Patchboard extends React.Component {
                 }}
                 xPos={patch.editor.position.x}
                 yPos={patch.editor.position.y}
+                updatePosition={this.dispatchPositionUpdate}
               />
             );
           })}
