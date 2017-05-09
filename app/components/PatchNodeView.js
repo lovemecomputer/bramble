@@ -4,7 +4,7 @@ import React from 'react';
 
 // click and drag derived from https://stackoverflow.com/questions/20926551/recommended-way-of-making-react-component-div-draggable
 
-class PatchPreview extends React.Component {
+class PatchNodeView extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
@@ -39,15 +39,15 @@ class PatchPreview extends React.Component {
   handleClickForDrag(event) {
     if (event.button !== 0) return;
     var position = {
-      x: this.refs.patchPreview.offsetLeft,
-      y: this.refs.patchPreview.offsetTop
+      x: this.refs.patchNode.offsetLeft,
+      y: this.refs.patchNode.offsetTop
     };
     console.log(
       '\n\n\n\n\n||||||||||| START CLICK |||||||||||||\n',
       '\nposition from offset\n',
       {
-        x: this.refs.patchPreview.offsetLeft,
-        y: this.refs.patchPreview.offsetTop
+        x: this.refs.patchNode.offsetLeft,
+        y: this.refs.patchNode.offsetTop
       },
       '\nSTATE POSITION \n',
       this.state.position,
@@ -113,7 +113,7 @@ class PatchPreview extends React.Component {
   }
 
   classNames() {
-    let classes = ['patch-preview'];
+    let classes = ['patch-node'];
     if (this.state.dragging) classes.push('dragging');
     return classes.join(' ');
   }
@@ -126,8 +126,8 @@ class PatchPreview extends React.Component {
     return (
       <div
         className={this.classNames()}
-        id={`patch-preview-${this.props.patchId}`}
-        ref={`patchPreview`}
+        id={`patch-node-${this.props.patchId}`}
+        ref={`patchNode`}
         onKeyPress={this.handleKeyPress}
         onMouseDown={event => {
           this.handleClickForDrag(event);
@@ -138,7 +138,7 @@ class PatchPreview extends React.Component {
         }}
         tabIndex="2"
       >
-        <div className="patch-preview-wrapper">
+        <div className="patch-node-wrapper">
           <header>
             <h4 className="patch-title">{this.props.name}</h4>
           </header>
@@ -165,4 +165,4 @@ consult docs for updated library
 //   body: React.PropTypes.string.isRequired
 // };
 
-export default PatchPreview;
+export default PatchNodeView;

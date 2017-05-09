@@ -117,7 +117,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 }
 
 
-.patch-preview {
+.patch-node {
   -webkit-user-select: none;
   overflow-wrap: break-word;
   cursor: pointer;
@@ -128,7 +128,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   font-size: 1.3em;
   perspective: 1000px;
 
-  .patch-preview-wrapper {
+  .patch-node-wrapper {
     background: #fff;
     box-shadow: 0 .3rem .2rem 0 rgba($color-background, .8),
                 0 .3rem .8rem -.4rem rgba($color-link, 1),
@@ -164,7 +164,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   }
 
   &:hover {
-    .patch-preview-wrapper {
+    .patch-node-wrapper {
       transition: .1s;
       box-shadow: 0 .3rem .2rem -.2rem rgba($color-background, .2),
                   0 .3rem 1.8rem -1rem rgba($color-link, 1),
@@ -175,7 +175,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   &.dragging {
     cursor: inherit; // gets set in react, so even if cursor misses for a frame it will maintain
 
-    .patch-preview-wrapper {
+    .patch-node-wrapper {
       transition: .035s;
       transform: scale(1.01);
       transform: rotateX(10deg) translateY(-.4em);

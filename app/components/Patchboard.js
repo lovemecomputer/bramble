@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
-import PatchPreview from './PatchPreview.js';
+import PatchNodeView from './PatchNodeView.js';
 import newPatch from '../actions/new-patch.js';
 
 class Patchboard extends React.Component {
@@ -64,7 +64,7 @@ class Patchboard extends React.Component {
         <section className="patchboard">
           {this.props.bramble.patches.map((patch, index) => {
             return (
-              <PatchPreview
+              <PatchNodeView
                 key={patch.patchId}
                 patchId={patch.patchId}
                 name={patch.content.name}
