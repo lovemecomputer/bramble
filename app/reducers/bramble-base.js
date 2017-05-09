@@ -55,7 +55,7 @@ export default function bramble(currentState, action) {
     case 'ADD_PATCH':
       var updatedPatches = currentState.patches.slice();
       updatedPatches.push(action.newPatch);
-      let updatedPatchCounter = updatedPatches.length;
+      let updatedPatchCounter = currentState.patchCounter + 1;
       return Object.assign({}, currentState, {
         patches: updatedPatches,
         patchCounter: updatedPatchCounter
