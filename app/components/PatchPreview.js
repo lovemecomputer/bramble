@@ -12,6 +12,7 @@ class PatchPreview extends React.Component {
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
+    this.classNames = this.classNames.bind(this);
     this.state = {
       dragging: false,
       position: {
@@ -36,8 +37,6 @@ class PatchPreview extends React.Component {
   }
 
   handleClickForDrag(event) {
-    // console.log('>>>> CLICK FOR DRAG>>', this);
-    // console.log('>>> ref >>>', this.refs.patchPreview);
     if (event.button !== 0) return;
     var position = {
       x: this.refs.patchPreview.offsetLeft,
@@ -112,13 +111,23 @@ class PatchPreview extends React.Component {
       </a>
     );
   }
+
+  classNames() {
+    let classes = ['patch-preview'];
+    if (this.state.dragging) classes.push('dragging');
+    return classes.join(' ');
+  }
+
   render() {
+    if (this.state.dragging) {
+      document.body.style.cursor = '-webkit-grabbing'; // only safe because Electron is webkit
+    }
+    //onClick={this.props.openPatchEdit}
     return (
       <div
-        className="patch-preview"
+        className={this.classNames()}
         id={`patch-preview-${this.props.patchId}`}
         ref={`patchPreview`}
-        onClick={this.props.openPatchEdit}
         onKeyPress={this.handleKeyPress}
         onMouseDown={event => {
           this.handleClickForDrag(event);
@@ -129,16 +138,18 @@ class PatchPreview extends React.Component {
         }}
         tabIndex="2"
       >
-        <header>
-          <h4 className="patch-title">{this.props.name}</h4>
-        </header>
-        <section className="patch-body">
-          {this.props.body}
-        </section>
-        <footer className="patch-footer">
-          <span className="patch-id">patch id: {this.props.patchId}</span>
-          {this.renderDeleteButton()}
-        </footer>
+        <div className="patch-preview-wrapper">
+          <header>
+            <h4 className="patch-title">{this.props.name}</h4>
+          </header>
+          <section className="patch-body">
+            {this.props.body}
+          </section>
+          <footer className="patch-footer">
+            <span className="patch-id">patch id: {this.props.patchId}</span>
+            {this.renderDeleteButton()}
+          </footer>
+        </div>
       </div>
     );
   }
