@@ -1,4 +1,5 @@
 // @flow
+import BrambleProject from '../models/BrambleProject.js';
 import Patch from '../models/patch.js';
 import utils from '../utils.js';
 
@@ -13,7 +14,7 @@ import utils from '../utils.js';
 //   }
 // });
 
-const examplePatch = new Patch({
+let examplePatch = new Patch({
   patchId: 0,
   content: {
     name: 'Example Patch',
@@ -21,7 +22,7 @@ const examplePatch = new Patch({
   }
 });
 
-const examplePatch2 = new Patch({
+let examplePatch2 = new Patch({
   patchId: 1,
   content: {
     name: 'Second Example Patch',
@@ -29,7 +30,7 @@ const examplePatch2 = new Patch({
   }
 });
 
-const examplePatch3 = new Patch({
+let examplePatch3 = new Patch({
   patchId: 2,
   content: {
     name: 'Third Example Patch',
@@ -37,12 +38,22 @@ const examplePatch3 = new Patch({
   }
 });
 
+let ExampleProject = new BrambleProject({
+  projectId: 0,
+  projectName: 'Example Project',
+  content: {
+    patches: [examplePatch, examplePatch2, examplePatch3]
+  },
+  editorSettings: {
+    displayFormattedPreview: true,
+    zoomLevel: 0
+  }
+});
+
 const initialState = {
-  patches: [examplePatch, examplePatch2, examplePatch3],
-  // patches: [examplePatch],
-  // patches: [],
+  brambleProject: ExampleProject,
+  patches: ExampleProject.content.patches,
   patchCounter: 2,
-  // patchCounter: 0,
   displayFormattedPreview: true
 };
 
