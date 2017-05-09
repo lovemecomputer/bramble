@@ -114,18 +114,25 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   background-size: 10em;
 }
 
+
 .patch-preview {
   -webkit-user-select: none;
   overflow-wrap: break-word;
   cursor: pointer;
-  display: inline-block;
+  display: block;
   width: 18rem;
   margin: 0;
   position: absolute;
-  background: #fff;
   font-size: 1.3em;
-  // box-shadow: 0 .6rem .2rem -.2rem rgba($color-dark, .2);
-  @include shadow-box-interactive;
+  perspective: 1000px;
+
+  .patch-preview-wrapper {
+    background: #fff;
+    @include shadow-box-interactive;
+    transform: scale(1);
+    transform: rotateX(0deg) translateY(0);
+    transition: 1s ease all;
+  }
 
   header {
     padding: .5rem 1rem;
@@ -152,6 +159,18 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   .delete-button {
     display: inline-block;
     float: right;
+  }
+
+  &.dragging {
+    // transform: rotateX(40deg);
+    // transform: translate3d(0, 0, 10px);
+    cursor: inherit; // gets set in react, so even if cursor misses for a frame it will maintain
+
+    .patch-preview-wrapper {
+      transform: scale(1.01);
+      transform: rotateX(10deg) translateY(-.3em);
+      transition: .15s;
+    }
   }
 }
 
