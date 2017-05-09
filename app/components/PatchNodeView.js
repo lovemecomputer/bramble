@@ -15,10 +15,6 @@ class PatchNodeView extends React.Component {
     this.classNames = this.classNames.bind(this);
     this.state = {
       dragging: false,
-      position: {
-        x: this.props.xPos,
-        y: this.props.yPos
-      },
       relative: {
         x: 0,
         y: 0
@@ -38,6 +34,7 @@ class PatchNodeView extends React.Component {
 
   handleClickForDrag(event) {
     if (event.button !== 0) return;
+    document.body.style.cursor = '-webkit-grabbing';
     var position = {
       x: this.refs.patchNode.offsetLeft,
       y: this.refs.patchNode.offsetTop
@@ -50,18 +47,17 @@ class PatchNodeView extends React.Component {
         y: this.refs.patchNode.offsetTop
       },
       '\nSTATE POSITION \n',
-      this.state.position,
+      { x: this.props.xPos, y: this.props.yPos },
       '\nSTATE RELATIVE\n',
       this.state.relative
     );
     this.setState({
       dragging: true,
       relative: {
-        x: event.pageX - this.state.position.x,
-        y: event.pageY - this.state.position.y
+        x: event.pageX - this.props.xPos,
+        y: event.pageY - this.props.yPos
       }
     });
-    console.log('>>> check in after setting::: \n', this.state.position.y);
     event.stopPropagation();
     event.preventDefault();
   }
@@ -71,16 +67,20 @@ class PatchNodeView extends React.Component {
       '\n\n\n>>> EVENT POSITION >>\n',
       { x: event.pageX, y: event.pageY },
       '\nSTATE POSITION \n',
-      this.state.position,
+      { x: this.props.xPos, y: this.props.yPos },
       '\nSTATE RELATIVE\n',
       this.state.relative
     );
     if (!this.state.dragging) return;
-    this.setState({
-      position: {
-        x: event.pageX - this.state.relative.x,
-        y: event.pageY - this.state.relative.y
-      }
+    // this.setState({
+    //   position: {
+    //     x: event.pageX - this.state.relative.x,
+    //     y: event.pageY - this.state.relative.y
+    //   }
+    // });
+    this.props.updatePosition(this.props.patchId, {
+      x: event.pageX - this.state.relative.x,
+      y: event.pageY - this.state.relative.y
     });
     event.stopPropagation();
     event.preventDefault();
@@ -88,6 +88,7 @@ class PatchNodeView extends React.Component {
 
   onMouseUp(event) {
     this.setState({ dragging: false });
+    document.body.style.cursor = 'inherit';
     event.stopPropagation();
     event.preventDefault();
   }
@@ -119,9 +120,11 @@ class PatchNodeView extends React.Component {
   }
 
   render() {
-    if (this.state.dragging) {
-      document.body.style.cursor = '-webkit-grabbing'; // only safe because Electron is webkit
-    }
+    // if (this.state.dragging) {
+    //   document.body.style.cursor = '-webkit-grabbing'; // only safe because Electron is webkit
+    // } else {
+    //   document.body.style.cursor = 'inherit';
+    // }
     //onClick={this.props.openPatchEdit}
     return (
       <div
@@ -133,8 +136,8 @@ class PatchNodeView extends React.Component {
           this.handleClickForDrag(event);
         }}
         style={{
-          top: `${this.state.position.y / 10}rem`,
-          left: `${this.state.position.x / 10}rem`
+          top: `${this.props.yPos / 10}rem`,
+          left: `${this.props.xPos / 10}rem`
         }}
         tabIndex="2"
       >
