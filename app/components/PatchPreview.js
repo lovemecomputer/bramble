@@ -133,8 +133,8 @@ class PatchPreview extends React.Component {
           this.handleClickForDrag(event);
         }}
         style={{
-          top: this.state.position.y,
-          left: this.state.position.x
+          top: `${this.state.position.y / 10}rem`,
+          left: `${this.state.position.x / 10}rem`
         }}
         tabIndex="2"
       >

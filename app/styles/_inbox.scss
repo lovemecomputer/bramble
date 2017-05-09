@@ -42,12 +42,14 @@
   position: relative;
   height:2000px;
   width: 2000px;
+  font-size: 1rem;
 }
 .header-controls {
   position: fixed;
   top: 4rem;
   right: 0;
   padding: 2rem 2rem 0 0;
+  font-size: 1.6rem;
 
   button {
     margin-left: 1rem;
@@ -59,8 +61,9 @@ $gidLineColor: rgba(255, 255, 255, $gridLineOpacity);
 $majorGridLineOpacity: .6;
 $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 .patchboard{
-  font-size: 1rem;
+  // font-size: 1rem;
   height: 100%;
+  background-size: 10em;
   background-color: transparent;
   background-image:
     // horizontal
@@ -111,7 +114,6 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       transparent 81%,
       transparent
       );
-  background-size: 10em;
 }
 
 
@@ -174,13 +176,12 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     cursor: inherit; // gets set in react, so even if cursor misses for a frame it will maintain
 
     .patch-preview-wrapper {
+      transition: .035s;
       transform: scale(1.01);
-      transform: rotateX(10deg) translateY(-.3em);
-      transition: .05s;
+      transform: rotateX(10deg) translateY(-.4em);
       box-shadow: 0 .7rem .3rem -.3rem rgba($color-background, .2),
                   0 1rem 2.4rem -1.2rem rgba($color-link, 1),
                   0 1.3rem 2.9rem -.8rem rgba($color-dark, .6);
-      // transition: .1s box-shadow ease;
     }
   }
 }
