@@ -173,7 +173,11 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   }
 
   &.dragging {
-    cursor: inherit; // gets set in react, so even if cursor misses for a frame it will maintain
+     // this also gets set in react, as a body style,
+     // so even if cursor misses for a frame it will maintain
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
 
     .patch-node-wrapper {
       transition: .035s;
