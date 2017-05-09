@@ -7,7 +7,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: map-get($zindex, header);
 }
 
 .app-header {
@@ -15,7 +15,7 @@
   box-shadow: 0 .6rem .1rem -.3rem rgba($color-dark, .05);
   padding: 1rem;
   @include clearfix;
-  z-index: 10001;
+  z-index: map-get($zindex, header);
 
 
   // make it draggable since we're removing chrome
@@ -50,6 +50,7 @@
   right: 0;
   padding: 2rem 2rem 0 0;
   font-size: 1.6rem;
+  z-index: map-get($zindex, header);
 
   button {
     margin-left: 1rem;
@@ -202,7 +203,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   right: 0;
   height: 100vh;
   width: 100vw;
-  z-index: 2000;
+  z-index: map-get($zindex, overlay);
   overflow-y: scroll;
 }
 .overlay-shade {
@@ -214,6 +215,9 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   right: 0;
   height: 100vh;
   width: 100vw;
+}
+.modal-wrapper {
+  z-index: map-get($zindex, modal);
 }
 .patch-editor-wrapper {
   padding: 6rem 4rem 4rem 4rem;
