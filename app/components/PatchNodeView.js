@@ -88,6 +88,15 @@ class PatchNodeView extends React.Component {
 
   onMouseUp(event) {
     this.setState({ dragging: false });
+    this.props.updatePosition(this.props.patchId, {
+      x: 20 * Math.round(this.props.xPos / 20),
+      y: 20 * Math.round(this.props.yPos / 20)
+    });
+    // this.props.updatePosition(this.props.patchId, {
+    //   x: Math.ceil((this.props.xPos + 1) / 20) * 20,
+    //   y: Math.ceil((this.props.yPos + 1) / 20) * 20
+    // });
+    // Math.ceil((N+1) / 10) * 10;
     document.body.style.cursor = 'inherit';
     event.stopPropagation();
     event.preventDefault();
