@@ -128,10 +128,10 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
   .patch-preview-wrapper {
     background: #fff;
-    @include shadow-box-interactive;
-    transform: scale(1);
-    transform: rotateX(0deg) translateY(0);
-    transition: 1s ease all;
+    box-shadow: 0 .3rem .2rem 0 rgba($color-background, .8),
+                0 .3rem .8rem -.4rem rgba($color-link, 1),
+                0 .8rem 1rem -.6rem rgba($color-dark, .2);
+    transition: .3s;
   }
 
   header {
@@ -161,15 +161,26 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     float: right;
   }
 
+  &:hover {
+    .patch-preview-wrapper {
+      transition: .1s;
+      box-shadow: 0 .3rem .2rem -.2rem rgba($color-background, .2),
+                  0 .3rem 1.8rem -1rem rgba($color-link, 1),
+                  0 .8rem 1.8rem -.4rem rgba($color-dark, .4);
+    }
+  }
+
   &.dragging {
-    // transform: rotateX(40deg);
-    // transform: translate3d(0, 0, 10px);
     cursor: inherit; // gets set in react, so even if cursor misses for a frame it will maintain
 
     .patch-preview-wrapper {
       transform: scale(1.01);
       transform: rotateX(10deg) translateY(-.3em);
-      transition: .15s;
+      transition: .05s;
+      box-shadow: 0 .7rem .3rem -.3rem rgba($color-background, .2),
+                  0 1rem 2.4rem -1.2rem rgba($color-link, 1),
+                  0 1.3rem 2.9rem -.8rem rgba($color-dark, .6);
+      // transition: .1s box-shadow ease;
     }
   }
 }
