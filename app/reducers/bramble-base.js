@@ -61,6 +61,21 @@ export default function bramble(currentState, action) {
         patchCounter: updatedPatchCounter
       });
 
+    case 'UPDATE_PATCH_POSITION':
+      var targetIndex = utils.indexOfObjectWithPropertyValue(
+        'patchId',
+        action.patchId,
+        currentState.patches
+      );
+      var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
+      updatedPatch.editor.position.x = action.x;
+      updatedPatch.editor.position.y = action.y;
+      var updatedPatches = currentState.patches.slice();
+      updatedPatches[targetIndex] = updatedPatch;
+      return Object.assign({}, currentState, {
+        patches: updatedPatches
+      });
+
     case 'UPDATE_PATCH_NAME':
       var targetIndex = utils.indexOfObjectWithPropertyValue(
         'patchId',
