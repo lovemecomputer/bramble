@@ -151,7 +151,7 @@ class PatchNodeView extends React.Component {
         tabIndex="2"
       >
         <div className="patch-node-wrapper">
-          <header>
+          <header className="patch-header">
             <h4 className="patch-title">{this.props.name}</h4>
           </header>
           <section className="patch-body">
