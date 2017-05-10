@@ -101,7 +101,7 @@ class PatchEdit extends React.Component {
 
   auto_grow(element) {
     element.style.height = '1.6rem';
-    element.style.height = element.scrollHeight + 'px';
+    element.style.height = Number(element.scrollHeight + 6) + 'px';
   }
 
   // renderDeleteButton () {
