@@ -71,7 +71,7 @@ class Preview extends React.Component {
     return (
       <div className="overlay-wrapper">
         <div className="overlay-shade" onClick={this.closePreview} />
-        <div className="patch-editor-wrapper">
+        <div className="story-preview-wrapper patch-editor-wrapper">
           <div className="patch-editor">
             <div className="story-preview-wrapper">
               <div
