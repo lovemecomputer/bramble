@@ -1,7 +1,7 @@
 // @flow
 // import React, { Component } from 'react';
 import React from 'react';
-// import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import marked from 'marked';
@@ -190,9 +190,20 @@ class PatchEdit extends React.Component {
     var marked = require('marked');
     return (
       <div className="overlay-wrapper">
-        <div className="overlay-shade" onClick={this.closePatchEditor} />
-        {this.renderPatchEditor(currentPatch)}
-
+        <CSSTransitionGroup
+          transitionName="modal-animation"
+          transitionAppear={true}
+          transitionAppearTimeout={300}
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={400}
+        >
+          <div
+            className="overlay-shade"
+            key="overlayShade"
+            onClick={this.closePatchEditor}
+          />
+          {this.renderPatchEditor(currentPatch)}
+        </CSSTransitionGroup>
       </div>
     );
   }
