@@ -16,6 +16,7 @@ class PatchNodeView extends React.Component {
     this.renderMenuButton = this.renderMenuButton.bind(this);
     this.classNames = this.classNames.bind(this);
     this.state = {
+      linkCoordinates: [],
       didMouseDown1: false,
       dragging: false,
       relative: {
@@ -145,6 +146,17 @@ class PatchNodeView extends React.Component {
   }
 
   render() {
+    var regexp = /@([^:]+):(\d)/g;
+    var match, matches = [];
+    let links = [];
+
+    while ((match = regexp.exec(this.props.body)) != null) {
+      matches.push(match.index);
+      links.push(match);
+    }
+
+    console.log(matches);
+
     return (
       <div
         className={this.classNames()}
@@ -179,6 +191,35 @@ class PatchNodeView extends React.Component {
             {this.renderMenuButton()}
           </footer>
         </div>
+        {links.map((link, index) => {
+          return (
+            <svg className="svg-arrow" key={index} width="600px" height="600px">
+              <defs>
+                <marker
+                  id="arrow"
+                  markerWidth="6"
+                  markerHeight="6"
+                  refX="0"
+                  refY="3"
+                  orient="auto"
+                  markerUnits="strokeWidth"
+                >
+                  <path d="M0,0 L0,6 L6,3 z" fill="rgba(128,117,138,.52)" />
+                </marker>
+              </defs>
+
+              <line
+                x1="180"
+                y1="0"
+                x2="245"
+                y2="50"
+                stroke="rgba(128,117,138,.52)"
+                strokeWidth="3"
+                markerEnd="url(#arrow)"
+              />
+            </svg>
+          );
+        })}
       </div>
     );
   }
