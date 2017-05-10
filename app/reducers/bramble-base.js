@@ -24,7 +24,7 @@ let examplePatch2 = new Patch({
   },
   editor: {
     position: {
-      x: 260,
+      x: 280,
       y: 120
     }
   }
@@ -38,7 +38,7 @@ let examplePatch3 = new Patch({
   },
   editor: {
     position: {
-      x: 500,
+      x: 540,
       y: 180
     }
   }
@@ -142,7 +142,7 @@ export default function bramble(currentState, action) {
 
     case 'SHOWING_PATCHBOARD':
       return Object.assign({}, currentState, {
-        onNewPatchShortcut: action.onNewPatchShortcut,
+        onCmdN: action.newPatchShortcut,
         onCmdP: action.initiatePreview
       });
 
@@ -155,7 +155,7 @@ export default function bramble(currentState, action) {
         functionToRun = currentState.onCmdEnter;
       } else if (action.key === 'n' && action.withMeta) {
         // cmd + n for new patch
-        functionToRun = currentState.onNewPatchShortcut;
+        functionToRun = currentState.onCmdN;
       } else if (
         (action.key === 'p' || action.key === 'P') &&
         action.withMeta

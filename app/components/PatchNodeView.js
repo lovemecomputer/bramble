@@ -8,12 +8,15 @@ class PatchNodeView extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleClickForDrag = this.handleClickForDrag.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
+    this.renderMenuButton = this.renderMenuButton.bind(this);
     this.classNames = this.classNames.bind(this);
     this.state = {
+      didMouseDown1: false,
       dragging: false,
       relative: {
         x: 0,
@@ -23,36 +26,43 @@ class PatchNodeView extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.state.dragging) {
+    if (this.state.didMouseDown1) {
       document.addEventListener('mousemove', this.onMouseMove);
       document.addEventListener('mouseup', this.onMouseUp);
-    } else if (!this.state.dragging) {
+    } else if (!this.state.didMouseDown1) {
       document.removeEventListener('mousemove', this.onMouseMove);
       document.removeEventListener('mouseup', this.onMouseUp);
     }
   }
 
+  handleClick(event) {
+    console.log('>>>> TARGET', event.target);
+    console.log(event.button);
+    if (!this.state.dragging) this.props.openPatchEdit();
+    this.setState({ didMouseDown1: false, dragging: false });
+  }
+
   handleClickForDrag(event) {
     if (event.button !== 0) return;
+    this.setState({ didMouseDown1: true });
     document.body.style.cursor = '-webkit-grabbing';
     var position = {
       x: this.refs.patchNode.offsetLeft,
       y: this.refs.patchNode.offsetTop
     };
-    console.log(
-      '\n\n\n\n\n||||||||||| START CLICK |||||||||||||\n',
-      '\nposition from offset\n',
-      {
-        x: this.refs.patchNode.offsetLeft,
-        y: this.refs.patchNode.offsetTop
-      },
-      '\nSTATE POSITION \n',
-      { x: this.props.xPos, y: this.props.yPos },
-      '\nSTATE RELATIVE\n',
-      this.state.relative
-    );
+    // console.log(
+    //   '\n\n\n\n\n||||||||||| START CLICK |||||||||||||\n',
+    //   '\nposition from offset\n',
+    //   {
+    //     x: this.refs.patchNode.offsetLeft,
+    //     y: this.refs.patchNode.offsetTop
+    //   },
+    //   '\nSTATE POSITION \n',
+    //   { x: this.props.xPos, y: this.props.yPos },
+    //   '\nSTATE RELATIVE\n',
+    //   this.state.relative
+    // );
     this.setState({
-      dragging: true,
       relative: {
         x: event.pageX - this.props.xPos,
         y: event.pageY - this.props.yPos
@@ -63,21 +73,16 @@ class PatchNodeView extends React.Component {
   }
 
   onMouseMove(event) {
-    console.log(
-      '\n\n\n>>> EVENT POSITION >>\n',
-      { x: event.pageX, y: event.pageY },
-      '\nSTATE POSITION \n',
-      { x: this.props.xPos, y: this.props.yPos },
-      '\nSTATE RELATIVE\n',
-      this.state.relative
-    );
-    if (!this.state.dragging) return;
-    // this.setState({
-    //   position: {
-    //     x: event.pageX - this.state.relative.x,
-    //     y: event.pageY - this.state.relative.y
-    //   }
-    // });
+    // console.log(
+    //   '\n\n\n>>> EVENT POSITION >>\n',
+    //   { x: event.pageX, y: event.pageY },
+    //   '\nSTATE POSITION \n',
+    //   { x: this.props.xPos, y: this.props.yPos },
+    //   '\nSTATE RELATIVE\n',
+    //   this.state.relative
+    // );
+    if (!this.state.didMouseDown1) return;
+    this.setState({ dragging: true });
     this.props.updatePosition(this.props.patchId, {
       x: event.pageX - this.state.relative.x,
       y: event.pageY - this.state.relative.y
@@ -87,16 +92,13 @@ class PatchNodeView extends React.Component {
   }
 
   onMouseUp(event) {
-    this.setState({ dragging: false });
-    this.props.updatePosition(this.props.patchId, {
-      x: 20 * Math.round(this.props.xPos / 20),
-      y: 20 * Math.round(this.props.yPos / 20)
-    });
-    // this.props.updatePosition(this.props.patchId, {
-    //   x: Math.ceil((this.props.xPos + 1) / 20) * 20,
-    //   y: Math.ceil((this.props.yPos + 1) / 20) * 20
-    // });
-    // Math.ceil((N+1) / 10) * 10;
+    setTimeout(() => {
+      this.setState({ didMouseDown1: false, dragging: false });
+      this.props.updatePosition(this.props.patchId, {
+        x: 20 * Math.round(this.props.xPos / 20),
+        y: 20 * Math.round(this.props.yPos / 20)
+      });
+    }, 0);
     document.body.style.cursor = 'inherit';
     event.stopPropagation();
     event.preventDefault();
@@ -122,19 +124,27 @@ class PatchNodeView extends React.Component {
     );
   }
 
+  renderMenuButton() {
+    return (
+      <a
+        className="menu-button"
+        onClick={event => {
+          event.stopPropagation();
+        }}
+      >
+        menu
+      </a>
+    );
+  }
+
   classNames() {
     let classes = ['patch-node'];
+    if (this.state.didMouseDown1) classes.push('didMouseDown1');
     if (this.state.dragging) classes.push('dragging');
     return classes.join(' ');
   }
 
   render() {
-    // if (this.state.dragging) {
-    //   document.body.style.cursor = '-webkit-grabbing'; // only safe because Electron is webkit
-    // } else {
-    //   document.body.style.cursor = 'inherit';
-    // }
-    //onClick={this.props.openPatchEdit}
     return (
       <div
         className={this.classNames()}
@@ -143,6 +153,12 @@ class PatchNodeView extends React.Component {
         onKeyPress={this.handleKeyPress}
         onMouseDown={event => {
           this.handleClickForDrag(event);
+        }}
+        onClick={event => {
+          // event.preventDefault();
+          // event.stopPropagation();
+          // this.props.openPatchEdit();
+          this.handleClick(event);
         }}
         style={{
           top: `${this.props.yPos / 10}rem`,
@@ -159,7 +175,8 @@ class PatchNodeView extends React.Component {
           </section>
           <footer className="patch-footer">
             <span className="patch-id">patch id: {this.props.patchId}</span>
-            {this.renderDeleteButton()}
+            {/*this.renderDeleteButton()*/}
+            {this.renderMenuButton()}
           </footer>
         </div>
       </div>
