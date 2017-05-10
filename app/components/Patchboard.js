@@ -71,7 +71,7 @@ class Patchboard extends React.Component {
         <section className="patchboard">
           <CSSTransitionGroup
             transitionName="patch-node-animation"
-            transitionEnterTimeout={300}
+            transitionEnterTimeout={200}
             transitionLeaveTimeout={1500}
           >
             {this.props.bramble.patches.map((patch, index) => {
