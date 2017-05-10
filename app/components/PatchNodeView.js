@@ -22,7 +22,14 @@ class PatchNodeView extends React.Component {
       relative: {
         x: 0,
         y: 0
-      } // position relative to the cursor
+      }, // position relative to the cursor
+      previousPosition: {
+        x: 0,
+        y: 0
+      },
+      draggingAngle: 0,
+      xDrift: 0,
+      yDrift: 0
     };
   }
 
@@ -67,6 +74,10 @@ class PatchNodeView extends React.Component {
       relative: {
         x: event.pageX - this.props.xPos,
         y: event.pageY - this.props.yPos
+      },
+      previousPosition: {
+        x: this.props.xPos,
+        y: this.props.yPos
       }
     });
     event.stopPropagation();
@@ -74,6 +85,8 @@ class PatchNodeView extends React.Component {
   }
 
   onMouseMove(event) {
+    // transform: rotateX(10deg) translateY(-.4em) scale(1.03);
+
     // console.log(
     //   '\n\n\n>>> EVENT POSITION >>\n',
     //   { x: event.pageX, y: event.pageY },
@@ -82,8 +95,42 @@ class PatchNodeView extends React.Component {
     //   '\nSTATE RELATIVE\n',
     //   this.state.relative
     // );
+
+    let angleInDegrees =
+      Math.atan2(
+        this.props.yPos - this.state.previousPosition.y,
+        this.props.xPos - this.state.previousPosition.x
+      ) *
+      180 /
+      Math.PI;
+
+    let _xDrift = this.props.xPos - this.state.previousPosition.x;
+    let _yDrift = this.props.yPos - this.state.previousPosition.y;
+
+    console.log(
+      '\n\n\nSTATE POSITION \n',
+      { x: this.props.xPos, y: this.props.yPos },
+      '\nPREVIOUS POSITION\n',
+      this.state.previousPosition,
+      '\nANGLE\n',
+      angleInDegrees
+    );
+
     if (!this.state.didMouseDown1) return;
-    this.setState({ dragging: true });
+    let oldPos = {
+      x: this.props.xPos,
+      y: this.props.yPos
+    };
+    this.setState({
+      dragging: true,
+      previousPosition: {
+        x: oldPos.x,
+        y: oldPos.y
+      },
+      draggingAngle: angleInDegrees,
+      xDrift: _xDrift * 1000,
+      yDrift: _yDrift * 1000
+    });
     this.props.updatePosition(this.props.patchId, {
       x: event.pageX - this.state.relative.x,
       y: event.pageY - this.state.relative.y
@@ -157,6 +204,17 @@ class PatchNodeView extends React.Component {
 
     console.log(matches);
 
+    var draggingAngleStyle = () => {
+      console.log('>>> DRIFTS>>', this.state.xDrift, '  ', this.state.yDrift);
+      if (this.state.dragging) {
+        return {
+          transform: `rotateX(${this.state.draggingAngle}deg) rotateY(${this.state.draggingAngle}deg) translateY(-.4em) scale(1.03)`
+        };
+      } else {
+        return { background: '#fff' };
+      }
+    };
+
     return (
       <div
         className={this.classNames()}
@@ -178,7 +236,7 @@ class PatchNodeView extends React.Component {
         }}
         tabIndex="2"
       >
-        <div className="patch-node-wrapper">
+        <div className="patch-node-wrapper" style={draggingAngleStyle()}>
           <header className="patch-header">
             <h4 className="patch-title">{this.props.name}</h4>
           </header>
