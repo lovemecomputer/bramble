@@ -17,7 +17,7 @@ class Patchboard extends React.Component {
   componentDidMount() {
     this.props.dispatch({
       type: 'SHOWING_PATCHBOARD',
-      onNewPatchShortcut: this.handleNewPatch,
+      newPatchShortcut: this.handleNewPatch,
       initiatePreview: this.handleInitiatePreview
     });
   }
