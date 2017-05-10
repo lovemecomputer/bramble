@@ -86,33 +86,6 @@ class Patchboard extends React.Component {
               />
             );
           })}
-
-          <svg>
-            <defs>
-              <marker
-                id="arrow"
-                markerWidth="10"
-                markerHeight="10"
-                refX="0"
-                refY="3"
-                orient="auto"
-                markerUnits="strokeWidth"
-              >
-                <path d="M0,0 L0,6 L9,3 z" fill="rgba(128,117,138,.52)" />
-              </marker>
-            </defs>
-
-            <line
-              x1="50"
-              y1="50"
-              x2="250"
-              y2="50"
-              stroke="rgba(128,117,138,.52)"
-              strokeWidth="3"
-              markerEnd="url(#arrow)"
-            />
-          </svg>
-
         </section>
       </div>
     );
