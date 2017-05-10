@@ -1,6 +1,7 @@
 // @flow
 // import React, { Component } from 'react';
 import React from 'react';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import marked from 'marked';

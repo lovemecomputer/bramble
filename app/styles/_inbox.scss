@@ -197,14 +197,14 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       transition: .035s;
       transform: scale(0.98);
       // transform: rotateX(10deg) translateY(-.4em);
-      box-shadow: 0 .3rem .1rem 0 rgba($color-background, .2),
-                  0 .3rem .8rem -.1rem rgba($color-link, 1),
-                  0 .4rem 1.2rem -.2rem rgba($color-dark, .6);
+      box-shadow: 0 .1rem .1rem 0 rgba($color-background, .2),
+                  0 .1rem .4rem -.1rem rgba($color-link, 1),
+                  0 .3rem 1.2rem -.2rem rgba($color-dark, .6);
     }
   }
 
   &.dragging {
-     // this also gets set in react, as a body style,
+     // this cursor style also gets set to the body in side of a react component function,
      // so even if cursor misses for a frame it will maintain
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
