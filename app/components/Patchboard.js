@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import PatchNodeView from './PatchNodeView.js';
@@ -68,24 +69,30 @@ class Patchboard extends React.Component {
           </button>
         </div>
         <section className="patchboard">
-          {this.props.bramble.patches.map((patch, index) => {
-            return (
-              <PatchNodeView
-                key={patch.patchId}
-                patchId={patch.patchId}
-                name={patch.content.name}
-                body={patch.content.body}
-                openPatchEdit={() => this.openPatchEdit(patch.patchId)}
-                deletePatch={() => this.handleDeletePatch(patch.patchId)}
-                dragFunction={() => {
-                  this.handleDragPatch(patch.patchId);
-                }}
-                xPos={patch.editor.position.x}
-                yPos={patch.editor.position.y}
-                updatePosition={this.dispatchPositionUpdate}
-              />
-            );
-          })}
+          <CSSTransitionGroup
+            transitionName="patch-node-animation"
+            transitionEnterTimeout={300}
+            transitionLeaveTimeout={1500}
+          >
+            {this.props.bramble.patches.map((patch, index) => {
+              return (
+                <PatchNodeView
+                  key={patch.patchId}
+                  patchId={patch.patchId}
+                  name={patch.content.name}
+                  body={patch.content.body}
+                  openPatchEdit={() => this.openPatchEdit(patch.patchId)}
+                  deletePatch={() => this.handleDeletePatch(patch.patchId)}
+                  dragFunction={() => {
+                    this.handleDragPatch(patch.patchId);
+                  }}
+                  xPos={patch.editor.position.x}
+                  yPos={patch.editor.position.y}
+                  updatePosition={this.dispatchPositionUpdate}
+                />
+              );
+            })}
+          </CSSTransitionGroup>
         </section>
       </div>
     );

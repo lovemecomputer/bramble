@@ -221,6 +221,40 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   }
 }
 
+.patch-node-animation-enter {
+  opacity: 0.01;
+  .patch-node-wrapper {
+    transform: scale(0.01);
+  }
+}
+
+.patch-node-animation-enter.patch-node-animation-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+  .patch-node-wrapper {
+    transform: scale(1.0);
+    transition: opacity 300ms ease-in;
+  }
+}
+
+.patch-node-animation-leave {
+  pointer-events:none;
+  opacity: 1;
+}
+
+.patch-node-animation-leave.patch-node-animation-leave-active {
+  pointer-events:none;
+  opacity: 0.01;
+  outline: .1rem solid $color-medium;
+  transition: opacity 1500ms ease-out;
+  background: rgba($color-light, .5);
+  .patch-node-wrapper {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
+  }
+
+}
+
 .patch-id {
   color: $color-medium;
 }
@@ -263,6 +297,23 @@ overlays
   max-width: 120rem;
   margin:0 auto;
   position: relative;
+}
+.modal-animation-enter {
+  opacity: 0.01 !important;
+}
+
+.modal-animation-enter.modal-animation-enter-active {
+  opacity: 1 !important;
+  transition: opacity 1000ms ease-in;
+}
+
+.modal-animation-leave {
+  opacity: 1 !important;
+}
+
+.modal-animation-leave.modal-animation-leave-active {
+  opacity: 0.01 !important;
+  transition: opacity 800ms ease-in;
 }
 
 
