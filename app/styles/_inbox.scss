@@ -43,6 +43,7 @@
   height:2000px;
   width: 2000px;
   font-size: 1rem;
+  overflow: hidden;
 }
 .header-controls {
   position: fixed;
@@ -117,6 +118,13 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       );
 }
 
+
+.svg-arrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events:none;
+}
 
 .patch-node {
   -webkit-user-select: none;
@@ -255,6 +263,10 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   h2 {
     margin: 0;
   }
+}
+
+.story-preview-wrapper {
+  padding: 8rem;
 }
 
 .patch-editor-controls {
