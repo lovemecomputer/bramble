@@ -221,6 +221,40 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   }
 }
 
+.patch-node-animation-enter {
+  opacity: 0.01;
+  .patch-node-wrapper {
+    transform: scale(0.01);
+  }
+}
+
+.patch-node-animation-enter.patch-node-animation-enter-active {
+  opacity: 1;
+  transition: opacity 100ms ease-out;
+  .patch-node-wrapper {
+    transform: scale(1.0);
+    transition: all 100ms ease-out;
+  }
+}
+
+.patch-node-animation-leave {
+  pointer-events:none;
+  opacity: 1;
+}
+
+.patch-node-animation-leave.patch-node-animation-leave-active {
+  pointer-events:none;
+  opacity: 0.01;
+  outline: .1rem solid $color-medium;
+  transition: opacity 1500ms ease-out;
+  background: rgba($color-light, .35);
+  .patch-node-wrapper {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
+  }
+
+}
+
 .patch-id {
   color: $color-medium;
 }
@@ -242,6 +276,7 @@ overlays
   width: 100vw;
   z-index: map-get($zindex, overlay);
   overflow-y: scroll;
+  perspective: 10000px;
 }
 .overlay-shade {
   background: rgba($color-medium, .8);
@@ -256,6 +291,12 @@ overlays
 .modal-wrapper {
   z-index: map-get($zindex, modal);
   padding: 6rem 4rem 4rem 4rem; // minimum edge between browser window edge
+  // hack(?) for centering an absolutely-positioned element:
+  // from https://css-tricks.com/forums/topic/horizontal-centering-of-an-absolute-element/
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto
 }
 .modal {
   background: #fff;
@@ -263,6 +304,52 @@ overlays
   max-width: 120rem;
   margin:0 auto;
   position: relative;
+}
+
+.modal-animation-appear {
+  opacity: 0.01;
+  .modal {
+    // transform: rotateX(-20deg) translateY(25vh) scale(.65);
+    transform: scale(0.1);
+  }
+}
+.modal-animation-appear.modal-animation-appear-active {
+  opacity: 1;
+  .modal {
+    // transform: rotateX(0) translateY(0vh) scale(1);
+    transform:scale(1);
+    transition: all 200ms ease-in;
+  }
+  transition: opacity 300ms ease-in;
+}
+
+.modal-animation-enter {
+  opacity: 0.01;
+  .modal {
+    // transform: rotateX(-20deg) translateY(25vh) scale(.65);
+    // transform: scale(0.1);
+    transform: translateX(25vw);
+  }
+}
+
+.modal-animation-enter.modal-animation-enter-active {
+  opacity: 1;
+  .modal {
+    // transform: rotateX(0) translateY(0vh) scale(1);
+    // transform:scale(1);
+    transform: translateX(0vw);
+    transition: all 200ms ease-in;
+  }
+  transition: opacity 300ms ease-in;
+}
+
+.modal-animation-leave {
+  opacity: 1;
+}
+
+.modal-animation-leave.modal-animation-leave-active {
+  opacity: 0.01;
+  transition: opacity 100ms ease-in;
 }
 
 
