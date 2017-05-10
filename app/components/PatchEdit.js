@@ -116,7 +116,7 @@ class PatchEdit extends React.Component {
   renderPatchEditor(currentPatch) {
     if (currentPatch !== undefined) {
       return (
-        <div className="modal-wrapper">
+        <div className="modal-wrapper" key={currentPatch.patchId}>
           <div className="modal patch-editor">
             {/*<h2 className="patch-editor-heading">{currentPatch.name}</h2>*/}
             <input
