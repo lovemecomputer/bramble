@@ -334,22 +334,32 @@ overlays
 
 .modal-animation-enter.modal-animation-enter-active {
   opacity: 1;
+  transition: opacity 300ms ease-in;
+  z-index: 99999999;
   .modal {
     // transform: rotateX(0) translateY(0vh) scale(1);
     // transform:scale(1);
     transform: translateX(0vw);
-    transition: all 200ms ease-in;
+    transition: all 300ms ease-out;
+    z-index: 99999999;
   }
-  transition: opacity 300ms ease-in;
 }
 
 .modal-animation-leave {
+  pointer-events: none;
   opacity: 1;
 }
 
 .modal-animation-leave.modal-animation-leave-active {
+  pointer-events: none;
   opacity: 0.01;
-  transition: opacity 100ms ease-in;
+  transition: opacity 400ms ease-out;
+  .modal {
+    // transform: rotateX(0) translateY(0vh) scale(1);
+    // transform:scale(1);
+    transform: translateX(-100vw);
+    transition: all 250ms ease-out;
+  }
 }
 
 
