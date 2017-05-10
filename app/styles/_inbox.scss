@@ -298,22 +298,32 @@ overlays
   margin:0 auto;
   position: relative;
 }
-.modal-animation-enter {
-  opacity: 0.01 !important;
+
+.modal-animation-appear {
+  opacity: 0.01;
 }
 
-.modal-animation-enter.modal-animation-enter-active {
-  opacity: 1 !important;
-  transition: opacity 1000ms ease-in;
+.modal-animation-appear.modal-animation-appear-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
 }
+
+// .modal-animation-enter {
+//   opacity: 0.01;
+// }
+//
+// .modal-animation-enter.modal-animation-enter-active {
+//   opacity: 1;
+//   transition: opacity 300ms ease-in;
+// }
 
 .modal-animation-leave {
-  opacity: 1 !important;
+  opacity: 1;
 }
 
 .modal-animation-leave.modal-animation-leave-active {
-  opacity: 0.01 !important;
-  transition: opacity 800ms ease-in;
+  opacity: 0.01;
+  transition: opacity 400ms ease-in;
 }
 
 
