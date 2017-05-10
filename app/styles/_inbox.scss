@@ -230,10 +230,10 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
 .patch-node-animation-enter.patch-node-animation-enter-active {
   opacity: 1;
-  transition: opacity 200ms ease-in;
+  transition: opacity 100ms ease-out;
   .patch-node-wrapper {
     transform: scale(1.0);
-    transition: all 200ms ease-in;
+    transition: all 100ms ease-out;
   }
 }
 
@@ -247,7 +247,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   opacity: 0.01;
   outline: .1rem solid $color-medium;
   transition: opacity 1500ms ease-out;
-  background: rgba($color-light, .5);
+  background: rgba($color-light, .35);
   .patch-node-wrapper {
     opacity: 0.01;
     transition: opacity 200ms ease-in;
