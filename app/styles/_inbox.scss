@@ -213,7 +213,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
     .patch-node-wrapper {
       transition: .3s;
-      transform: rotateX(10deg) translateY(-.4em) scale(1.03);
+      transform: rotateX(0) translateY(-.4em) scale(1.03);
       box-shadow: 0 .8rem .3rem -.3rem rgba($color-background, .2),
                   0 1.4rem 2.4rem -1.2rem rgba($color-link, 1),
                   0 1.8rem 2.9rem -.8rem rgba($color-dark, .6);
