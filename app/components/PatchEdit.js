@@ -1,6 +1,7 @@
 // @flow
 // import React, { Component } from 'react';
 import React from 'react';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import marked from 'marked';
@@ -115,8 +116,8 @@ class PatchEdit extends React.Component {
   renderPatchEditor(currentPatch) {
     if (currentPatch !== undefined) {
       return (
-        <div className="modal-wrapper patch-editor-wrapper">
-          <div className="patch-editor">
+        <div className="modal-wrapper">
+          <div className="modal patch-editor">
             {/*<h2 className="patch-editor-heading">{currentPatch.name}</h2>*/}
             <input
               onChange={this.enterNameText}

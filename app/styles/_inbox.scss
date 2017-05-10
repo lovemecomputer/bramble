@@ -195,16 +195,16 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
     .patch-node-wrapper {
       transition: .035s;
-      transform: scale(1.01);
+      transform: scale(0.98);
       // transform: rotateX(10deg) translateY(-.4em);
-      box-shadow: 0 .7rem .3rem -.3rem rgba($color-background, .2),
-                  0 1rem 2.4rem -1.2rem rgba($color-link, 1),
-                  0 1.3rem 2.9rem -.8rem rgba($color-dark, .6);
+      box-shadow: 0 .1rem .1rem 0 rgba($color-background, .2),
+                  0 .1rem .4rem -.1rem rgba($color-link, 1),
+                  0 .3rem 1.2rem -.2rem rgba($color-dark, .6);
     }
   }
 
   &.dragging {
-     // this also gets set in react, as a body style,
+     // this cursor style also gets set to the body in side of a react component function,
      // so even if cursor misses for a frame it will maintain
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
@@ -213,11 +213,10 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
     .patch-node-wrapper {
       transition: .3s;
-      transform: scale(1.03);
-      transform: rotateX(10deg) translateY(-.4em);
-      box-shadow: 0 .7rem .3rem -.3rem rgba($color-background, .2),
-                  0 1rem 2.4rem -1.2rem rgba($color-link, 1),
-                  0 1.3rem 2.9rem -.8rem rgba($color-dark, .6);
+      transform: rotateX(10deg) translateY(-.4em) scale(1.03);
+      box-shadow: 0 .8rem .3rem -.3rem rgba($color-background, .2),
+                  0 1.4rem 2.4rem -1.2rem rgba($color-link, 1),
+                  0 1.8rem 2.9rem -.8rem rgba($color-dark, .6);
     }
   }
 }
@@ -225,6 +224,13 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 .patch-id {
   color: $color-medium;
 }
+
+
+/*
+
+overlays
+
+*/
 
 .overlay-wrapper {
   position: fixed;
@@ -249,59 +255,57 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 }
 .modal-wrapper {
   z-index: map-get($zindex, modal);
+  padding: 6rem 4rem 4rem 4rem; // minimum edge between browser window edge
 }
-.patch-editor-wrapper {
-  padding: 6rem 4rem 4rem 4rem;
-}
-.patch-editor {
+.modal {
   background: #fff;
+  padding: 4rem; // margin inside of modal
   max-width: 120rem;
   margin:0 auto;
   position: relative;
-  padding: 4rem;
+}
 
-  h2 {
-    margin: 0;
+
+// edit patches
+.modal.patch-editor {
+
+  .story-preview-wrapper {
+    padding: 8rem;
+  }
+
+  .patch-editor-controls {
+    text-align: right;
+  }
+
+  .patch-input-and-preview-container{
+    display: flex;
+    padding-top: 2rem 0 0 0;
+  }
+  .patch-entry {
+    flex: 1;
+  }
+  .patch-input {
+    display: block;
+    font-family: monospace;
+    width: 100%;
+  }
+  .formatted-preview-section {
+    flex: 1;
+    padding-left: 4rem;
+    font-size: .8em;
+  }
+
+  .formatted-article {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    hyphens: auto;
+    padding: 4rem;
+    border: .1rem solid $color-light;
   }
 }
-
-.story-preview-wrapper {
-  padding: 8rem;
-}
-
-.patch-editor-controls {
-  text-align: right;
-}
-
-.patch-input-and-preview-container{
-  display: flex;
-  padding-top: 2rem 0 0 0;
-}
-.patch-entry {
-  flex: 1;
-}
-.patch-input {
-  display: block;
-  font-family: monospace;
-  width: 100%;
-}
-.formatted-preview-section {
-  flex: 1;
-  padding-left: 4rem;
-  font-size: .8em;
-}
-
-.formatted-article {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  hyphens: auto;
-  padding: 4rem;
-  border: .1rem solid $color-light;
-}
-
 
 
 
