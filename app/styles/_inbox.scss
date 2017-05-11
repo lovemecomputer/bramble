@@ -1,5 +1,5 @@
 .app-wrapper {
-  padding-top: 4rem;
+  // padding-top: 4rem; // same as header height, since header is fixed
 }
 
 .app-top-area {
@@ -11,9 +11,13 @@
 }
 
 .app-header {
-  background: rgba(255,255,255,.2);
-  box-shadow: 0 .6rem .1rem -.3rem rgba($color-dark, .05);
-  padding: 1rem;
+  background: rgba(255,255,255,.5);
+  box-shadow:
+    0 .1rem .35rem -.2rem rgba($color-dark, .65),
+    0 .6rem 1.65rem -1rem rgba($color-dark, .2);
+  margin: 0 -4rem;
+  padding: 1rem 5rem;
+  height: 4rem;
   @include clearfix;
   z-index: map-get($zindex, header);
 
@@ -70,26 +74,26 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   background-image:
     // horizontal
     linear-gradient(
-      0deg,
-      $majorGidLineColor 0%,
-      $majorGidLineColor .5%,
-      transparent 1%,
-      transparent 19%,
-      $gidLineColor 20%,
+      180deg,
+      $gidLineColor 0%,
+      $gidLineColor 1%,
+      transparent 1.5%,
+      transparent 19.5%,
       $gidLineColor 20.5%,
-      transparent 21%,
-      transparent 39%,
-      $gidLineColor 40%,
-      $gidLineColor 40.5%,
-      transparent 41%,
-      transparent 59%,
-      $gidLineColor 60%,
+      $gidLineColor 21%,
+      transparent 21.5%,
+      transparent 39.5%,
+      $majorGidLineColor 40.5%,
+      $majorGidLineColor 41%,
+      transparent 41.5%,
+      transparent 59.5%,
       $gidLineColor 60.5%,
-      transparent 61%,
-      transparent 79%,
-      $gidLineColor 80%,
+      $gidLineColor 61%,
+      transparent 61.5%,
+      transparent 79.5%,
       $gidLineColor 80.5%,
-      transparent 81%,
+      $gidLineColor 81%,
+      transparent 81.5%,
       transparent
       ),
     // vertical
@@ -221,6 +225,40 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   }
 }
 
+.patch-node-animation-enter {
+  opacity: 0.01;
+  .patch-node-wrapper {
+    transform: scale(0.01);
+  }
+}
+
+.patch-node-animation-enter.patch-node-animation-enter-active {
+  opacity: 1;
+  transition: opacity 100ms ease-out;
+  .patch-node-wrapper {
+    transform: scale(1.0);
+    transition: all 100ms ease-out;
+  }
+}
+
+.patch-node-animation-leave {
+  pointer-events:none;
+  opacity: 1;
+}
+
+.patch-node-animation-leave.patch-node-animation-leave-active {
+  pointer-events:none;
+  opacity: 0.01;
+  outline: .1rem solid $color-medium;
+  transition: opacity 1500ms ease-out;
+  background: rgba($color-light, .35);
+  .patch-node-wrapper {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
+  }
+
+}
+
 .patch-id {
   color: $color-medium;
 }
@@ -242,6 +280,7 @@ overlays
   width: 100vw;
   z-index: map-get($zindex, overlay);
   overflow-y: scroll;
+  perspective: 10000px;
 }
 .overlay-shade {
   background: rgba($color-medium, .8);
@@ -256,6 +295,12 @@ overlays
 .modal-wrapper {
   z-index: map-get($zindex, modal);
   padding: 6rem 4rem 4rem 4rem; // minimum edge between browser window edge
+  // hack(?) for centering an absolutely-positioned element:
+  // from https://css-tricks.com/forums/topic/horizontal-centering-of-an-absolute-element/
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto
 }
 .modal {
   background: #fff;
@@ -263,6 +308,62 @@ overlays
   max-width: 120rem;
   margin:0 auto;
   position: relative;
+}
+
+.modal-animation-appear {
+  opacity: 0.01;
+  .modal {
+    // transform: rotateX(-20deg) translateY(25vh) scale(.65);
+    transform: scale(0.1);
+  }
+}
+.modal-animation-appear.modal-animation-appear-active {
+  opacity: 1;
+  .modal {
+    // transform: rotateX(0) translateY(0vh) scale(1);
+    transform:scale(1);
+    transition: all 200ms ease-in;
+  }
+  transition: opacity 300ms ease-in;
+}
+
+.modal-animation-enter {
+  opacity: 0.01;
+  .modal {
+    // transform: rotateX(-20deg) translateY(25vh) scale(.65);
+    // transform: scale(0.1);
+    transform: translateX(25vw);
+  }
+}
+
+.modal-animation-enter.modal-animation-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+  z-index: 99999999;
+  .modal {
+    // transform: rotateX(0) translateY(0vh) scale(1);
+    // transform:scale(1);
+    transform: translateX(0vw);
+    transition: all 300ms ease-out;
+    z-index: 99999999;
+  }
+}
+
+.modal-animation-leave {
+  pointer-events: none;
+  opacity: 1;
+}
+
+.modal-animation-leave.modal-animation-leave-active {
+  pointer-events: none;
+  opacity: 0.01;
+  transition: opacity 400ms ease-out;
+  .modal {
+    // transform: rotateX(0) translateY(0vh) scale(1);
+    // transform:scale(1);
+    transform: translateX(-100vw);
+    transition: all 250ms ease-out;
+  }
 }
 
 
