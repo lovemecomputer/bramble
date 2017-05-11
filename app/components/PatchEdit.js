@@ -205,22 +205,23 @@ class PatchEdit extends React.Component {
 
     var marked = require('marked');
     return (
-      <CSSTransitionGroup
-        transitionName="modal-animation"
-        transitionAppear={true}
-        transitionAppearTimeout={200}
-        transitionEnterTimeout={300}
-        transitionLeaveTimeout={400}
-      >
-        <div
-          className={this.overlayShadeClassNames()}
-          key="overlayWrapper"
-          onClick={this.closePatchEditor}
+      <div className={this.overlayShadeClassNames()} key="overlayWrapper">
+        <CSSTransitionGroup
+          transitionName="modal-animation"
+          transitionAppear={true}
+          transitionAppearTimeout={200}
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={400}
         >
-          {this.renderPatchEditor(currentPatch)}
-        </div>
 
-      </CSSTransitionGroup>
+          <div
+            className="overlay-click-to-close"
+            onClick={this.closePatchEditor}
+          />
+          {this.renderPatchEditor(currentPatch)}
+
+        </CSSTransitionGroup>
+      </div>
     );
   }
 }
