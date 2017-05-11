@@ -1,5 +1,5 @@
 .app-wrapper {
-  padding-top: 4rem;
+  // padding-top: 4rem; // same as header height, since header is fixed
 }
 
 .app-top-area {
@@ -11,9 +11,13 @@
 }
 
 .app-header {
-  background: rgba(255,255,255,.2);
-  box-shadow: 0 .6rem .1rem -.3rem rgba($color-dark, .05);
-  padding: 1rem;
+  background: rgba(255,255,255,.5);
+  box-shadow:
+    0 .1rem .35rem -.2rem rgba($color-dark, .65),
+    0 .6rem 1.65rem -1rem rgba($color-dark, .2);
+  margin: 0 -4rem;
+  padding: 1rem 5rem;
+  height: 4rem;
   @include clearfix;
   z-index: map-get($zindex, header);
 
@@ -70,26 +74,26 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   background-image:
     // horizontal
     linear-gradient(
-      0deg,
-      $majorGidLineColor 0%,
-      $majorGidLineColor .5%,
-      transparent 1%,
-      transparent 19%,
-      $gidLineColor 20%,
+      180deg,
+      $gidLineColor 0%,
+      $gidLineColor 1%,
+      transparent 1.5%,
+      transparent 19.5%,
       $gidLineColor 20.5%,
-      transparent 21%,
-      transparent 39%,
-      $gidLineColor 40%,
-      $gidLineColor 40.5%,
-      transparent 41%,
-      transparent 59%,
-      $gidLineColor 60%,
+      $gidLineColor 21%,
+      transparent 21.5%,
+      transparent 39.5%,
+      $majorGidLineColor 40.5%,
+      $majorGidLineColor 41%,
+      transparent 41.5%,
+      transparent 59.5%,
       $gidLineColor 60.5%,
-      transparent 61%,
-      transparent 79%,
-      $gidLineColor 80%,
+      $gidLineColor 61%,
+      transparent 61.5%,
+      transparent 79.5%,
       $gidLineColor 80.5%,
-      transparent 81%,
+      $gidLineColor 81%,
+      transparent 81.5%,
       transparent
       ),
     // vertical
