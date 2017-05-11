@@ -134,7 +134,7 @@ class PatchEdit extends React.Component {
               placeholder="patch name…"
             />
             <a className="close-modal-button" onClick={this.closePatchEditor}>
-              X
+              x
             </a>
             <hr />
             <div className="patch-editor-controls">
@@ -193,7 +193,7 @@ class PatchEdit extends React.Component {
   }
 
   overlayShadeClassNames() {
-    let classNames = 'overlay-shade';
+    let classNames = 'overlay-wrapper';
     if (this.state.closing) classNames += ' closing';
     return classNames;
   }
@@ -205,22 +205,22 @@ class PatchEdit extends React.Component {
 
     var marked = require('marked');
     return (
-      <div className="overlay-wrapper">
-        <CSSTransitionGroup
-          transitionName="modal-animation"
-          transitionAppear={true}
-          transitionAppearTimeout={200}
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={400}
+      <CSSTransitionGroup
+        transitionName="modal-animation"
+        transitionAppear={true}
+        transitionAppearTimeout={200}
+        transitionEnterTimeout={300}
+        transitionLeaveTimeout={400}
+      >
+        <div
+          className={this.overlayShadeClassNames()}
+          key="overlayWrapper"
+          onClick={this.closePatchEditor}
         >
-          <div
-            className={this.overlayShadeClassNames()}
-            key="overlayShade"
-            onClick={this.closePatchEditor}
-          />
           {this.renderPatchEditor(currentPatch)}
-        </CSSTransitionGroup>
-      </div>
+        </div>
+
+      </CSSTransitionGroup>
     );
   }
 }

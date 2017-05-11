@@ -76,24 +76,24 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     linear-gradient(
       180deg,
       $gidLineColor 0%,
-      $gidLineColor 1%,
-      transparent 1.5%,
-      transparent 19.5%,
+      $gidLineColor .5%,
+      transparent 1%,
+      transparent 19%,
+      $gidLineColor 20%,
       $gidLineColor 20.5%,
-      $gidLineColor 21%,
-      transparent 21.5%,
-      transparent 39.5%,
+      transparent 21%,
+      transparent 39%,
+      $majorGidLineColor 40%,
       $majorGidLineColor 40.5%,
-      $majorGidLineColor 41%,
-      transparent 41.5%,
-      transparent 59.5%,
+      transparent 41%,
+      transparent 59%,
+      $gidLineColor 60%,
       $gidLineColor 60.5%,
-      $gidLineColor 61%,
-      transparent 61.5%,
-      transparent 79.5%,
+      transparent 61%,
+      transparent 79%,
+      $gidLineColor 80%,
       $gidLineColor 80.5%,
-      $gidLineColor 81%,
-      transparent 81.5%,
+      transparent 81%,
       transparent
       ),
     // vertical
@@ -278,45 +278,51 @@ overlays
   right: 0;
   height: 100vh;
   width: 100vw;
+  padding: 6rem 4rem 4rem 4rem; // minimum edge between browser window edge
   z-index: map-get($zindex, overlay);
   overflow-y: scroll;
   perspective: 10000px;
-}
-.overlay-shade {
   background: rgba($color-medium, .8);
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  width: 100vw;
 
   &.closing {
     opacity: 0.01;
     transition: 200ms opacity ease-out;
   }
+
 }
+// .overlay-shade {
+//   // position: fixed;
+//   // top: 0;
+//   // bottom: 0;
+//   // left: 0;
+//   // right: 0;
+//   // height: 100vh;
+//   // width: 100vw;
+//
+//
+// }
 .modal-wrapper {
   z-index: map-get($zindex, modal);
-  padding: 6rem 4rem 4rem 4rem; // minimum edge between browser window edge
   // hack(?) for centering an absolutely-positioned element:
   // from https://css-tricks.com/forums/topic/horizontal-centering-of-an-absolute-element/
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto;
+  max-width: 120rem;
+  margin: 0 auto;
 }
 .modal {
   background: #fff;
   padding: 4rem; // margin inside of modal
-  max-width: 120rem;
-  margin:0 auto;
   position: relative;
 }
 .close-modal-button {
-  display: inline-block;
-  float: right;
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 3rem 4rem;
+  font-weight: 100;
+  font-size: 4rem;
+  line-height: 4rem;
+  color: $color-medium;
 }
 
 .modal-animation-appear {
