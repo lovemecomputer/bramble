@@ -305,7 +305,7 @@ overlays
   position: absolute;
   left: 0;
   right: 0;
-  margin: auto
+  margin: auto;
 }
 .modal {
   background: #fff;
@@ -313,6 +313,10 @@ overlays
   max-width: 120rem;
   margin:0 auto;
   position: relative;
+}
+.close-modal-button {
+  display: inline-block;
+  float: right;
 }
 
 .modal-animation-appear {

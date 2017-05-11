@@ -133,6 +133,9 @@ class PatchEdit extends React.Component {
               value={currentPatch.content.name}
               placeholder="patch name…"
             />
+            <a className="close-modal-button" onClick={this.closePatchEditor}>
+              X
+            </a>
             <hr />
             <div className="patch-editor-controls">
               <a onClick={this.toggleFormattedPreview}>Formatted preview</a>
@@ -206,16 +209,14 @@ class PatchEdit extends React.Component {
         <CSSTransitionGroup
           transitionName="modal-animation"
           transitionAppear={true}
-          transitionAppearTimeout={300}
+          transitionAppearTimeout={200}
           transitionEnterTimeout={300}
           transitionLeaveTimeout={400}
         >
           <div
             className={this.overlayShadeClassNames()}
             key="overlayShade"
-            onClick={() => {
-              this.closePatchEditor();
-            }}
+            onClick={this.closePatchEditor}
           />
           {this.renderPatchEditor(currentPatch)}
         </CSSTransitionGroup>
