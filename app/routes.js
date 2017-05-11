@@ -6,6 +6,7 @@ import App from './containers/App';
 import Header from './components/Header.js';
 import Patchboard from './components/Patchboard.js';
 import PatchEdit from './components/PatchEdit.js';
+import ClosingModal from './components/ClosingModal.js';
 import Preview from './components/Preview.js';
 
 import HomePage from './containers/HomePage';
@@ -17,6 +18,7 @@ export default () => (
         <Header />
         <Route path="/" component={Patchboard} />
         <Route path="/patch-edit/:patchId" component={PatchEdit} />
+        <Route path="/patch-edit/closing-edit" component={ClosingModal} />
         <Route exact path="/preview" component={Preview} />
         <Route exact path="/preview/:id" component={Preview} />
       </div>
