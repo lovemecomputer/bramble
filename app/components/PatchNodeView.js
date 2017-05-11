@@ -9,27 +9,25 @@ class PatchNodeView extends React.Component {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleClickForDrag = this.handleClickForDrag.bind(this);
+    this.handleMouseDownForDrag = this.handleMouseDownForDrag.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
     this.renderMenuButton = this.renderMenuButton.bind(this);
     this.classNames = this.classNames.bind(this);
+
     this.state = {
       linkCoordinates: [],
       didMouseDown1: false,
       dragging: false,
-      relative: {
-        x: 0,
-        y: 0
-      }, // position relative to the cursor
-      previousPosition: {
+      relativeToClickPoint: {
         x: 0,
         y: 0
       },
-      draggingAngle: 0,
-      xDrift: 0,
-      yDrift: 0
+      drifts: {
+        x: [0, 0, 0, 0, 0, 0],
+        y: [0, 0, 0, 0, 0, 0]
+      }
     };
   }
 
@@ -50,91 +48,81 @@ class PatchNodeView extends React.Component {
     this.setState({ didMouseDown1: false, dragging: false });
   }
 
-  handleClickForDrag(event) {
+  handleMouseDownForDrag(event) {
     if (event.button !== 0) return;
     this.setState({ didMouseDown1: true });
     document.body.style.cursor = '-webkit-grabbing';
-    var position = {
-      x: this.refs.patchNode.offsetLeft,
-      y: this.refs.patchNode.offsetTop
-    };
-    // console.log(
-    //   '\n\n\n\n\n||||||||||| START CLICK |||||||||||||\n',
-    //   '\nposition from offset\n',
-    //   {
-    //     x: this.refs.patchNode.offsetLeft,
-    //     y: this.refs.patchNode.offsetTop
-    //   },
-    //   '\nSTATE POSITION \n',
-    //   { x: this.props.xPos, y: this.props.yPos },
-    //   '\nSTATE RELATIVE\n',
-    //   this.state.relative
-    // );
+
+    // record cursor click point offset, which will be used during the entire drag
+    // initialize drifts to and array of 0s
     this.setState({
-      relative: {
+      relativeToClickPoint: {
         x: event.pageX - this.props.xPos,
         y: event.pageY - this.props.yPos
       },
-      previousPosition: {
-        x: this.props.xPos,
-        y: this.props.yPos
+      drifts: {
+        x: [0, 0, 0, 0, 0, 0],
+        y: [0, 0, 0, 0, 0, 0]
       }
     });
+
     event.stopPropagation();
     event.preventDefault();
   }
 
+  clamp(num, min, max) {
+    return num <= min ? min : num >= max ? max : num;
+  }
+
   onMouseMove(event) {
-    // transform: rotateX(10deg) translateY(-.4em) scale(1.03);
-
-    // console.log(
-    //   '\n\n\n>>> EVENT POSITION >>\n',
-    //   { x: event.pageX, y: event.pageY },
-    //   '\nSTATE POSITION \n',
-    //   { x: this.props.xPos, y: this.props.yPos },
-    //   '\nSTATE RELATIVE\n',
-    //   this.state.relative
-    // );
-
-    let angleInDegrees =
-      Math.atan2(
-        this.props.yPos - this.state.previousPosition.y,
-        this.props.xPos - this.state.previousPosition.x
-      ) *
-      180 /
-      Math.PI;
-
-    let _xDrift = this.props.xPos - this.state.previousPosition.x;
-    let _yDrift = this.props.yPos - this.state.previousPosition.y;
-
-    console.log(
-      '\n\n\nSTATE POSITION \n',
-      { x: this.props.xPos, y: this.props.yPos },
-      '\nPREVIOUS POSITION\n',
-      this.state.previousPosition,
-      '\nANGLE\n',
-      angleInDegrees
-    );
-
     if (!this.state.didMouseDown1) return;
+
+    // save previous position and get updated position, based on where the mouse is
+
     let oldPos = {
       x: this.props.xPos,
       y: this.props.yPos
     };
+
+    let newPos = {
+      x: event.pageX - this.state.relativeToClickPoint.x,
+      y: event.pageY - this.state.relativeToClickPoint.y
+    };
+
+    // determine change between old position and new position
+    //  add this value into the drifts array
+    //  so they can be later averaged out to rotate the node based on movement
+    //  clamp so it doesn't get too wonky
+
+    let newXDrift = this.clamp(newPos.x - oldPos.x, -100, 100);
+    let newYDrift = this.clamp(newPos.y - oldPos.y, -100, 100);
+
+    let newXDrifts = this.state.drifts.x.slice(1, this.state.drifts.x.length);
+    newXDrifts.push(newXDrift);
+    let newYDrifts = this.state.drifts.y.slice(1, this.state.drifts.y.length);
+    newYDrifts.push(newYDrift);
+
+    // let newXDrifts = this.state.drifts.x
+    //   .slice(1, this.state.drifts.x.length)
+    //   .push(newXDrift);
+
+    // state update:
+    //  - set dragging to true to prevent modal from opening after moving this patch node
+    //  - updated the drifts
     this.setState({
       dragging: true,
-      previousPosition: {
-        x: oldPos.x,
-        y: oldPos.y
-      },
-      draggingAngle: angleInDegrees,
-      xDrift: _xDrift * 1000,
-      yDrift: _yDrift * 1000
+      drifts: {
+        x: newXDrifts,
+        y: newYDrifts
+      }
     });
+
     this.props.updatePosition(this.props.patchId, {
-      x: event.pageX - this.state.relative.x,
-      y: event.pageY - this.state.relative.y
+      x: newPos.x,
+      y: newPos.y
     });
+
+    // stop the click/dragging from triggering other interior actions
     event.stopPropagation();
     event.preventDefault();
   }
@@ -202,13 +190,27 @@ class PatchNodeView extends React.Component {
       links.push(match);
     }
 
-    console.log(matches);
-
     var draggingAngleStyle = () => {
-      console.log('>>> DRIFTS>>', this.state.xDrift, '  ', this.state.yDrift);
+      let yRotationScaler = -10;
+      let xRotationScaler = 10;
+
+      let sumX = 0;
+      for (let i = 0; i < this.state.drifts.x.length; i++) {
+        sumX += this.state.drifts.x[i];
+      }
+      let averagedXDrift = sumX / this.state.drifts.x.length;
+      let clampedXDrift = this.clamp(averagedXDrift * yRotationScaler, -20, 20);
+
+      let sumY = 0;
+      for (let i = 0; i < this.state.drifts.y.length; i++) {
+        sumY += this.state.drifts.y[i];
+      }
+      let averagedYDrift = sumY / this.state.drifts.y.length;
+      let clampedYDrift = this.clamp(averagedYDrift * xRotationScaler, -20, 20);
+
       if (this.state.dragging) {
         return {
-          transform: `rotateX(${this.state.draggingAngle}deg) rotateY(${this.state.draggingAngle}deg) translateY(-.4em) scale(1.03)`
+          transform: `rotateX(${clampedYDrift}deg) rotateY(${clampedXDrift}deg) translateY(-.4em) scale(1.03)`
         };
       } else {
         return { background: '#fff' };
@@ -222,7 +224,7 @@ class PatchNodeView extends React.Component {
         ref={`patchNode`}
         onKeyPress={this.handleKeyPress}
         onMouseDown={event => {
-          this.handleClickForDrag(event);
+          this.handleMouseDownForDrag(event);
         }}
         onClick={event => {
           // event.preventDefault();
