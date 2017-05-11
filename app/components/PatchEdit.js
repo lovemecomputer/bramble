@@ -116,7 +116,7 @@ class PatchEdit extends React.Component {
   renderPatchEditor(currentPatch) {
     if (currentPatch !== undefined) {
       return (
-        <div className="modal-wrapper">
+        <div className="modal-wrapper" key={currentPatch.patchId}>
           <div className="modal patch-editor">
             {/*<h2 className="patch-editor-heading">{currentPatch.name}</h2>*/}
             <input
@@ -190,8 +190,20 @@ class PatchEdit extends React.Component {
     var marked = require('marked');
     return (
       <div className="overlay-wrapper">
-        <div className="overlay-shade" onClick={this.closePatchEditor} />
-        {this.renderPatchEditor(currentPatch)}
+        <CSSTransitionGroup
+          transitionName="modal-animation"
+          transitionAppear={true}
+          transitionAppearTimeout={300}
+          transitionEnterTimeout={300}
+          transitionLeaveTimeout={400}
+        >
+          <div
+            className="overlay-shade"
+            key="overlayShade"
+            onClick={this.closePatchEditor}
+          />
+          {this.renderPatchEditor(currentPatch)}
+        </CSSTransitionGroup>
       </div>
     );
   }
