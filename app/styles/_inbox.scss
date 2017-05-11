@@ -290,17 +290,15 @@ overlays
   }
 
 }
-// .overlay-shade {
-//   // position: fixed;
-//   // top: 0;
-//   // bottom: 0;
-//   // left: 0;
-//   // right: 0;
-//   // height: 100vh;
-//   // width: 100vw;
-//
-//
-// }
+.overlay-click-to-close {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  width: 100vw;
+}
 .modal-wrapper {
   z-index: map-get($zindex, modal);
   // hack(?) for centering an absolutely-positioned element:
@@ -365,6 +363,11 @@ overlays
 .modal-animation-leave {
   pointer-events: none;
   opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
 
 .modal-animation-leave.modal-animation-leave-active {
