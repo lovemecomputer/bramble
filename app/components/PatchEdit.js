@@ -10,10 +10,10 @@ import utils from '../utils.js';
 // import { Route, Link, NavLink } from 'react-router-dom';
 // import container from '../../containers/all.js';
 
-const changeURL = history => {
+const changeURL = (history, destination) => {
   return () => {
     if (window.location.hash !== '#/') {
-      return history.push('/');
+      return history.push(destination);
     }
   };
 };
@@ -31,6 +31,10 @@ class PatchEdit extends React.Component {
 
     this.renderPatchEditor = this.renderPatchEditor.bind(this);
     this.renderFormattedPreview = this.renderFormattedPreview.bind(this);
+
+    this.state = {
+      closing: false
+    };
   }
 
   componentDidMount() {
@@ -53,7 +57,8 @@ class PatchEdit extends React.Component {
 
   closePatchEditor() {
     if (this.props.match.url !== '/') {
-      this.props.dispatch(changeURL(this.props.history));
+      this.setState({ closing: true });
+      this.props.dispatch(changeURL(this.props.history, 'closing-edit'));
     }
   }
 
@@ -101,8 +106,10 @@ class PatchEdit extends React.Component {
   }
 
   auto_grow(element) {
-    element.style.height = '1.6rem';
-    element.style.height = Number(element.scrollHeight + 6) + 'px';
+    if (element) {
+      element.style.height = '1.6rem';
+      element.style.height = Number(element.scrollHeight + 6) + 'px';
+    }
   }
 
   // renderDeleteButton () {
@@ -182,6 +189,12 @@ class PatchEdit extends React.Component {
     }
   }
 
+  overlayShadeClassNames() {
+    let classNames = 'overlay-shade';
+    if (this.state.closing) classNames += ' closing';
+    return classNames;
+  }
+
   render() {
     let lookup = utils.indexesToIds(this.props.bramble.patches);
     let currentPatchId = this.props.match.params.patchId;
@@ -198,9 +211,11 @@ class PatchEdit extends React.Component {
           transitionLeaveTimeout={400}
         >
           <div
-            className="overlay-shade"
+            className={this.overlayShadeClassNames()}
             key="overlayShade"
-            onClick={this.closePatchEditor}
+            onClick={() => {
+              this.closePatchEditor();
+            }}
           />
           {this.renderPatchEditor(currentPatch)}
         </CSSTransitionGroup>

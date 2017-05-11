@@ -291,6 +291,11 @@ overlays
   right: 0;
   height: 100vh;
   width: 100vw;
+
+  &.closing {
+    opacity: 0.01;
+    transition: 200ms opacity ease-out;
+  }
 }
 .modal-wrapper {
   z-index: map-get($zindex, modal);
@@ -311,38 +316,36 @@ overlays
 }
 
 .modal-animation-appear {
+  pointer-events: none;
   opacity: 0.01;
   .modal {
-    // transform: rotateX(-20deg) translateY(25vh) scale(.65);
     transform: scale(0.1);
   }
 }
 .modal-animation-appear.modal-animation-appear-active {
+  pointer-events: none;
   opacity: 1;
+  transition: opacity 200ms ease-out;
   .modal {
-    // transform: rotateX(0) translateY(0vh) scale(1);
     transform:scale(1);
     transition: all 200ms ease-in;
   }
-  transition: opacity 300ms ease-in;
 }
 
 .modal-animation-enter {
+  pointer-events: none;
   opacity: 0.01;
   .modal {
-    // transform: rotateX(-20deg) translateY(25vh) scale(.65);
-    // transform: scale(0.1);
     transform: translateX(25vw);
   }
 }
 
 .modal-animation-enter.modal-animation-enter-active {
+  pointer-events: none;
   opacity: 1;
   transition: opacity 300ms ease-in;
   z-index: 99999999;
   .modal {
-    // transform: rotateX(0) translateY(0vh) scale(1);
-    // transform:scale(1);
     transform: translateX(0vw);
     transition: all 300ms ease-out;
     z-index: 99999999;
@@ -357,12 +360,13 @@ overlays
 .modal-animation-leave.modal-animation-leave-active {
   pointer-events: none;
   opacity: 0.01;
-  transition: opacity 400ms ease-out;
+  transition: all 200ms ease-out;
   .modal {
     // transform: rotateX(0) translateY(0vh) scale(1);
     // transform:scale(1);
     transform: translateX(-100vw);
-    transition: all 250ms ease-out;
+    transform:scale(.01);
+    transition: all 200ms ease-out;
   }
 }
 
