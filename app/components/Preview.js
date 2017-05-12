@@ -66,11 +66,17 @@ class Preview extends React.Component {
     return { __html: htmlWithLinks };
   }
 
+  overlayShadeClassNames() {
+    let classNames = 'overlay-wrapper';
+    if (this.state.closing) classNames += ' closing';
+    return classNames;
+  }
+
   render() {
     var marked = require('marked');
     return (
-      <div className="overlay-wrapper">
-        <div className="overlay-shade" onClick={this.closePreview} />
+      <div className={this.overlayShadeClassNames()} key="overlayWrapper">
+        <div className="overlay-click-to-close" onClick={this.closePreview} />
         <div className="modal-wrapper story-preview-wrapper">
           <div className="modal">
             <div className="story-preview-wrapper">

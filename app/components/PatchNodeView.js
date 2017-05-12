@@ -197,18 +197,18 @@ class PatchNodeView extends React.Component {
         sumX += this.state.drifts.x[i];
       }
       let averagedXDrift = sumX / this.state.drifts.x.length;
-      let clampedXDrift = this.clamp(averagedXDrift * yRotationScaler, -20, 20);
+      let clampedXDrift = this.clamp(averagedXDrift * yRotationScaler, -10, 10);
 
       let sumY = 0;
       for (let i = 0; i < this.state.drifts.y.length; i++) {
         sumY += this.state.drifts.y[i];
       }
       let averagedYDrift = sumY / this.state.drifts.y.length;
-      let clampedYDrift = this.clamp(averagedYDrift * xRotationScaler, -20, 20);
+      let clampedYDrift = this.clamp(averagedYDrift * xRotationScaler, -10, 10);
 
       if (this.state.dragging) {
         return {
-          transform: `rotateX(${clampedYDrift}deg) rotateY(${clampedXDrift}deg) translateY(${clampedYDrift * 0.05}em) translateX(${clampedXDrift * 0.05}em) scale(1.03)`
+          transform: `rotateX(${clampedYDrift}deg) rotateY(${clampedXDrift}deg) translateY(${clampedYDrift * 0.08}em) translateX(${clampedXDrift * 0.08}em) scale(1.03)`
         };
       } else {
         return { background: '#fff' };

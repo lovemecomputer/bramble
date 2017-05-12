@@ -45,6 +45,8 @@ let examplePatch3 = new Patch({
 });
 
 const initialState = {
+  projectId: '',
+  projectName: '',
   patches: [examplePatch, examplePatch2, examplePatch3],
   patchCounter: 2,
   displayFormattedPreview: true
