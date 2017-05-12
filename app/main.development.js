@@ -47,6 +47,8 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
+    title: 'Bramble',
+    tabbingIdentifier: 'Bramble',
     show: false,
     width: 1024,
     height: 728,
