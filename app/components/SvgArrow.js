@@ -27,48 +27,81 @@ class SvgArrow extends React.Component {
 
     console.log('target: ', this.props.bramble.patches[targetPatchIndex]);
 
+    let nodeWidth = 180;
+
+    let thisPosition = Object.assign({}, this.props.thisPosition);
+    // thisPosition.x -= nodeWidth;
+
     let targetPosition = {
-      x: this.props.bramble.patches[targetPatchIndex].editor.position.x,
+      x: this.props.bramble.patches[targetPatchIndex].editor.position.x -
+        nodeWidth,
       y: this.props.bramble.patches[targetPatchIndex].editor.position.y
     };
 
     console.log('target position: ', targetPosition);
 
     let arrowOffset = {
-      x: targetPosition.x - this.props.thisPosition.x,
-      y: targetPosition.y - this.props.thisPosition.y
+      x: thisPosition.x - targetPosition.x,
+      y: thisPosition.y - targetPosition.y
     };
 
     console.log('arrow offset: ', arrowOffset);
 
+    let arrowMagnitude = Math.sqrt(
+      arrowOffset.x * arrowOffset.x + arrowOffset.y * arrowOffset.y
+    );
+
+    console.log('magnitude: ', arrowMagnitude);
+
+    let facingAngle = Math.atan2(
+      targetPosition.y - thisPosition.y,
+      targetPosition.x - thisPosition.x
+    );
+
+    console.log('facing angle: ', facingAngle);
+
     console.log('----- done with initial logic\n ');
 
-    return (
-      <svg className="svg-arrow" width="600px" height="600px">
-        <defs>
-          <marker
-            id="arrow"
-            markerWidth="6"
-            markerHeight="6"
-            refX="0"
-            refY="3"
-            orient="auto"
-            markerUnits="strokeWidth"
-          >
-            <path d="M0,0 L0,6 L6,3 z" fill="rgba(128,117,138,.52)" />
-          </marker>
-        </defs>
+    var rotation = () => {
+      return {
+        transform: `rotatez(${facingAngle}rad)`,
+        'transform-origin': 'left center'
+      };
+    };
 
-        <line
-          x1="0"
-          y1="0"
-          x2={arrowOffset.x}
-          y2={arrowOffset.y}
-          stroke="rgba(128,117,138,.52)"
-          strokeWidth="3"
-          markerEnd="url(#arrow)"
-        />
-      </svg>
+    return (
+      <div className="arrow-container">
+        <svg
+          className="svg-arrow"
+          width={arrowMagnitude}
+          height="12px"
+          style={rotation()}
+        >
+          <defs>
+            <marker
+              id="arrow"
+              markerWidth="6"
+              markerHeight="6"
+              refX="0"
+              refY="3"
+              orient="auto"
+              markerUnits="strokeWidth"
+            >
+              <path d="M0,0 L0,6 L6,3 z" fill="rgba(128,117,138,.52)" />
+            </marker>
+          </defs>
+
+          <line
+            x1="0"
+            y1="6"
+            x2={arrowMagnitude - 20}
+            y2="6"
+            stroke="rgba(128,117,138,.52)"
+            strokeWidth="3"
+            markerEnd="url(#arrow)"
+          />
+        </svg>
+      </div>
     );
   }
 }
