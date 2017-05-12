@@ -140,18 +140,18 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   overflow-wrap: break-word;
   cursor: pointer;
   display: block;
-  width: 18rem;
+  width: 16rem;
   margin: 0;
   position: absolute;
-  font-size: 1.3em;
+  font-size: 1.2em;
   perspective: 1000px;
 
   .patch-node-wrapper {
     flex-direction: column;
     background: #fff;
-    box-shadow: 0 .3rem .2rem 0 rgba($color-background, .8),
-                0 .3rem .8rem -.4rem rgba($color-link, 1),
-                0 .8rem 1rem -.6rem rgba($color-dark, .2);
+    box-shadow: 0 .3rem .2rem 0 rgba($color-background, .1),
+                0 .3rem .8rem -.4rem rgba($color-link, .2),
+                0 .8rem 1rem -.6rem rgba($color-dark, .05);
     transition: .3s;
   }
 
@@ -190,9 +190,9 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   &:hover {
     .patch-node-wrapper {
       transition: .1s;
-      box-shadow: 0 .3rem .2rem -.2rem rgba($color-background, .2),
-                  0 .3rem 1.8rem -1rem rgba($color-link, 1),
-                  0 .8rem 1.8rem -.4rem rgba($color-dark, .4);
+      box-shadow: 0 .1rem .1rem 0rem rgba($color-background, .2),
+                  0 .1rem .4rem -.2rem rgba($color-link, 1),
+                  0 .3rem .4rem -.2rem rgba($color-dark, .4);
     }
   }
 

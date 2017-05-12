@@ -208,7 +208,7 @@ class PatchNodeView extends React.Component {
 
       if (this.state.dragging) {
         return {
-          transform: `rotateX(${clampedYDrift}deg) rotateY(${clampedXDrift}deg) translateY(-.4em) scale(1.03)`
+          transform: `rotateX(${clampedYDrift}deg) rotateY(${clampedXDrift}deg) translateY(${clampedYDrift * 0.05}em) translateX(${clampedXDrift * 0.05}em) scale(1.03)`
         };
       } else {
         return { background: '#fff' };
@@ -249,7 +249,7 @@ class PatchNodeView extends React.Component {
             {this.renderMenuButton()}
           </footer>
         </div>
-        {links.map((link, index) => {
+        {/*links.map((link, index) => {
           return (
             <svg className="svg-arrow" key={index} width="600px" height="600px">
               <defs>
@@ -277,7 +277,7 @@ class PatchNodeView extends React.Component {
               />
             </svg>
           );
-        })}
+        })*/}
       </div>
     );
   }
