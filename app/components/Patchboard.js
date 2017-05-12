@@ -53,9 +53,18 @@ class Patchboard extends React.Component {
     this.props.history.push(`/patch-edit/${patchId}`);
   }
 
+  patchboardWrapperClasses() {
+    let classNames = 'patchboard-wrapper';
+    if (window.location.hash.indexOf('patch-edit') >= 0) {
+      // TODO: how to prevent scrolling?
+      classNames += ' modal-open';
+    }
+    return classNames;
+  }
+
   render() {
     return (
-      <div className="patchboard-wrapper">
+      <div className={this.patchboardWrapperClasses()} ref="patchboardWrapper">
         <div className="header-controls">
           <button type="button" onClick={this.handleNewPatch} tabIndex="1">
             + new patch
