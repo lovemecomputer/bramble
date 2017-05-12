@@ -175,7 +175,9 @@ export default function bramble(currentState, action) {
       }
 
       return currentState;
-    case 'LOCATION_CHANGE':
+
+    case '@@router/LOCATION_CHANGE':
+      console.log('🗺 current location: \n', window.location.hash);
       return currentState;
 
     default:

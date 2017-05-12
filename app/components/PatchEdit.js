@@ -10,10 +10,10 @@ import utils from '../utils.js';
 // import { Route, Link, NavLink } from 'react-router-dom';
 // import container from '../../containers/all.js';
 
-const changeURL = history => {
+const changeURL = (history, destination) => {
   return () => {
     if (window.location.hash !== '#/') {
-      return history.push('/');
+      return history.push(destination);
     }
   };
 };
@@ -31,6 +31,10 @@ class PatchEdit extends React.Component {
 
     this.renderPatchEditor = this.renderPatchEditor.bind(this);
     this.renderFormattedPreview = this.renderFormattedPreview.bind(this);
+
+    this.state = {
+      closing: false
+    };
   }
 
   componentDidMount() {
@@ -53,7 +57,8 @@ class PatchEdit extends React.Component {
 
   closePatchEditor() {
     if (this.props.match.url !== '/') {
-      this.props.dispatch(changeURL(this.props.history));
+      this.setState({ closing: true });
+      this.props.dispatch(changeURL(this.props.history, 'closing-edit'));
     }
   }
 
@@ -101,8 +106,10 @@ class PatchEdit extends React.Component {
   }
 
   auto_grow(element) {
-    element.style.height = '1.6rem';
-    element.style.height = Number(element.scrollHeight + 6) + 'px';
+    if (element) {
+      element.style.height = '1.6rem';
+      element.style.height = Number(element.scrollHeight + 6) + 'px';
+    }
   }
 
   // renderDeleteButton () {
@@ -126,6 +133,9 @@ class PatchEdit extends React.Component {
               value={currentPatch.content.name}
               placeholder="patch name…"
             />
+            <a className="close-modal-button" onClick={this.closePatchEditor}>
+              x
+            </a>
             <hr />
             <div className="patch-editor-controls">
               <a onClick={this.toggleFormattedPreview}>Formatted preview</a>
@@ -182,6 +192,12 @@ class PatchEdit extends React.Component {
     }
   }
 
+  overlayShadeClassNames() {
+    let classNames = 'overlay-wrapper';
+    if (this.state.closing) classNames += ' closing';
+    return classNames;
+  }
+
   render() {
     let lookup = utils.indexesToIds(this.props.bramble.patches);
     let currentPatchId = this.props.match.params.patchId;
@@ -189,20 +205,21 @@ class PatchEdit extends React.Component {
 
     var marked = require('marked');
     return (
-      <div className="overlay-wrapper">
+      <div className={this.overlayShadeClassNames()} key="overlayWrapper">
         <CSSTransitionGroup
           transitionName="modal-animation"
           transitionAppear={true}
-          transitionAppearTimeout={300}
+          transitionAppearTimeout={200}
           transitionEnterTimeout={300}
           transitionLeaveTimeout={400}
         >
+
           <div
-            className="overlay-shade"
-            key="overlayShade"
+            className="overlay-click-to-close"
             onClick={this.closePatchEditor}
           />
           {this.renderPatchEditor(currentPatch)}
+
         </CSSTransitionGroup>
       </div>
     );
