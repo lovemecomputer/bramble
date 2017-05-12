@@ -10,8 +10,8 @@ let examplePatch = new Patch({
   },
   editor: {
     position: {
-      x: 20,
-      y: 60
+      x: 40,
+      y: 80
     }
   }
 });
@@ -24,8 +24,8 @@ let examplePatch2 = new Patch({
   },
   editor: {
     position: {
-      x: 280,
-      y: 120
+      x: 300,
+      y: 140
     }
   }
 });
@@ -38,8 +38,8 @@ let examplePatch3 = new Patch({
   },
   editor: {
     position: {
-      x: 540,
-      y: 180
+      x: 560,
+      y: 200
     }
   }
 });
