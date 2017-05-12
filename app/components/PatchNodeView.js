@@ -42,8 +42,6 @@ class PatchNodeView extends React.Component {
   }
 
   handleClick(event) {
-    console.log('>>>> TARGET', event.target);
-    console.log(event.button);
     if (!this.state.dragging) this.props.openPatchEdit();
     this.setState({ didMouseDown1: false, dragging: false });
   }
