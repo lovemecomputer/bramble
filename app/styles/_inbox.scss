@@ -287,23 +287,29 @@ overlays
   z-index: map-get($zindex, overlay);
   overflow-y: scroll;
   perspective: 10000px;
-  background: rgba($color-medium, .8);
+
+  .overlay-click-to-close {
+    background: rgba($color-medium, .8);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+  }
 
   &.closing {
-    opacity: 0.01;
-    transition: 200ms opacity ease-out;
+
+
+    .overlay-click-to-close {
+      opacity: 0.01;
+      transition: 200ms opacity ease-out;
+    }
   }
 
 }
-.overlay-click-to-close {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100vh;
-  width: 100vw;
-}
+
 .modal-wrapper {
   z-index: map-get($zindex, modal);
   // hack(?) for centering an absolutely-positioned element:
