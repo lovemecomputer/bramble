@@ -373,6 +373,10 @@ overlays
   left: 0;
   right: 0;
   margin: 0 auto;
+  transition: 0 all ease-in;
+  .modal {
+    opacity: .3;
+  }
 }
 
 .modal-animation-leave.modal-animation-leave-active {
@@ -383,8 +387,9 @@ overlays
     // transform: rotateX(0) translateY(0vh) scale(1);
     // transform:scale(1);
     // transform: translateX(-100vw);
+    opacity: .3;
     transform:scale(.01);
-    transition: all 200ms ease-out;
+    transition: all 200ms linear;
   }
 }
 
