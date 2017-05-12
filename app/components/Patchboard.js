@@ -98,6 +98,7 @@ class Patchboard extends React.Component {
                   xPos={patch.editor.position.x}
                   yPos={patch.editor.position.y}
                   updatePosition={this.dispatchPositionUpdate}
+                  patches={this.props.bramble.patches}
                 />
               );
             })}

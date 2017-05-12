@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import SvgArrow from './SvgArrow.js';
 // import { Route } from 'react-router-dom';
 
 // click and drag derived from https://stackoverflow.com/questions/20926551/recommended-way-of-making-react-component-div-draggable
@@ -14,6 +15,7 @@ class PatchNodeView extends React.Component {
     this.onMouseUp = this.onMouseUp.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
     this.renderMenuButton = this.renderMenuButton.bind(this);
+    // this.renderSvg = this.renderSvg.bind(this);
     this.classNames = this.classNames.bind(this);
 
     this.state = {
@@ -182,11 +184,15 @@ class PatchNodeView extends React.Component {
     var regexp = /@([^:]+):(\d)/g;
     var match, matches = [];
     let links = [];
+    let linkTargetPositions = [];
 
     while ((match = regexp.exec(this.props.body)) != null) {
       matches.push(match.index);
       links.push(match);
     }
+
+    // TODO: get the arrow drawing working
+    links.forEach((link, index) => {});
 
     var draggingAngleStyle = () => {
       let yRotationScaler = -10;
@@ -250,32 +256,13 @@ class PatchNodeView extends React.Component {
           </footer>
         </div>
         {links.map((link, index) => {
+          // this.renderSvg(link);
           return (
-            <svg className="svg-arrow" key={index} width="600px" height="600px">
-              <defs>
-                <marker
-                  id="arrow"
-                  markerWidth="6"
-                  markerHeight="6"
-                  refX="0"
-                  refY="3"
-                  orient="auto"
-                  markerUnits="strokeWidth"
-                >
-                  <path d="M0,0 L0,6 L6,3 z" fill="rgba(128,117,138,.52)" />
-                </marker>
-              </defs>
-
-              <line
-                x1="180"
-                y1="0"
-                x2="245"
-                y2="50"
-                stroke="rgba(128,117,138,.52)"
-                strokeWidth="3"
-                markerEnd="url(#arrow)"
-              />
-            </svg>
+            <SvgArrow
+              thisPosition={{ x: this.props.xPos, y: this.props.yPos }}
+              link={link}
+              key={Math.random()}
+            />
           );
         })}
       </div>
