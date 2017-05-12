@@ -127,7 +127,12 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       );
 }
 
-
+.arrow-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  pointer-events:none;
+}
 .svg-arrow {
   position: absolute;
   top: 0;
