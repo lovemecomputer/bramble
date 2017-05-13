@@ -18,6 +18,56 @@
 </script>
   </head>
   <body>
+
+    <!-- testing dialogs -->
+    <br /><br /><br /><br />
+    <button id="openFile" onclick="openFile();">Open</button>
+    <button id="saveFile" onclick="saveFile();">Save</button><br />
+    <br />
+    <textarea id="editor" style="width: 400px; height: 300px;"></textarea>
+
+    <script>
+        // var remote = require('remote');
+        // var dialog = remote.require('dialog')
+        const dialog = require('electron').remote.dialog;
+        var fs = require('fs');
+        console.log('dialog:', dialog);
+
+        function openFile () {
+          dialog.showOpenDialog(
+            { filters: [
+              { name: 'bramble file', extensions: ['bramble'] },
+              { name: 'json', extensions: ['json'] },
+              { name: 'text', extensions: ['txt'] },
+              { name: 'All Files', extensions: ['*'] }
+            ]},
+            function (fileNames) {
+            if (fileNames === undefined) return;
+
+            var fileName = fileNames[0];
+
+            fs.readFile(fileName, 'utf-8', function (err, data) {
+              document.getElementById("editor").value = data;
+            });
+          });
+        }
+
+        function saveFile () {
+          dialog.showSaveDialog(
+            { filters: [
+              { name: 'text', extensions: ['txt'] }
+            ]},
+            function (fileName) {
+              if (fileName === undefined) return;
+              fs.writeFile(fileName, document.getElementById("editor").value, function (err) {
+               dialog.showMessageBox({ message: "The file has been saved! :-)",
+                buttons: ["OK"] });
+              });
+            });
+        }
+    </script>
+
+
     <div id="root"></div>
     <script>
     {
