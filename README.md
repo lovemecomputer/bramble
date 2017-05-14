@@ -8,7 +8,7 @@
 
 ---
 
-A native desktop app running in Electron. Started from: https://github.com/animalphase/bramble
+A native desktop app running in Electron. Started from: https://github.com/chentsulin/electron-react-boilerplate
 
 ---
 

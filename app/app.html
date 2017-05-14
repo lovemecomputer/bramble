@@ -6,70 +6,78 @@
     <!-- TODO: need to store this locally but need to check on license https://github.com/adobe-fonts/source-code-pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" rel="stylesheet">
     <script>
-    (function() {
-  if (!process.env.HOT) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = './dist/style.css';
-    // HACK: Writing the script path should be done with webpack
-    document.getElementsByTagName('head')[0].appendChild(link);
-  }
-})();
-</script>
+      (function() {
+        if (!process.env.HOT) {
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = './dist/style.css';
+          // HACK: Writing the script path should be done with webpack
+          document.getElementsByTagName('head')[0].appendChild(link);
+        }
+      }());
+    </script>
   </head>
   <body>
 
     <!-- testing dialogs -->
-    <br /><br /><br /><br />
+    <!-- <br /><br /><br /><br />
     <button id="openFile" onclick="openFile();">Open</button>
     <button id="saveFile" onclick="saveFile();">Save</button><br />
     <br />
     <textarea id="editor" style="width: 400px; height: 300px;"></textarea>
 
     <script>
-        // var remote = require('remote');
-        // var dialog = remote.require('dialog')
-        const dialog = require('electron').remote.dialog;
-        var fs = require('fs');
-        console.log('dialog:', dialog);
+    // var remote = require('remote');
+// var dialog = remote.require('dialog')
+const dialog = require('electron').remote.dialog;
+var fs = require('fs');
+console.log('dialog:', dialog);
 
-        function openFile () {
-          dialog.showOpenDialog(
-            { filters: [
-              { name: 'bramble file', extensions: ['bramble'] },
-              { name: 'json', extensions: ['json'] },
-              { name: 'text', extensions: ['txt'] },
-              { name: 'All Files', extensions: ['*'] }
-            ]},
-            function (fileNames) {
-            if (fileNames === undefined) return;
+function openFile() {
+  dialog.showOpenDialog(
+    {
+      filters: [
+        { name: 'bramble file', extensions: ['bramble'] },
+        { name: 'json', extensions: ['json'] },
+        { name: 'text', extensions: ['txt'] },
+        { name: 'All Files', extensions: ['*'] }
+      ]
+    },
+    function(fileNames) {
+      if (fileNames === undefined) return;
 
-            var fileName = fileNames[0];
+      var fileName = fileNames[0];
 
-            fs.readFile(fileName, 'utf-8', function (err, data) {
-              document.getElementById("editor").value = data;
-            });
+      fs.readFile(fileName, 'utf-8', function(err, data) {
+        document.getElementById('editor').value = data;
+      });
+    }
+  );
+}
+
+function saveFile() {
+  dialog.showSaveDialog(
+    {
+      filters: [{ name: 'text', extensions: ['txt'] }]
+    },
+    function(fileName) {
+      if (fileName === undefined) return;
+      fs.writeFile(fileName, document.getElementById('editor').value, function(
+        err
+      ) {
+        if (err === undefined) {
+          dialog.showMessageBox({
+            message: 'The file has been saved! :-)',
+            buttons: ['OK']
           });
+        } else {
+          dialog.showErrorBox('File Save Error', err.message);
         }
-
-        function saveFile () {
-          dialog.showSaveDialog(
-            { filters: [
-              { name: 'text', extensions: ['txt'] }
-            ]},
-            function (fileName) {
-              if (fileName === undefined) return;
-              fs.writeFile(fileName, document.getElementById("editor").value, function (err) {
-                if (err === undefined) {
-                 dialog.showMessageBox({ message: "The file has been saved! :-)",
-                  buttons: ["OK"] });
-                   } else {
-                     dialog.showErrorBox("File Save Error", err.message);
-                   }
-                });
-              });
-        }
-    </script>
+      });
+    }
+  );
+}
+</script> -->
 
 
     <div id="root"></div>

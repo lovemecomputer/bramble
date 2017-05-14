@@ -36,9 +36,14 @@
   }
 }
 .app-title {
-  margin: 0 0 0 65px;
+  margin: 0 20rem 0 65px;
   font-size: 1.4rem;
-  opacity: .2;
+  opacity: .3;
+}
+
+.main-header-controls {
+  width: 20rem;
+  float: right;
 }
 
 
@@ -53,7 +58,7 @@
     // TODO: how to prevent scrolling?
   }
 }
-.header-controls {
+.patchboard-controls {
   position: fixed;
   top: 4rem;
   right: 0;
