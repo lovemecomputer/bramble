@@ -48,9 +48,9 @@ let examplePatch3 = new Patch({
   }
 });
 
-const initialState = {
+const exampleState = {
   projectId: '',
-  projectName: '',
+  projectName: 'Example Project',
   patches: [examplePatch, examplePatch2, examplePatch3],
   patchCounter: 2,
   displayFormattedPreview: true
@@ -58,7 +58,7 @@ const initialState = {
 
 export default function bramble(currentState, action) {
   if (currentState === undefined) {
-    return initialState;
+    return exampleState;
   }
 
   switch (action.type) {
@@ -183,14 +183,14 @@ export default function bramble(currentState, action) {
 
     case 'FILE_SAVE':
       console.log('>>> saving file!! >>>');
-      let stateToSave = JSON.stringify(currentState)
+      let stateToSave = JSON.stringify(currentState, null, 2);
       dialog.showSaveDialog(
         {
           filters: [{ name: 'text', extensions: ['json'] }]
         },
-        function(fileName) {
+        fileName => {
           if (fileName === undefined) return;
-          fs.writeFile(fileName, stateToSave, function(err) {
+          fs.writeFile(fileName, stateToSave, err => {
             if (err === undefined) {
               dialog.showMessageBox({
                 message: 'The file has been saved! 🌱',
@@ -206,6 +206,9 @@ export default function bramble(currentState, action) {
 
     case 'FILE_OPEN':
       console.log('>>> opening file!! >>>');
+
+      var loadedState = {};
+
       dialog.showOpenDialog(
         {
           filters: [
@@ -221,11 +224,14 @@ export default function bramble(currentState, action) {
           var fileName = fileNames[0];
 
           fs.readFile(fileName, 'utf-8', function(err, data) {
-            document.getElementById('app-title').value = data;
+            console.log(data);
+            var jsData = JSON.parse(data);
+            console.log(jsData);
+            loadedState = jsData;
           });
         }
       );
-      return currentState;
+      return Object.assign({}, loadedState);
 
     case '@@router/LOCATION_CHANGE':
       console.log('🗺 current location: \n', window.location.hash);
