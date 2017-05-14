@@ -4,7 +4,6 @@ import utils from '../utils.js';
 
 const dialog = require('electron').remote.dialog;
 const fs = require('fs');
-console.log('dialog:', dialog);
 
 let examplePatch = new Patch({
   patchId: 0,
@@ -204,34 +203,8 @@ export default function bramble(currentState, action) {
       );
       return currentState;
 
-    case 'FILE_OPEN':
-      console.log('>>> opening file!! >>>');
-
-      var loadedState = {};
-
-      dialog.showOpenDialog(
-        {
-          filters: [
-            { name: 'bramble file', extensions: ['bramble'] },
-            { name: 'json', extensions: ['json'] },
-            { name: 'text', extensions: ['txt'] },
-            { name: 'All Files', extensions: ['*'] }
-          ]
-        },
-        function(fileNames) {
-          if (fileNames === undefined) return;
-
-          var fileName = fileNames[0];
-
-          fs.readFile(fileName, 'utf-8', function(err, data) {
-            console.log(data);
-            var jsData = JSON.parse(data);
-            console.log(jsData);
-            loadedState = jsData;
-          });
-        }
-      );
-      return Object.assign({}, loadedState);
+    case 'LOAD_STATE':
+      return Object.assign({}, action.loadedState);
 
     case '@@router/LOCATION_CHANGE':
       console.log('🗺 current location: \n', window.location.hash);

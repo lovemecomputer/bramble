@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 
+import fileOpen from '../actions/fileOpen.js';
+
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,8 @@ class Header extends React.Component {
 
   openProject() {
     console.log('clicked open!');
-    this.props.dispatch({ type: 'FILE_OPEN' });
+    // this.props.dispatch({ type: 'FILE_OPEN' });
+    this.props.dispatch(fileOpen());
   }
 
   render() {
@@ -25,7 +28,9 @@ class Header extends React.Component {
       <div className="app-top-area">
         <header className="app-header">
           <h1 id="app-title" className="app-title">bramble</h1>
-          <span className="project-name">📄 {this.props.bramble.projectName}</span>
+          <span className="project-name">
+            📄 {this.props.bramble.projectName}
+          </span>
           <div className="main-header-controls">
             <a onClick={this.saveProject}>save</a>
             <a onClick={this.openProject}>open</a>
