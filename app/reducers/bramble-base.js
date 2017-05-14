@@ -2,6 +2,10 @@
 import Patch from '../models/patch.js';
 import utils from '../utils.js';
 
+const dialog = require('electron').remote.dialog;
+const fs = require('fs');
+console.log('dialog:', dialog);
+
 let examplePatch = new Patch({
   patchId: 0,
   content: {
@@ -175,7 +179,52 @@ export default function bramble(currentState, action) {
           functionToRun();
         }, 0);
       }
+      return currentState;
 
+    case 'FILE_SAVE':
+      console.log('>>> saving file!! >>>');
+      let stateToSave = JSON.stringify(currentState)
+      dialog.showSaveDialog(
+        {
+          filters: [{ name: 'text', extensions: ['json'] }]
+        },
+        function(fileName) {
+          if (fileName === undefined) return;
+          fs.writeFile(fileName, stateToSave, function(err) {
+            if (err === undefined) {
+              dialog.showMessageBox({
+                message: 'The file has been saved! 🌱',
+                buttons: ['OK']
+              });
+            } else {
+              dialog.showErrorBox('File Save Error', err.message);
+            }
+          });
+        }
+      );
+      return currentState;
+
+    case 'FILE_OPEN':
+      console.log('>>> opening file!! >>>');
+      dialog.showOpenDialog(
+        {
+          filters: [
+            { name: 'bramble file', extensions: ['bramble'] },
+            { name: 'json', extensions: ['json'] },
+            { name: 'text', extensions: ['txt'] },
+            { name: 'All Files', extensions: ['*'] }
+          ]
+        },
+        function(fileNames) {
+          if (fileNames === undefined) return;
+
+          var fileName = fileNames[0];
+
+          fs.readFile(fileName, 'utf-8', function(err, data) {
+            document.getElementById('app-title').value = data;
+          });
+        }
+      );
       return currentState;
 
     case '@@router/LOCATION_CHANGE':

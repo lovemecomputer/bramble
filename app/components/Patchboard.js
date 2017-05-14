@@ -65,7 +65,7 @@ class Patchboard extends React.Component {
   render() {
     return (
       <div className={this.patchboardWrapperClasses()} ref="patchboardWrapper">
-        <div className="header-controls">
+        <div className="patchboard-controls">
           <button type="button" onClick={this.handleNewPatch} tabIndex="1">
             + new patch
           </button>
