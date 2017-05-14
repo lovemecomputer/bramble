@@ -60,10 +60,14 @@
             function (fileName) {
               if (fileName === undefined) return;
               fs.writeFile(fileName, document.getElementById("editor").value, function (err) {
-               dialog.showMessageBox({ message: "The file has been saved! :-)",
-                buttons: ["OK"] });
+                if (err === undefined) {
+                 dialog.showMessageBox({ message: "The file has been saved! :-)",
+                  buttons: ["OK"] });
+                   } else {
+                     dialog.showErrorBox("File Save Error", err.message);
+                   }
+                });
               });
-            });
         }
     </script>
 
