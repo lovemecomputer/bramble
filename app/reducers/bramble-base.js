@@ -2,6 +2,9 @@
 import Patch from '../models/patch.js';
 import utils from '../utils.js';
 
+const dialog = require('electron').remote.dialog;
+const fs = require('fs');
+
 let examplePatch = new Patch({
   patchId: 0,
   content: {
@@ -44,9 +47,9 @@ let examplePatch3 = new Patch({
   }
 });
 
-const initialState = {
+const exampleState = {
   projectId: '',
-  projectName: '',
+  projectName: 'Example Project',
   patches: [examplePatch, examplePatch2, examplePatch3],
   patchCounter: 2,
   displayFormattedPreview: true
@@ -54,7 +57,7 @@ const initialState = {
 
 export default function bramble(currentState, action) {
   if (currentState === undefined) {
-    return initialState;
+    return exampleState;
   }
 
   switch (action.type) {
@@ -175,8 +178,33 @@ export default function bramble(currentState, action) {
           functionToRun();
         }, 0);
       }
-
       return currentState;
+
+    case 'FILE_SAVE':
+      console.log('>>> saving file!! >>>');
+      let stateToSave = JSON.stringify(currentState, null, 2);
+      dialog.showSaveDialog(
+        {
+          filters: [{ name: 'text', extensions: ['json'] }]
+        },
+        fileName => {
+          if (fileName === undefined) return;
+          fs.writeFile(fileName, stateToSave, err => {
+            if (err === undefined) {
+              dialog.showMessageBox({
+                message: 'The file has been saved! 🌱',
+                buttons: ['OK']
+              });
+            } else {
+              dialog.showErrorBox('File Save Error', err.message);
+            }
+          });
+        }
+      );
+      return currentState;
+
+    case 'LOAD_STATE':
+      return Object.assign({}, action.loadedState);
 
     case '@@router/LOCATION_CHANGE':
       console.log('🗺 current location: \n', window.location.hash);
