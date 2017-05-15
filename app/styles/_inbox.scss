@@ -145,14 +145,16 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   overflow-wrap: break-word;
   cursor: pointer;
   display: block;
-  width: 16rem;
+  width: 15rem;
+  height: 15rem;
   margin: 0;
   position: absolute;
   font-size: 1.2em;
   perspective: 1000px;
 
   .patch-node-wrapper {
-    flex-direction: column;
+    width: 15rem;
+    height: 15rem;
     background: #fff;
     box-shadow: 0 .3rem .2rem 0 rgba($color-background, .1),
                 0 .3rem .8rem -.4rem rgba($color-link, .2),
@@ -161,24 +163,53 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   }
 
   .patch-header {
-    padding: .5rem 1rem;
+    height: 2.4rem;
+    padding: .6rem 1rem;
     border-bottom: .1rem solid $color-light;
+
+    .patch-title {
+      height: 1.2rem;
+      line-height: 1.2rem;
+      margin: 0;
+      padding: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
-  .patch-title {
-    margin: 0;
-    padding: 0;
-  }
 
   .patch-body {
     padding: 1rem;
     font-family: 'Source Code Pro', monospace;
     letter-spacing: -.05rem;
+    height: 10.2rem;
+    overflow: hidden;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background:
+      linear-gradient(
+        0deg,
+        #fff 0%,
+        #fff 1.5%,
+        transparent 15%,
+        transparent
+        );
+    }
   }
 
   .patch-footer {
+    height: 2.4rem;
+    padding: .6rem 1rem;
     font-size: 1em;
-    padding: .5rem 1rem;
     border-top: .1rem solid $color-light;
   }
 
@@ -349,10 +380,10 @@ overlays
 .modal-animation-appear.modal-animation-appear-active {
   pointer-events: none;
   opacity: 1;
-  transition: opacity 200ms ease-out;
+  transition: opacity 175ms ease-out;
   .modal {
     transform:scale(1);
-    transition: all 200ms ease-in;
+    transition: all 175ms ease-in;
   }
 }
 
