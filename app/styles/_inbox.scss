@@ -1,5 +1,14 @@
 .app-wrapper {
-  // padding-top: 4rem; // same as header height, since header is fixed
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: scroll;
+
+  &.modal-visible {
+    overflow: hidden;
+  }
 }
 
 .app-top-area {
@@ -324,6 +333,8 @@ overlays
   overflow-y: scroll;
   perspective: 10000px;
 
+
+
   .overlay-click-to-close {
     background: rgba($color-medium, .8);
     position: fixed;
@@ -331,7 +342,7 @@ overlays
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100vh;
+    height: 100%;
     width: 100vw;
   }
 
