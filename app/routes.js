@@ -11,10 +11,17 @@ import Preview from './components/Preview.js';
 
 import HomePage from './containers/HomePage';
 
+function wrapperClassNames() {
+  let classNames = ['app-wrapper'];
+  if (window.location.hash.includes('patch-edit'))
+    classNames.push('modal-visible');
+  return classNames.join(' ');
+}
+
 export default () => (
   <Router>
     <App>
-      <div className="app-wrapper">
+      <div className={wrapperClassNames()}>
         <Header />
         <Route path="/" component={Patchboard} />
         <Route path="/patch-edit/:patchId" component={PatchEdit} />
