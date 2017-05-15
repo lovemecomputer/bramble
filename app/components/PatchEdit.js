@@ -209,7 +209,7 @@ class PatchEdit extends React.Component {
         <CSSTransitionGroup
           transitionName="modal-animation"
           transitionAppear={true}
-          transitionAppearTimeout={200}
+          transitionAppearTimeout={175}
           transitionEnterTimeout={300}
           transitionLeaveTimeout={400}
         >
