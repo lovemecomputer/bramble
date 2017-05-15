@@ -249,7 +249,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   }
 
   &.dragging {
-     // this cursor style also gets set to the body in side of a react component function,
+     // this cursor style also gets set to the body inside of a react component function,
      // so even if cursor misses for a frame it will maintain
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
