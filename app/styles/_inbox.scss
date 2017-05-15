@@ -154,8 +154,9 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   overflow-wrap: break-word;
   cursor: pointer;
   display: block;
-  width: 15rem;
-  height: 15rem;
+  width: 16rem;
+  height: 16rem;
+  padding: .5rem;
   margin: 0;
   position: absolute;
   font-size: 1.2em;
@@ -344,7 +345,6 @@ overlays
 
   .overlay-click-to-close {
     background: rgba($color-medium, .8);
-    // position: fixed;
     position: sticky;
     top: 0;
     bottom: 0;
@@ -355,7 +355,6 @@ overlays
   }
 
   &.closing {
-
 
     .overlay-click-to-close {
       opacity: 0.01;
