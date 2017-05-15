@@ -320,29 +320,37 @@ overlays
 
 */
 
+
+.modal-and-overlay-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  z-index: map-get($zindex, overlay);
+}
+
 .overlay-wrapper {
   position: fixed;
   top: 0;
-  bottom: 0;
   left: 0;
-  right: 0;
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
-  padding: 6rem; // minimum edge between browser window edge
-  z-index: map-get($zindex, overlay);
+  // padding: 6rem; // minimum edge between browser window edge
+
   overflow-y: scroll;
   perspective: 10000px;
 
-
-
   .overlay-click-to-close {
     background: rgba($color-medium, .8);
-    position: fixed;
+    // position: fixed;
+    position: sticky;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 100%;
+    height: 100vh;
     width: 100vw;
   }
 
@@ -361,8 +369,13 @@ overlays
   z-index: map-get($zindex, modal);
   // hack(?) for centering an absolutely-positioned element:
   // from https://css-tricks.com/forums/topic/horizontal-centering-of-an-absolute-element/
+  width: 90%;
   max-width: 120rem;
-  margin: 0 auto;
+  margin: 8rem auto 6rem auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 .modal {
   background: #fff;
@@ -421,11 +434,11 @@ overlays
 .modal-animation-leave {
   pointer-events: none;
   opacity: 1;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // right: 0;
+  // margin: 0 auto;
   transition: 0 all ease-in;
   .modal {
     opacity: .3;
