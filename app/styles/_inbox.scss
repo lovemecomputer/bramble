@@ -221,16 +221,19 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     padding: .6rem 1rem;
     font-size: 1em;
     border-top: .1rem solid $color-light;
+    position: relative;
   }
 
   .menu-button {
-    display: inline-block;
+    display: block;
     float: right;
-  }
-
-  .delete-button {
-    display: inline-block;
-    float: right;
+    padding: .6rem 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 100;
+    text-align: right;
   }
 
   &:hover {
@@ -310,10 +313,93 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
 }
 
+.patch-node-menu {
+  background: $color-white;
+  margin: 0;
+  padding: .3rem;
+  border-top: .1rem solid $color-light;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    font-size: 1.4rem;
+    display: block;
+    width: 100%;
+    padding: 1rem 1rem 1rem 2.3rem;
+    color: $color-dark;
+    // border-left: .3rem solid $color-white;
+    // border-right: .3rem solid $color-white;
+    border-bottom: .1rem solid $color-light;
+    position: relative;
+
+    &:hover {
+      background: $color-light;
+    }
+  }
+}
+
+.patch-footer .patch-node-menu {
+  margin: .4rem -1rem 0 -1rem;
+}
+
+.delete-button {
+  &::before {
+    content: 'X';
+    display: inline-block;
+    position: absolute;
+    left: .4rem;
+    vertical-align: middle;
+  }
+}
+
+.set-starting-patch-button {
+  &::before {
+    content: '▶︎';
+    display: inline-block;
+    position: absolute;
+    left: .4rem;
+    vertical-align: middle;
+  }
+}
+
 .patch-id {
   color: $color-medium;
 }
 
+.starting-patch-tag {
+  display: inline-block;
+  background: #a6dfa9;
+  color: $color-white;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  border-radius: .2rem;
+  padding: .3rem .5rem .2rem .5rem;
+  margin: -.3rem 1rem -.3rem 1.2rem;
+  // display: block;
+  // position: absolute;
+  // width: 5.4rem;
+  // top: .2rem;
+  // left: 0;
+  // right: 0;
+  // margin: 0 auto;
+  text-align: center;
+}
+
+.starting-patch-info {
+  display: inline-block;
+  padding: 1rem;
+  color: #a6dfa9;
+  color: #96c399;
+}
 
 /*
 
