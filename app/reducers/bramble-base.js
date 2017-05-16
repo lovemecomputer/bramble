@@ -51,7 +51,15 @@ const exampleState = {
   projectId: '',
   projectName: 'Example Project',
   patches: [examplePatch, examplePatch2, examplePatch3],
-  patchCounter: 2,
+  patchCounter: 2, // used to make IDs until autocomplete & unique ID system is implemented
+  displayFormattedPreview: true
+};
+
+const newState = {
+  projectId: '',
+  projectName: 'New Project',
+  patches: [],
+  patchCounter: 0, // used to make IDs until autocomplete & unique ID system is implemented
   displayFormattedPreview: true
 };
 
@@ -205,6 +213,9 @@ export default function bramble(currentState, action) {
 
     case 'LOAD_STATE':
       return Object.assign({}, action.loadedState);
+
+    case 'NEW_PROJECT':
+      return Object.assign({}, newState);
 
     case '@@router/LOCATION_CHANGE':
       console.log('🗺 current location: \n', window.location.hash);
