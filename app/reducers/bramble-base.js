@@ -13,8 +13,8 @@ let examplePatch = new Patch({
   },
   editor: {
     position: {
-      x: 40,
-      y: 80,
+      x: 60,
+      y: 100,
       z: 1
     },
     isStartingPatch: true
@@ -30,7 +30,7 @@ let examplePatch2 = new Patch({
   editor: {
     position: {
       x: 360,
-      y: 80,
+      y: 100,
       z: 2
     },
     isStartingPatch: false
@@ -45,7 +45,7 @@ let examplePatch3 = new Patch({
   },
   editor: {
     position: {
-      x: 600,
+      x: 520,
       y: 400,
       z: 3
     },
