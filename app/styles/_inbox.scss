@@ -221,16 +221,19 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     padding: .6rem 1rem;
     font-size: 1em;
     border-top: .1rem solid $color-light;
+    position: relative;
   }
 
   .menu-button {
-    display: inline-block;
+    display: block;
     float: right;
-  }
-
-  .delete-button {
-    display: inline-block;
-    float: right;
+    padding: .6rem 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    z-index: 100;
+    text-align: right;
   }
 
   &:hover {
@@ -308,6 +311,49 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     transition: opacity 200ms ease-in;
   }
 
+}
+
+.patch-node-menu {
+  background: $color-white;
+  margin: 0;
+  padding: .3rem;
+  font-size: 1.4rem;
+  border-top: .1rem solid $color-light;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+  }
+
+  a {
+    display: block;
+    width: 100%;
+    padding: 1rem 1rem 1rem 1rem;
+    color: $color-dark;
+    // border-left: .3rem solid $color-white;
+    // border-right: .3rem solid $color-white;
+    border-bottom: .1rem solid $color-light;
+
+    &:hover {
+      background: $color-light;
+    }
+  }
+}
+
+.patch-footer .patch-node-menu {
+  margin: .4rem -1rem 0 -1rem;
+}
+
+.set-starting-patch-button {
+}
+
+.delete-button {
 }
 
 .patch-id {

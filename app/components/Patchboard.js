@@ -40,6 +40,10 @@ class Patchboard extends React.Component {
     this.props.dispatch({ type: 'DELETE_PATCH', patchId: patchId });
   }
 
+  handleSetStartingPatch(patchId) {
+    this.props.dispatch({ type: 'SET_STARTING_PATCH', patchId: patchId });
+  }
+
   dispatchPositionUpdate(patchId, newPosition) {
     this.props.dispatch({
       type: 'UPDATE_PATCH_POSITION',
@@ -90,14 +94,15 @@ class Patchboard extends React.Component {
                   patchId={patch.patchId}
                   name={patch.content.name}
                   body={patch.content.body}
+                  isStartingPatch={patch.editor.isStartingPatch}
+                  xPos={patch.editor.position.x}
+                  yPos={patch.editor.position.y}
+                  updatePosition={this.dispatchPositionUpdate}
                   openPatchEdit={() => this.openPatchEdit(patch.patchId)}
                   deletePatch={() => this.handleDeletePatch(patch.patchId)}
                   dragFunction={() => {
                     this.handleDragPatch(patch.patchId);
                   }}
-                  xPos={patch.editor.position.x}
-                  yPos={patch.editor.position.y}
-                  updatePosition={this.dispatchPositionUpdate}
                 />
               );
             })}
