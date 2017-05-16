@@ -151,27 +151,25 @@ export default class MenuBuilder {
         {
           label: 'Learn More',
           click() {
-            shell.openExternal('http://electron.atom.io');
+            shell.openExternal('http://animalphse.com/bramble');
           }
         },
         {
           label: 'Documentation',
           click() {
-            shell.openExternal(
-              'https://github.com/atom/electron/tree/master/docs#readme'
-            );
+            shell.openExternal('https://github.com/animalphase/bramble');
           }
         },
         {
           label: 'Community Discussions',
           click() {
-            shell.openExternal('https://discuss.atom.io/c/electron');
+            shell.openExternal('https://github.com/animalphase/bramble');
           }
         },
         {
           label: 'Search Issues',
           click() {
-            shell.openExternal('https://github.com/atom/electron/issues');
+            shell.openExternal('https://github.com/animalphase/bramble/issues');
           }
         }
       ]
@@ -248,27 +246,27 @@ export default class MenuBuilder {
           {
             label: 'Learn More',
             click() {
-              shell.openExternal('http://electron.atom.io');
+              shell.openExternal('http://animalphase.com/bramble/');
             }
           },
           {
             label: 'Documentation',
             click() {
-              shell.openExternal(
-                'https://github.com/atom/electron/tree/master/docs#readme'
-              );
+              shell.openExternal('https://github.com/animalphase/bramble');
             }
           },
           {
             label: 'Community Discussions',
             click() {
-              shell.openExternal('https://discuss.atom.io/c/electron');
+              shell.openExternal('https://github.com/animalphase/bramble');
             }
           },
           {
             label: 'Search Issues',
             click() {
-              shell.openExternal('https://github.com/atom/electron/issues');
+              shell.openExternal(
+                'https://github.com/animalphase/bramble/pulls'
+              );
             }
           }
         ]
