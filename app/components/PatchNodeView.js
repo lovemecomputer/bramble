@@ -53,6 +53,7 @@ class PatchNodeView extends React.Component {
 
   handleMouseDownForDrag(event) {
     if (event.button !== 0 || this.state.deleting) return;
+    this.props.bringToFront();
     this.setState({ didMouseDown1: true });
     document.body.style.cursor = '-webkit-grabbing';
 
@@ -302,7 +303,8 @@ class PatchNodeView extends React.Component {
         }}
         style={{
           top: `${this.props.yPos / 10}rem`,
-          left: `${this.props.xPos / 10}rem`
+          left: `${this.props.xPos / 10}rem`,
+          zIndex: `${this.props.z}`
         }}
         tabIndex="2"
       >

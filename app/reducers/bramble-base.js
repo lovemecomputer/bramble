@@ -14,7 +14,8 @@ let examplePatch = new Patch({
   editor: {
     position: {
       x: 40,
-      y: 80
+      y: 80,
+      z: 1
     },
     isStartingPatch: true
   }
@@ -29,7 +30,8 @@ let examplePatch2 = new Patch({
   editor: {
     position: {
       x: 300,
-      y: 140
+      y: 140,
+      z: 2
     },
     isStartingPatch: false
   }
@@ -44,7 +46,8 @@ let examplePatch3 = new Patch({
   editor: {
     position: {
       x: 560,
-      y: 200
+      y: 200,
+      z: 3
     },
     isStartingPatch: false
   }
@@ -165,6 +168,38 @@ export default function bramble(currentState, action) {
         return Object.assign({}, currentState, {
           patches: updatedPatches
         });
+      } else {
+        return currentState;
+      }
+
+    case 'BRING_PATCH_NODE_TO_FRONT':
+      var targetIndex = utils.indexOfObjectWithPropertyValue(
+        'patchId',
+        action.patchId,
+        currentState.patches
+      );
+      if (targetIndex !== null) {
+        if (
+          currentState.patches[targetIndex].editor.position.z ===
+          currentState.patches.length
+        ) {
+          return currentState;
+        } else {
+          var updatedPatches = currentState.patches.slice();
+          updatedPatches.forEach(patch => {
+            if (patch.patchId === action.patchId) {
+              patch.editor.position.z = currentState.patches.length;
+            } else {
+              patch.editor.position.z--;
+              if (patch.editor.position.z === 0) {
+                patch.editor.position.z = 1;
+              }
+            }
+          });
+          return Object.assign({}, currentState, {
+            patches: updatedPatches
+          });
+        }
       } else {
         return currentState;
       }
