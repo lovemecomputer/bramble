@@ -25,15 +25,26 @@ class SvgArrow extends React.Component {
     );
 
     let nodeWidth = 160;
-
+    let arrowColor = 'rgba(128,117,138,.52)';
+    let arrowNoTargetColor = 'rgba(204,135,105,.3)';
+    let targetPosition = { x: 0, y: 0 };
     let thisPosition = Object.assign({}, this.props.thisPosition);
-    // thisPosition.x += nodeWidth;
-    // thisPosition.x += nodeWidth;
 
-    let targetPosition = {
-      x: this.props.bramble.patches[targetPatchIndex].editor.position.x,
-      y: this.props.bramble.patches[targetPatchIndex].editor.position.y
-    };
+    if (
+      this.props.bramble.patches[targetPatchIndex] === undefined ||
+      this.props.bramble.patches[targetPatchIndex] === null
+    ) {
+      targetPosition.x = thisPosition.x + nodeWidth / 4 / 10;
+      targetPosition.y = thisPosition.y;
+      arrowColor = arrowNoTargetColor;
+    } else {
+      targetPosition.x = this.props.bramble.patches[
+        targetPatchIndex
+      ].editor.position.x;
+      targetPosition.y = this.props.bramble.patches[
+        targetPatchIndex
+      ].editor.position.y;
+    }
 
     let arrowOffset = {
       x: thisPosition.x - targetPosition.x,
@@ -45,6 +56,9 @@ class SvgArrow extends React.Component {
     );
 
     arrowMagnitude -= nodeWidth / 0.9;
+    if (arrowMagnitude < 0) arrowMagnitude *= -1;
+
+    // console.log(arrowMagnitude);
 
     let facingAngle = Math.atan2(
       targetPosition.y - thisPosition.y,
@@ -93,7 +107,7 @@ class SvgArrow extends React.Component {
             orient="auto"
             markerUnits="strokeWidth"
           >
-            <path d="M0,0 L0,6 L6,3 z" fill="rgba(128,117,138,.52)" />
+            <path d="M0,0 L0,6 L6,3 z" fill={arrowColor} />
           </marker>
         </defs>
 
@@ -102,7 +116,7 @@ class SvgArrow extends React.Component {
           y1="8"
           x2={arrowMagnitude - 20}
           y2="8"
-          stroke="rgba(128,117,138,.52)"
+          stroke={arrowColor}
           strokeWidth="3"
           markerEnd="url(#arrow)"
         />
