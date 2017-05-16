@@ -1,5 +1,6 @@
 export default function Patch(attributes) {
   this.patchId = attributes.patchId;
+  this.isStartingPatch = attributes.isStartingPatch || false;
   this.content = {
     name: attributes.content.name || '',
     body: attributes.content.body || '',
@@ -21,8 +22,6 @@ export default function Patch(attributes) {
         attributes.editor.position &&
         attributes.editor.position.z) ||
         0
-    },
-    isStartingPatch: (attributes.editor && attributes.editor.isStartingPatch) ||
-      false
+    }
   };
 }
