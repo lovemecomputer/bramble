@@ -24,6 +24,12 @@ class SvgArrow extends React.Component {
       this.props.bramble.patches
     );
 
+    if (
+      this.props.bramble.patches[targetPatchIndex] === undefined ||
+      this.props.bramble.patches[targetPatchIndex] === null
+    )
+      return <span />;
+
     let nodeWidth = 160;
 
     let thisPosition = Object.assign({}, this.props.thisPosition);
