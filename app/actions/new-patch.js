@@ -19,7 +19,7 @@ export default function newPatch() {
           x: 60,
           y: 60
         },
-        isStartingPatch: false
+        isStartingPatch: isStarting
       }
     });
     dispatch({

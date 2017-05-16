@@ -100,6 +100,8 @@ class Patchboard extends React.Component {
                   updatePosition={this.dispatchPositionUpdate}
                   openPatchEdit={() => this.openPatchEdit(patch.patchId)}
                   deletePatch={() => this.handleDeletePatch(patch.patchId)}
+                  setStartPatch={() =>
+                    this.handleSetStartingPatch(patch.patchId)}
                   dragFunction={() => {
                     this.handleDragPatch(patch.patchId);
                   }}
