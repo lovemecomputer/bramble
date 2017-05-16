@@ -55,7 +55,7 @@ class SvgArrow extends React.Component {
       arrowOffset.x * arrowOffset.x + arrowOffset.y * arrowOffset.y
     );
 
-    arrowMagnitude -= nodeWidth / 0.9;
+    arrowMagnitude -= nodeWidth / 1.7;
     if (arrowMagnitude < 0) arrowMagnitude *= -1;
 
     // console.log(arrowMagnitude);
@@ -72,6 +72,15 @@ class SvgArrow extends React.Component {
     //   let number = nodeWidth / 2 + amp * Math.sin(Math.PI * freq * angle + 45);
     //   return number;
     // };
+    let calculateDiagonalDistance = angle => {
+      let freq = 4;
+      // let amp = (nodeWidth * 1.414 - nodeWidth) / 2;
+      let amp = -20;
+      // let number = nodeWidth / 2 + amp * Math.sin(Math.PI * angle);
+      let number = amp * Math.sin(180 + Math.PI + angle * freq);
+      return number;
+    };
+    arrowMagnitude -= calculateDiagonalDistance(facingAngle);
 
     var rotation = () => {
       // let adjustment = calculateDiagonalDistance(facingAngle);
@@ -81,7 +90,8 @@ class SvgArrow extends React.Component {
       //   transformOrigin: 'left center'
       // };
       return {
-        transform: `rotatez(${facingAngle}rad) translateX(${nodeWidth / 2.5 / 10}rem)`,
+        // transform: `rotatez(${facingAngle}rad) translateX(${nodeWidth / 2.5 / 10}rem)`,
+        transform: `rotatez(${facingAngle}rad)`,
         transformOrigin: 'left center'
       };
       // return {
