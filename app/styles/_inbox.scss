@@ -334,11 +334,12 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   a {
     display: block;
     width: 100%;
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 1rem 1rem 1rem 2.3rem;
     color: $color-dark;
     // border-left: .3rem solid $color-white;
     // border-right: .3rem solid $color-white;
     border-bottom: .1rem solid $color-light;
+    position: relative;
 
     &:hover {
       background: $color-light;
@@ -350,16 +351,40 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   margin: .4rem -1rem 0 -1rem;
 }
 
-.set-starting-patch-button {
+.delete-button {
+  &::before {
+    content: 'X';
+    display: inline-block;
+    position: absolute;
+    left: .4rem;
+    vertical-align: middle;
+  }
 }
 
-.delete-button {
+.set-starting-patch-button {
+  &::before {
+    content: '▶︎';
+    display: inline-block;
+    position: absolute;
+    left: .4rem;
+    vertical-align: middle;
+  }
 }
 
 .patch-id {
   color: $color-medium;
 }
 
+.starting-patch-tag {
+  display: inline-block;
+  background: #a6dfa9;
+  color: $color-white;
+  letter-spacing: .1rem;
+  text-transform: uppercase;
+  border-radius: .2rem;
+  padding: .3rem .5rem .2rem .5rem;
+  margin: -.3rem 1rem;
+}
 
 /*
 
