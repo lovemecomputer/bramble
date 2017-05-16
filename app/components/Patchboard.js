@@ -12,6 +12,7 @@ class Patchboard extends React.Component {
     this.openPatchEdit = this.openPatchEdit.bind(this);
     this.handleNewPatch = this.handleNewPatch.bind(this);
     this.handleInitiatePreview = this.handleInitiatePreview.bind(this);
+    this.handBringPatchNodeToFront = this.handBringPatchNodeToFront.bind(this);
     this.dispatchPositionUpdate = this.dispatchPositionUpdate.bind(this);
   }
 
@@ -27,7 +28,7 @@ class Patchboard extends React.Component {
     this.props.dispatch(newPatch());
     if (this.props.history.location.pathname.includes('patch-edit')) {
       this.props.history.push(
-        `/patch-edit/${this.props.bramble.patches[this.props.bramble.patches.length - 1].patchId}`
+        `/patchboard/patch-edit/${this.props.bramble.patches[this.props.bramble.patches.length - 1].patchId}`
       );
     }
   }
@@ -40,6 +41,17 @@ class Patchboard extends React.Component {
     this.props.dispatch({ type: 'DELETE_PATCH', patchId: patchId });
   }
 
+  handleSetStartingPatch(patchId) {
+    this.props.dispatch({ type: 'SET_STARTING_PATCH', patchId: patchId });
+  }
+
+  handBringPatchNodeToFront(patchId) {
+    this.props.dispatch({
+      type: 'BRING_PATCH_NODE_TO_FRONT',
+      patchId: patchId
+    });
+  }
+
   dispatchPositionUpdate(patchId, newPosition) {
     this.props.dispatch({
       type: 'UPDATE_PATCH_POSITION',
@@ -50,7 +62,7 @@ class Patchboard extends React.Component {
   }
 
   openPatchEdit(patchId) {
-    this.props.history.push(`/patch-edit/${patchId}`);
+    this.props.history.push(`/patchboard/patch-edit/${patchId}`);
   }
 
   patchboardWrapperClasses() {
@@ -65,7 +77,7 @@ class Patchboard extends React.Component {
   render() {
     return (
       <div className={this.patchboardWrapperClasses()} ref="patchboardWrapper">
-        <div className="header-controls">
+        <div className="patchboard-controls">
           <button type="button" onClick={this.handleNewPatch} tabIndex="1">
             + new patch
           </button>
@@ -90,14 +102,20 @@ class Patchboard extends React.Component {
                   patchId={patch.patchId}
                   name={patch.content.name}
                   body={patch.content.body}
+                  isStartingPatch={patch.editor.isStartingPatch}
+                  xPos={patch.editor.position.x}
+                  yPos={patch.editor.position.y}
+                  z={patch.editor.position.z}
+                  updatePosition={this.dispatchPositionUpdate}
+                  bringToFront={() =>
+                    this.handBringPatchNodeToFront(patch.patchId)}
                   openPatchEdit={() => this.openPatchEdit(patch.patchId)}
                   deletePatch={() => this.handleDeletePatch(patch.patchId)}
+                  setStartPatch={() =>
+                    this.handleSetStartingPatch(patch.patchId)}
                   dragFunction={() => {
                     this.handleDragPatch(patch.patchId);
                   }}
-                  xPos={patch.editor.position.x}
-                  yPos={patch.editor.position.y}
-                  updatePosition={this.dispatchPositionUpdate}
                   patches={this.props.bramble.patches}
                 />
               );

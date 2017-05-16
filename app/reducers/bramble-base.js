@@ -2,6 +2,9 @@
 import Patch from '../models/patch.js';
 import utils from '../utils.js';
 
+const dialog = require('electron').remote.dialog;
+const fs = require('fs');
+
 let examplePatch = new Patch({
   patchId: 0,
   content: {
@@ -10,9 +13,11 @@ let examplePatch = new Patch({
   },
   editor: {
     position: {
-      x: 20,
-      y: 60
-    }
+      x: 40,
+      y: 80,
+      z: 1
+    },
+    isStartingPatch: true
   }
 });
 
@@ -24,9 +29,11 @@ let examplePatch2 = new Patch({
   },
   editor: {
     position: {
-      x: 280,
-      y: 120
-    }
+      x: 300,
+      y: 140,
+      z: 2
+    },
+    isStartingPatch: false
   }
 });
 
@@ -38,21 +45,33 @@ let examplePatch3 = new Patch({
   },
   editor: {
     position: {
-      x: 540,
-      y: 180
-    }
+      x: 560,
+      y: 200,
+      z: 3
+    },
+    isStartingPatch: false
   }
 });
 
-const initialState = {
+const exampleState = {
+  projectId: '',
+  projectName: 'Example Project',
   patches: [examplePatch, examplePatch2, examplePatch3],
-  patchCounter: 2,
+  patchCounter: 2, // used to make IDs until autocomplete & unique ID system is implemented
+  displayFormattedPreview: true
+};
+
+const newState = {
+  projectId: '',
+  projectName: 'New Project',
+  patches: [],
+  patchCounter: 0, // used to make IDs until autocomplete & unique ID system is implemented
   displayFormattedPreview: true
 };
 
 export default function bramble(currentState, action) {
   if (currentState === undefined) {
-    return initialState;
+    return exampleState;
   }
 
   switch (action.type) {
@@ -128,6 +147,63 @@ export default function bramble(currentState, action) {
         return currentState;
       }
 
+    case 'SET_STARTING_PATCH':
+      var targetIndex = utils.indexOfObjectWithPropertyValue(
+        'patchId',
+        action.patchId,
+        currentState.patches
+      );
+      if (targetIndex !== null) {
+        // var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
+        // updatedPatch.editor.startingPatch = true;
+        // updatedPatches[targetIndex] = updatedPatch;
+        var updatedPatches = currentState.patches.slice();
+        updatedPatches.forEach(patch => {
+          if (patch.patchId === action.patchId) {
+            patch.editor.isStartingPatch = true;
+          } else {
+            patch.editor.isStartingPatch = false;
+          }
+        });
+        return Object.assign({}, currentState, {
+          patches: updatedPatches
+        });
+      } else {
+        return currentState;
+      }
+
+    case 'BRING_PATCH_NODE_TO_FRONT':
+      var targetIndex = utils.indexOfObjectWithPropertyValue(
+        'patchId',
+        action.patchId,
+        currentState.patches
+      );
+      if (targetIndex !== null) {
+        if (
+          currentState.patches[targetIndex].editor.position.z ===
+          currentState.patches.length
+        ) {
+          return currentState;
+        } else {
+          var updatedPatches = currentState.patches.slice();
+          updatedPatches.forEach(patch => {
+            if (patch.patchId === action.patchId) {
+              patch.editor.position.z = currentState.patches.length;
+            } else {
+              patch.editor.position.z--;
+              if (patch.editor.position.z === 0) {
+                patch.editor.position.z = 1;
+              }
+            }
+          });
+          return Object.assign({}, currentState, {
+            patches: updatedPatches
+          });
+        }
+      } else {
+        return currentState;
+      }
+
     case 'TOGGLE_FORMATTED_PREVIEW':
       return Object.assign({}, currentState, {
         displayFormattedPreview: !currentState.displayFormattedPreview
@@ -173,8 +249,36 @@ export default function bramble(currentState, action) {
           functionToRun();
         }, 0);
       }
-
       return currentState;
+
+    case 'FILE_SAVE':
+      console.log('>>> saving file!! >>>');
+      let stateToSave = JSON.stringify(currentState, null, 2);
+      dialog.showSaveDialog(
+        {
+          filters: [{ name: 'text', extensions: ['json'] }]
+        },
+        fileName => {
+          if (fileName === undefined) return;
+          fs.writeFile(fileName, stateToSave, err => {
+            if (err === undefined) {
+              dialog.showMessageBox({
+                message: 'The file has been saved! 🌱',
+                buttons: ['OK']
+              });
+            } else {
+              dialog.showErrorBox('File Save Error', err.message);
+            }
+          });
+        }
+      );
+      return currentState;
+
+    case 'LOAD_STATE':
+      return Object.assign({}, action.loadedState);
+
+    case 'NEW_PROJECT':
+      return Object.assign({}, newState);
 
     case '@@router/LOCATION_CHANGE':
       console.log('🗺 current location: \n', window.location.hash);

@@ -100,7 +100,7 @@ class PatchEdit extends React.Component {
 
     let htmlWithLinks = renderedHTML.replace(
       /@([^:]+):(\d)/g,
-      "<a href='#/patch-edit/$2'>$1</a>"
+      "<a href='#/patchboard/patch-edit/$2'>$1</a>"
     );
     return { __html: htmlWithLinks };
   }
@@ -205,22 +205,24 @@ class PatchEdit extends React.Component {
 
     var marked = require('marked');
     return (
-      <div className={this.overlayShadeClassNames()} key="overlayWrapper">
-        <CSSTransitionGroup
-          transitionName="modal-animation"
-          transitionAppear={true}
-          transitionAppearTimeout={200}
-          transitionEnterTimeout={300}
-          transitionLeaveTimeout={400}
-        >
+      <div className="modal-and-overlay-wrapper">
+        <div className={this.overlayShadeClassNames()} key="overlayWrapper">
+          <CSSTransitionGroup
+            transitionName="modal-animation"
+            transitionAppear={true}
+            transitionAppearTimeout={175}
+            transitionEnterTimeout={300}
+            transitionLeaveTimeout={400}
+          >
 
-          <div
-            className="overlay-click-to-close"
-            onClick={this.closePatchEditor}
-          />
-          {this.renderPatchEditor(currentPatch)}
+            <div
+              className="overlay-click-to-close"
+              onClick={this.closePatchEditor}
+            />
+            {this.renderPatchEditor(currentPatch)}
 
-        </CSSTransitionGroup>
+          </CSSTransitionGroup>
+        </div>
       </div>
     );
   }
