@@ -211,7 +211,7 @@ class PatchNodeView extends React.Component {
           transform: `rotateX(${clampedYDrift}deg) rotateY(${clampedXDrift}deg) translateY(${clampedYDrift * 0.08}em) translateX(${clampedXDrift * 0.08}em) scale(1.03)`
         };
       } else {
-        return { background: '#fff' };
+        return { appearance: 'none' }; // gotta return something to make JSX/React happy
       }
     };
 

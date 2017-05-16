@@ -51,7 +51,7 @@ const exampleState = {
   projectId: '',
   projectName: 'Example Project',
   patches: [examplePatch, examplePatch2, examplePatch3],
-  patchCounter: 2, // used to make IDs until autocomplete & unique ID system is implemented
+  patchCounter: 2,
   displayFormattedPreview: true
 };
 

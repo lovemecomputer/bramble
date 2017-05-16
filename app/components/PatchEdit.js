@@ -100,7 +100,7 @@ class PatchEdit extends React.Component {
 
     let htmlWithLinks = renderedHTML.replace(
       /@([^:]+):(\d)/g,
-      "<a href='#/patch-edit/$2'>$1</a>"
+      "<a href='#/patchboard/patch-edit/$2'>$1</a>"
     );
     return { __html: htmlWithLinks };
   }
