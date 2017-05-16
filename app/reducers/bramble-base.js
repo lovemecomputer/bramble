@@ -29,8 +29,8 @@ let examplePatch2 = new Patch({
   },
   editor: {
     position: {
-      x: 300,
-      y: 140,
+      x: 360,
+      y: 80,
       z: 2
     },
     isStartingPatch: false
@@ -45,8 +45,8 @@ let examplePatch3 = new Patch({
   },
   editor: {
     position: {
-      x: 560,
-      y: 200,
+      x: 600,
+      y: 400,
       z: 3
     },
     isStartingPatch: false

@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+import SvgArrow from './SvgArrow.js';
 // import { Route } from 'react-router-dom';
 
 // click and drag derived from https://stackoverflow.com/questions/20926551/recommended-way-of-making-react-component-div-draggable
@@ -254,11 +255,15 @@ class PatchNodeView extends React.Component {
     var regexp = /@([^:]+):(\d)/g;
     var match, matches = [];
     let links = [];
+    let linkTargetPositions = [];
 
     while ((match = regexp.exec(this.props.body)) != null) {
       matches.push(match.index);
       links.push(match);
     }
+
+    // TODO: get the arrow drawing working
+    links.forEach((link, index) => {});
 
     var draggingAngleStyle = () => {
       let yRotationScaler = -10;
@@ -324,6 +329,15 @@ class PatchNodeView extends React.Component {
             {this.renderMenu()}
           </footer>
         </div>
+        {links.map((link, index) => {
+          return (
+            <SvgArrow
+              thisPosition={{ x: this.props.xPos, y: this.props.yPos }}
+              link={link}
+              key={Math.random()}
+            />
+          );
+        })}
       </div>
     );
   }

@@ -141,12 +141,18 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       );
 }
 
-
+// .arrow-container {
+//   position: absolute;
+//   top: $patch-node-size / 2;
+//   left: $patch-node-size / 2;
+//   pointer-events:none;
+// }
 .svg-arrow {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: $patch-node-size / 2;
+  left: $patch-node-size / 2;
   pointer-events:none;
+  z-index: 1;
 }
 
 .patch-node {
@@ -154,8 +160,8 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   overflow-wrap: break-word;
   cursor: pointer;
   display: block;
-  width: 16rem;
-  height: 16rem;
+  width: $patch-node-size;
+  height: $patch-node-size;
   padding: .5rem;
   margin: 0;
   position: absolute;
@@ -163,8 +169,10 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   perspective: 1000px;
 
   .patch-node-wrapper {
-    width: 15rem;
-    height: 15rem;
+    position: relative;
+    z-index: 100;
+    width: $patch-node-size - 1rem;
+    height: $patch-node-size - 1rem;
     background: #fff;
     box-shadow: 0 .3rem .2rem 0 rgba($color-background, .1),
                 0 .3rem .8rem -.4rem rgba($color-link, .2),

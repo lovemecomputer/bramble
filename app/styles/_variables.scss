@@ -16,18 +16,10 @@ $color-link-hover: #5b4094;
 // measurements
 $radius-standard: .3rem;
 
-
-// other properties
-$speed-transition-standard: .35s;
-$speed-transition-hover: .1s;
-
-
-
-
-
-// measurements
 $border-width-meaurement: .1rem;
 $border-radius-measurement: .5rem;
+
+$patch-node-size: 16rem;
 
 // define z-index layers to keep track,
 // and leave plenty of flexibility in between
@@ -38,3 +30,7 @@ $zindex: (
   header    : 6000,
   footer    : 5000
 );
+
+// other properties
+$speed-transition-standard: .35s;
+$speed-transition-hover: .1s;
