@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import SvgArrow from './SvgArrow.js';
+import utils from '../utils.js';
 // import { Route } from 'react-router-dom';
 
 // click and drag derived from https://stackoverflow.com/questions/20926551/recommended-way-of-making-react-component-div-draggable
@@ -75,9 +76,9 @@ class PatchNodeView extends React.Component {
     event.preventDefault();
   }
 
-  clamp(num, min, max) {
-    return num <= min ? min : num >= max ? max : num;
-  }
+  // clamp(num, min, max) {
+  //   return num <= min ? min : num >= max ? max : num;
+  // }
 
   onMouseMove(event) {
     if (!this.state.didMouseDown1 || this.state.deleting) return;
@@ -99,8 +100,8 @@ class PatchNodeView extends React.Component {
     //  so they can be later averaged out to rotate the node based on movement
     //  clamp so it doesn't get too wonky
 
-    let newXDrift = this.clamp(newPos.x - oldPos.x, -100, 100);
-    let newYDrift = this.clamp(newPos.y - oldPos.y, -100, 100);
+    let newXDrift = utils.clamp(newPos.x - oldPos.x, -100, 100);
+    let newYDrift = utils.clamp(newPos.y - oldPos.y, -100, 100);
 
     let newXDrifts = this.state.drifts.x.slice(1, this.state.drifts.x.length);
     newXDrifts.push(newXDrift);
@@ -279,14 +280,22 @@ class PatchNodeView extends React.Component {
         sumX += this.state.drifts.x[i];
       }
       let averagedXDrift = sumX / this.state.drifts.x.length;
-      let clampedXDrift = this.clamp(averagedXDrift * yRotationScaler, -10, 10);
+      let clampedXDrift = utils.clamp(
+        averagedXDrift * yRotationScaler,
+        -10,
+        10
+      );
 
       let sumY = 0;
       for (let i = 0; i < this.state.drifts.y.length; i++) {
         sumY += this.state.drifts.y[i];
       }
       let averagedYDrift = sumY / this.state.drifts.y.length;
-      let clampedYDrift = this.clamp(averagedYDrift * xRotationScaler, -10, 10);
+      let clampedYDrift = utils.clamp(
+        averagedYDrift * xRotationScaler,
+        -10,
+        10
+      );
 
       if (this.state.dragging) {
         return {

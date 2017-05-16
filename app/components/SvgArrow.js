@@ -30,6 +30,8 @@ class SvgArrow extends React.Component {
     let targetPosition = { x: 0, y: 0 };
     let thisPosition = Object.assign({}, this.props.thisPosition);
 
+    let targetingNodeAdjustment = 1;
+
     if (
       this.props.bramble.patches[targetPatchIndex] === undefined ||
       this.props.bramble.patches[targetPatchIndex] === null
@@ -37,6 +39,7 @@ class SvgArrow extends React.Component {
       targetPosition.x = thisPosition.x + nodeWidth / 4 / 10;
       targetPosition.y = thisPosition.y;
       arrowColor = arrowNoTargetColor;
+      targetingNodeAdjustment = -1;
     } else {
       targetPosition.x = this.props.bramble.patches[
         targetPatchIndex
@@ -56,31 +59,27 @@ class SvgArrow extends React.Component {
     );
 
     arrowMagnitude -= nodeWidth / 1.7;
-    if (arrowMagnitude < 0) arrowMagnitude *= -1;
 
-    // console.log(arrowMagnitude);
+    if (arrowMagnitude < 0) arrowMagnitude *= targetingNodeAdjustment;
 
     let facingAngle = Math.atan2(
       targetPosition.y - thisPosition.y,
       targetPosition.x - thisPosition.x
     );
 
-    // sin wave reference: http://motionscript.com/articles/speed-control.html#frequency
-    // let calculateDiagonalDistance = angle => {
-    //   let freq = 1;
-    //   let amp = (nodeWidth * 1.414 - nodeWidth) / 2;
-    //   let number = nodeWidth / 2 + amp * Math.sin(Math.PI * freq * angle + 45);
-    //   return number;
-    // };
-    let calculateDiagonalDistance = angle => {
-      let freq = 4;
-      // let amp = (nodeWidth * 1.414 - nodeWidth) / 2;
-      let amp = -20;
-      // let number = nodeWidth / 2 + amp * Math.sin(Math.PI * angle);
-      let number = amp * Math.sin(180 + Math.PI + angle * freq);
-      return number;
-    };
-    arrowMagnitude -= calculateDiagonalDistance(facingAngle);
+    if (targetingNodeAdjustment === 1) {
+      let calculateDiagonalDistance = angle => {
+        let freq = 4;
+        // let amp = (nodeWidth * 1.414 - nodeWidth) / 2;
+        let amp = -20;
+        // let number = nodeWidth / 2 + amp * Math.sin(Math.PI * angle);
+        let number = amp * Math.sin(180 + Math.PI + angle * freq);
+        return number;
+      };
+      arrowMagnitude -= calculateDiagonalDistance(facingAngle);
+    }
+
+    arrowMagnitude = utils.clamp(arrowMagnitude, 100, Infinity);
 
     var rotation = () => {
       // let adjustment = calculateDiagonalDistance(facingAngle);
@@ -92,7 +91,7 @@ class SvgArrow extends React.Component {
       return {
         // transform: `rotatez(${facingAngle}rad) translateX(${nodeWidth / 2.5 / 10}rem)`,
         transform: `rotatez(${facingAngle}rad)`,
-        transformOrigin: 'left center'
+        transformOrigin: 'left 3px'
       };
       // return {
       //   transform: `rotatez(${facingAngle}rad)`,
@@ -103,8 +102,8 @@ class SvgArrow extends React.Component {
     return (
       <svg
         className="svg-arrow"
-        width={arrowMagnitude}
-        height="30px"
+        width={arrowMagnitude - 2}
+        height="20px"
         style={rotation()}
       >
         <defs>
@@ -123,9 +122,9 @@ class SvgArrow extends React.Component {
 
         <line
           x1="0"
-          y1="8"
+          y1="9"
           x2={arrowMagnitude - 20}
-          y2="8"
+          y2="9"
           stroke={arrowColor}
           strokeWidth="3"
           markerEnd="url(#arrow)"

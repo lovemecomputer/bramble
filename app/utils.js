@@ -25,6 +25,9 @@ const utils = {
       console.log('⚠️ utils.indexOfObjectWithPropertyValue found nothing!!');
       return null;
     }
+  },
+  clamp(num, min, max) {
+    return num <= min ? min : num >= max ? max : num;
   }
 };
 
