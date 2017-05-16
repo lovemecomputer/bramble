@@ -14,6 +14,8 @@ class Patchboard extends React.Component {
     this.handleInitiatePreview = this.handleInitiatePreview.bind(this);
     this.handBringPatchNodeToFront = this.handBringPatchNodeToFront.bind(this);
     this.dispatchPositionUpdate = this.dispatchPositionUpdate.bind(this);
+    this.dispatchMenuOpen = this.dispatchMenuOpen.bind(this);
+    this.dispatchMenuClose = this.dispatchMenuClose.bind(this);
   }
 
   componentDidMount() {
@@ -61,6 +63,26 @@ class Patchboard extends React.Component {
     });
   }
 
+  dispatchMenuOpen(patchId) {
+    this.props.dispatch({
+      type: 'OPEN_PATCH_NODE_MENU',
+      patchId: patchId
+    });
+  }
+
+  dispatchMenuOpen(patchId) {
+    this.props.dispatch({
+      type: 'OPEN_PATCH_NODE_MENU',
+      patchId: patchId
+    });
+  }
+
+  dispatchMenuClose() {
+    this.props.dispatch({
+      type: 'CLOSE_PATCH_NODE_MENU'
+    });
+  }
+
   openPatchEdit(patchId) {
     this.props.history.push(`/patchboard/patch-edit/${patchId}`);
   }
@@ -103,6 +125,13 @@ class Patchboard extends React.Component {
                   name={patch.content.name}
                   body={patch.content.body}
                   isStartingPatch={patch.editor.isStartingPatch}
+                  menuIsOpen={
+                    this.props.bramble.menuOpenedPatch === patch.patchId
+                  }
+                  openMenu={() => {
+                    this.dispatchMenuOpen(patch.patchId);
+                  }}
+                  closeMenu={this.dispatchMenuClose}
                   xPos={patch.editor.position.x}
                   yPos={patch.editor.position.y}
                   z={patch.editor.position.z}
