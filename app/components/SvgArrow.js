@@ -44,18 +44,36 @@ class SvgArrow extends React.Component {
       arrowOffset.x * arrowOffset.x + arrowOffset.y * arrowOffset.y
     );
 
-    arrowMagnitude -= nodeWidth;
+    arrowMagnitude -= nodeWidth / 0.9;
 
     let facingAngle = Math.atan2(
       targetPosition.y - thisPosition.y,
       targetPosition.x - thisPosition.x
     );
 
+    // sin wave reference: http://motionscript.com/articles/speed-control.html#frequency
+    // let calculateDiagonalDistance = angle => {
+    //   let freq = 1;
+    //   let amp = (nodeWidth * 1.414 - nodeWidth) / 2;
+    //   let number = nodeWidth / 2 + amp * Math.sin(Math.PI * freq * angle + 45);
+    //   return number;
+    // };
+
     var rotation = () => {
+      // let adjustment = calculateDiagonalDistance(facingAngle);
+      // console.log(adjustment);
+      // return {
+      //   transform: `rotatez(${facingAngle}rad) translateX(${adjustment / 10}rem)`,
+      //   transformOrigin: 'left center'
+      // };
       return {
-        transform: `rotatez(${facingAngle}rad) translateX(${nodeWidth / 2 / 10}rem)`,
+        transform: `rotatez(${facingAngle}rad) translateX(${nodeWidth / 2.5 / 10}rem)`,
         transformOrigin: 'left center'
       };
+      // return {
+      //   transform: `rotatez(${facingAngle}rad)`,
+      //   transformOrigin: 'left center'
+      // };
     };
 
     return (
