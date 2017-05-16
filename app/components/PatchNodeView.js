@@ -151,7 +151,8 @@ class PatchNodeView extends React.Component {
   }
 
   handleClickMenu() {
-    this.setState({ menuVisible: !this.state.menuVisible });
+    if (!this.state.dragging)
+      this.setState({ menuVisible: !this.state.menuVisible });
   }
 
   renderDeleteButton() {
