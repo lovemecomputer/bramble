@@ -10,6 +10,7 @@ class Header extends React.Component {
     super(props);
     this.saveProject = this.saveProject.bind(this);
     this.openProject = this.openProject.bind(this);
+    this.newProject = this.newProject.bind(this);
   }
 
   saveProject() {
@@ -23,6 +24,12 @@ class Header extends React.Component {
     this.props.dispatch(fileOpen());
   }
 
+  newProject() {
+    console.log('clicked open!');
+    // this.props.dispatch({ type: 'FILE_OPEN' });
+    this.props.dispatch({ type: 'NEW_PROJECT' });
+  }
+
   render() {
     return (
       <div className="app-top-area">
@@ -34,6 +41,7 @@ class Header extends React.Component {
           <div className="main-header-controls">
             <a onClick={this.saveProject}>save</a>
             <a onClick={this.openProject}>open</a>
+            <a onClick={this.newProject}>new</a>
           </div>
         </header>
       </div>
