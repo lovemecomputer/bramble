@@ -12,6 +12,7 @@ class Patchboard extends React.Component {
     this.openPatchEdit = this.openPatchEdit.bind(this);
     this.handleNewPatch = this.handleNewPatch.bind(this);
     this.handleInitiatePreview = this.handleInitiatePreview.bind(this);
+    this.handBringPatchNodeToFront = this.handBringPatchNodeToFront.bind(this);
     this.dispatchPositionUpdate = this.dispatchPositionUpdate.bind(this);
   }
 
@@ -42,6 +43,13 @@ class Patchboard extends React.Component {
 
   handleSetStartingPatch(patchId) {
     this.props.dispatch({ type: 'SET_STARTING_PATCH', patchId: patchId });
+  }
+
+  handBringPatchNodeToFront(patchId) {
+    this.props.dispatch({
+      type: 'BRING_PATCH_NODE_TO_FRONT',
+      patchId: patchId
+    });
   }
 
   dispatchPositionUpdate(patchId, newPosition) {
@@ -97,7 +105,10 @@ class Patchboard extends React.Component {
                   isStartingPatch={patch.editor.isStartingPatch}
                   xPos={patch.editor.position.x}
                   yPos={patch.editor.position.y}
+                  z={patch.editor.position.z}
                   updatePosition={this.dispatchPositionUpdate}
+                  bringToFront={() =>
+                    this.handBringPatchNodeToFront(patch.patchId)}
                   openPatchEdit={() => this.openPatchEdit(patch.patchId)}
                   deletePatch={() => this.handleDeletePatch(patch.patchId)}
                   setStartPatch={() =>
