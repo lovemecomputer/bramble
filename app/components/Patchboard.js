@@ -27,7 +27,7 @@ class Patchboard extends React.Component {
     this.props.dispatch(newPatch());
     if (this.props.history.location.pathname.includes('patch-edit')) {
       this.props.history.push(
-        `/patch-edit/${this.props.bramble.patches[this.props.bramble.patches.length - 1].patchId}`
+        `/patchboard/patch-edit/${this.props.bramble.patches[this.props.bramble.patches.length - 1].patchId}`
       );
     }
   }
@@ -50,7 +50,7 @@ class Patchboard extends React.Component {
   }
 
   openPatchEdit(patchId) {
-    this.props.history.push(`/patch-edit/${patchId}`);
+    this.props.history.push(`/patchboard/patch-edit/${patchId}`);
   }
 
   patchboardWrapperClasses() {
