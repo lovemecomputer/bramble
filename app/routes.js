@@ -18,14 +18,31 @@ function wrapperClassNames() {
   return classNames.join(' ');
 }
 
+// <Router>
+//   <App>
+//     <div className={wrapperClassNames()}>
+//       <Header />
+//       <Route path="/" component={Patchboard} />
+//       <Route path="/patch-edit/:patchId" component={PatchEdit} />
+//       <Route path="/patch-edit/closing-edit" component={ClosingModal} />
+//       <Route exact path="/preview" component={Preview} />
+//       <Route exact path="/preview/:id" component={Preview} />
+//     </div>
+//   </App>
+// </Router>
+
 export default () => (
   <Router>
     <App>
       <div className={wrapperClassNames()}>
         <Header />
         <Route path="/" component={Patchboard} />
-        <Route path="/patch-edit/:patchId" component={PatchEdit} />
-        <Route path="/patch-edit/closing-edit" component={ClosingModal} />
+        <Route path="/patchboard" component={Patchboard} />
+        <Route path="/patchboard/patch-edit/:patchId" component={PatchEdit} />
+        <Route
+          path="/patchboard/patch-edit/closing-edit"
+          component={ClosingModal}
+        />
         <Route exact path="/preview" component={Preview} />
         <Route exact path="/preview/:id" component={Preview} />
       </div>
