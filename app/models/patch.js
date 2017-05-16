@@ -16,7 +16,13 @@ export default function Patch(attributes) {
       y: (attributes.editor &&
         attributes.editor.position &&
         attributes.editor.position.y) ||
+        0,
+      z: (attributes.editor &&
+        attributes.editor.position &&
+        attributes.editor.position.z) ||
         0
-    }
+    },
+    isStartingPatch: (attributes.editor && attributes.editor.isStartingPatch) ||
+      false
   };
 }

@@ -2,6 +2,9 @@ import Patch from '../models/patch.js';
 
 export default function newPatch() {
   return (dispatch, getState) => {
+    let isStarting = false;
+    if (getState().bramble.patches.length === 0) isStarting = true;
+
     const newPatch = new Patch({
       patchId: Number(getState().bramble.patchCounter + 1),
       content: {
@@ -15,7 +18,8 @@ export default function newPatch() {
         position: {
           x: 60,
           y: 60
-        }
+        },
+        isStartingPatch: isStarting
       }
     });
     dispatch({

@@ -1,17 +1,21 @@
 # bramble 🌱
 
-### A IF editor, starting with a Twine-like interface in its first iteration
+### An interactive fiction or dialog editor
+
+Inspired by [Twine](https://twinery.org/), [Yarn](https://github.com/InfiniteAmmoInc/Yarn), and the like.
 
 ---
 
-[twitter thread](https://twitter.com/animalphase/status/858031784927391745)
+Heavily in alpha. Approaching a point of testing, feedback, and input if you would like to get invovled.
+
+[twitter progress thread](https://twitter.com/animalphase/status/858031784927391745)
 
 ---
 
-A native desktop app running in Electron. Started from: https://github.com/animalphase/bramble
+A native desktop app running in Electron. Started from this boilerplate: https://github.com/chentsulin/electron-react-boilerplate
 
 ---
 
-bramble is brought to you by: [charli taylor e](http://loveme.computer/)
+Bramble is brought to you by [charli taylor e](http://loveme.computer/) aka [animalphase](http://animalphase.com/).
 
-contact me on [twitter](https://twitter.com/animalphase)
+Contact me on [twitter](https://twitter.com/animalphase)

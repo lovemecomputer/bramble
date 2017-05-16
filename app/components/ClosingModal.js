@@ -13,7 +13,7 @@ class ClosingModal extends React.Component {
     console.log('CLOSING MOUNTED');
     setTimeout(() => {
       console.log('TIMINGOUT');
-      this.props.history.push('/');
+      this.props.history.push('/patchboard');
     }, 200);
   }
 

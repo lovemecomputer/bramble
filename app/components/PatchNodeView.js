@@ -11,16 +11,20 @@ class PatchNodeView extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleMouseDownForDrag = this.handleMouseDownForDrag.bind(this);
+    this.handleClickMenu = this.handleClickMenu.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
+    this.renderSetStartButton = this.renderSetStartButton.bind(this);
     this.renderMenuButton = this.renderMenuButton.bind(this);
-    // this.renderSvg = this.renderSvg.bind(this);
+    this.renderStartingStatus = this.renderStartingStatus.bind(this);
     this.classNames = this.classNames.bind(this);
 
     this.state = {
+      menuVisible: false,
       linkCoordinates: [],
       didMouseDown1: false,
+      deleting: false,
       dragging: false,
       relativeToClickPoint: {
         x: 0,
@@ -49,7 +53,8 @@ class PatchNodeView extends React.Component {
   }
 
   handleMouseDownForDrag(event) {
-    if (event.button !== 0) return;
+    if (event.button !== 0 || this.state.deleting) return;
+    this.props.bringToFront();
     this.setState({ didMouseDown1: true });
     document.body.style.cursor = '-webkit-grabbing';
 
@@ -75,7 +80,7 @@ class PatchNodeView extends React.Component {
   }
 
   onMouseMove(event) {
-    if (!this.state.didMouseDown1) return;
+    if (!this.state.didMouseDown1 || this.state.deleting) return;
 
     // save previous position and get updated position, based on where the mouse is
 
@@ -146,18 +151,56 @@ class PatchNodeView extends React.Component {
     }
   }
 
+  handleClickMenu() {
+    if (!this.state.dragging)
+      this.setState({ menuVisible: !this.state.menuVisible });
+  }
+
   renderDeleteButton() {
     return (
       <a
         className="delete-button"
         onClick={event => {
           event.stopPropagation();
+          this.setState({
+            menuVisible: false,
+            deleting: true,
+            didMouseDown1: false,
+            dragging: false
+          });
           this.props.deletePatch();
         }}
       >
-        delete
+        Delete this patch
       </a>
     );
+  }
+
+  renderSetStartButton() {
+    if (this.props.isStartingPatch) {
+      return (
+        <span className="starting-patch-info">
+          ▶︎ Starting patch: your story will begin here
+        </span>
+      );
+    } else {
+      return (
+        <a
+          className="set-starting-patch-button"
+          onClick={event => {
+            event.stopPropagation();
+            this.setState({
+              menuVisible: false,
+              didMouseDown1: false,
+              dragging: false
+            });
+            this.props.setStartPatch();
+          }}
+        >
+          Set as starting patch
+        </a>
+      );
+    }
   }
 
   renderMenuButton() {
@@ -166,11 +209,39 @@ class PatchNodeView extends React.Component {
         className="menu-button"
         onClick={event => {
           event.stopPropagation();
+          this.handleClickMenu();
         }}
       >
         menu
       </a>
     );
+  }
+
+  renderStartingStatus() {
+    if (this.props.isStartingPatch)
+      return <span className="starting-patch-tag">Start</span>;
+  }
+
+  renderMenu() {
+    if (this.state.menuVisible) {
+      // QUESTION: remove this after clicking?
+      // document.getElementsByTagName('body')[0].addEventListener('click', () => {
+      //   this.setState({ menuVisible: false });
+      // });
+      return (
+        <div
+          className="patch-node-menu"
+          onClick={event => {
+            event.stopPropagation();
+          }}
+        >
+          <ul>
+            <li>{this.renderDeleteButton()}</li>
+            <li>{this.renderSetStartButton()}</li>
+          </ul>
+        </div>
+      );
+    }
   }
 
   classNames() {
@@ -203,21 +274,21 @@ class PatchNodeView extends React.Component {
         sumX += this.state.drifts.x[i];
       }
       let averagedXDrift = sumX / this.state.drifts.x.length;
-      let clampedXDrift = this.clamp(averagedXDrift * yRotationScaler, -20, 20);
+      let clampedXDrift = this.clamp(averagedXDrift * yRotationScaler, -10, 10);
 
       let sumY = 0;
       for (let i = 0; i < this.state.drifts.y.length; i++) {
         sumY += this.state.drifts.y[i];
       }
       let averagedYDrift = sumY / this.state.drifts.y.length;
-      let clampedYDrift = this.clamp(averagedYDrift * xRotationScaler, -20, 20);
+      let clampedYDrift = this.clamp(averagedYDrift * xRotationScaler, -10, 10);
 
       if (this.state.dragging) {
         return {
-          transform: `rotateX(${clampedYDrift}deg) rotateY(${clampedXDrift}deg) translateY(-.4em) scale(1.03)`
+          transform: `rotateX(${clampedYDrift}deg) rotateY(${clampedXDrift}deg) translateY(${clampedYDrift * 0.08}em) translateX(${clampedXDrift * 0.08}em) scale(1.03)`
         };
       } else {
-        return { background: '#fff' };
+        return { appearance: 'none' }; // gotta return something to make JSX/React happy
       }
     };
 
@@ -238,7 +309,8 @@ class PatchNodeView extends React.Component {
         }}
         style={{
           top: `${this.props.yPos / 10}rem`,
-          left: `${this.props.xPos / 10}rem`
+          left: `${this.props.xPos / 10}rem`,
+          zIndex: `${this.props.z}`
         }}
         tabIndex="2"
       >
@@ -250,13 +322,14 @@ class PatchNodeView extends React.Component {
             {this.props.body}
           </section>
           <footer className="patch-footer">
-            <span className="patch-id">patch id: {this.props.patchId}</span>
+            <span className="patch-id">id: {this.props.patchId}</span>
             {/*this.renderDeleteButton()*/}
+            {this.renderStartingStatus()}
             {this.renderMenuButton()}
+            {this.renderMenu()}
           </footer>
         </div>
         {links.map((link, index) => {
-          // this.renderSvg(link);
           return (
             <SvgArrow
               thisPosition={{ x: this.props.xPos, y: this.props.yPos }}
