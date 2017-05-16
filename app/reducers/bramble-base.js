@@ -58,7 +58,8 @@ const exampleState = {
   projectName: 'Example Project',
   patches: [examplePatch, examplePatch2, examplePatch3],
   patchCounter: 2, // used to make IDs until autocomplete & unique ID system is implemented
-  displayFormattedPreview: true
+  displayFormattedPreview: true,
+  menuOpenedPatch: -1
 };
 
 const newState = {
@@ -66,7 +67,8 @@ const newState = {
   projectName: 'New Project',
   patches: [],
   patchCounter: 0, // used to make IDs until autocomplete & unique ID system is implemented
-  displayFormattedPreview: true
+  displayFormattedPreview: true,
+  menuOpenedPatch: -1
 };
 
 export default function bramble(currentState, action) {
@@ -146,6 +148,16 @@ export default function bramble(currentState, action) {
       } else {
         return currentState;
       }
+
+    case 'OPEN_PATCH_NODE_MENU':
+      return Object.assign({}, currentState, {
+        menuOpenedPatch: action.patchId
+      });
+
+    case 'CLOSE_PATCH_NODE_MENU':
+      return Object.assign({}, currentState, {
+        menuOpenedPatch: -1
+      });
 
     case 'SET_STARTING_PATCH':
       var targetIndex = utils.indexOfObjectWithPropertyValue(

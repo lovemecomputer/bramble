@@ -21,6 +21,28 @@ const listenToPresses = e => {
   // TODO: PREVENT SOME KEYSTOKES WITH ELECTRON API
 };
 document.addEventListener('keydown', listenToPresses);
+document.addEventListener('mousedown', event => {
+  store.dispatch({
+    type: 'MOUSE_DOWN',
+    data: {
+      target: event.target,
+      button: event.button,
+      mouseX: event.clientX,
+      mouseY: event.clientY
+    }
+  });
+});
+document.addEventListener('click', event => {
+  store.dispatch({
+    type: 'MOUSE_CLICK',
+    data: {
+      target: event.target,
+      button: event.button,
+      mouseX: event.clientX,
+      mouseY: event.clientY
+    }
+  });
+});
 
 render(
   <AppContainer>
