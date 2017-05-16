@@ -315,7 +315,7 @@ class PatchNodeView extends React.Component {
         style={{
           top: `${this.props.yPos / 10}rem`,
           left: `${this.props.xPos / 10}rem`,
-          zIndex: `${this.props.z}`
+          zIndex: `${this.props.z + 3000}`
         }}
         tabIndex="2"
       >
