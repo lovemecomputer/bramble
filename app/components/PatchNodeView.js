@@ -168,7 +168,7 @@ class PatchNodeView extends React.Component {
           this.props.deletePatch();
         }}
       >
-        Delete
+        Delete this patch
       </a>
     );
   }
@@ -194,6 +194,10 @@ class PatchNodeView extends React.Component {
 
   renderMenu() {
     if (this.state.menuVisible) {
+      // QUESTION: remove this after clicking?
+      // document.getElementsByTagName('body')[0].addEventListener('click', () => {
+      //   this.setState({ menuVisible: false });
+      // });
       return (
         <div
           className="patch-node-menu"
@@ -202,12 +206,12 @@ class PatchNodeView extends React.Component {
           }}
         >
           <ul>
+            <li>{this.renderDeleteButton()}</li>
             <li>
               <a className="set-starting-patch-button">
-                ▶︎ Set as starting patch
+                Set as starting patch
               </a>
             </li>
-            <li>{this.renderDeleteButton()}</li>
           </ul>
         </div>
       );
