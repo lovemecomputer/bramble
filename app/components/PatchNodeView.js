@@ -14,6 +14,7 @@ class PatchNodeView extends React.Component {
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
+    this.renderSetStartButton = this.renderSetStartButton.bind(this);
     this.renderMenuButton = this.renderMenuButton.bind(this);
     this.renderStartingStatus = this.renderStartingStatus.bind(this);
     this.classNames = this.classNames.bind(this);
@@ -77,7 +78,7 @@ class PatchNodeView extends React.Component {
   }
 
   onMouseMove(event) {
-    if (!this.state.didMouseDown1) return;
+    if (!this.state.didMouseDown1 || this.state.deleting) return;
 
     // save previous position and get updated position, based on where the mouse is
 
@@ -173,6 +174,33 @@ class PatchNodeView extends React.Component {
     );
   }
 
+  renderSetStartButton() {
+    if (this.props.isStartingPatch) {
+      return (
+        <span className="starting-patch-info">
+          ▶︎ Starting patch: your story will begin here
+        </span>
+      );
+    } else {
+      return (
+        <a
+          className="set-starting-patch-button"
+          onClick={event => {
+            event.stopPropagation();
+            this.setState({
+              menuVisible: false,
+              didMouseDown1: false,
+              dragging: false
+            });
+            this.props.setStartPatch();
+          }}
+        >
+          Set as starting patch
+        </a>
+      );
+    }
+  }
+
   renderMenuButton() {
     return (
       <a
@@ -207,11 +235,7 @@ class PatchNodeView extends React.Component {
         >
           <ul>
             <li>{this.renderDeleteButton()}</li>
-            <li>
-              <a className="set-starting-patch-button">
-                Set as starting patch
-              </a>
-            </li>
+            <li>{this.renderSetStartButton()}</li>
           </ul>
         </div>
       );
