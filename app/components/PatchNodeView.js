@@ -10,15 +10,19 @@ class PatchNodeView extends React.Component {
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleMouseDownForDrag = this.handleMouseDownForDrag.bind(this);
+    this.handleClickMenu = this.handleClickMenu.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.renderDeleteButton = this.renderDeleteButton.bind(this);
     this.renderMenuButton = this.renderMenuButton.bind(this);
+    this.renderStartingStatus = this.renderStartingStatus.bind(this);
     this.classNames = this.classNames.bind(this);
 
     this.state = {
+      menuVisible: false,
       linkCoordinates: [],
       didMouseDown1: false,
+      deleting: false,
       dragging: false,
       relativeToClickPoint: {
         x: 0,
@@ -47,7 +51,7 @@ class PatchNodeView extends React.Component {
   }
 
   handleMouseDownForDrag(event) {
-    if (event.button !== 0) return;
+    if (event.button !== 0 || this.state.deleting) return;
     this.setState({ didMouseDown1: true });
     document.body.style.cursor = '-webkit-grabbing';
 
@@ -144,16 +148,27 @@ class PatchNodeView extends React.Component {
     }
   }
 
+  handleClickMenu() {
+    this.setState({ menuVisible: !this.state.menuVisible });
+    console.log('>>>>>> menu clicked!', this.state.menuVisible);
+  }
+
   renderDeleteButton() {
     return (
       <a
         className="delete-button"
         onClick={event => {
           event.stopPropagation();
+          this.setState({
+            menuVisible: false,
+            deleting: true,
+            didMouseDown1: false,
+            dragging: false
+          });
           this.props.deletePatch();
         }}
       >
-        delete
+        Delete
       </a>
     );
   }
@@ -164,11 +179,39 @@ class PatchNodeView extends React.Component {
         className="menu-button"
         onClick={event => {
           event.stopPropagation();
+          this.handleClickMenu();
         }}
       >
         menu
       </a>
     );
+  }
+
+  renderStartingStatus() {
+    if (this.props.isStartingPatch)
+      return <span className="starting-patch-tag">Start</span>;
+  }
+
+  renderMenu() {
+    if (this.state.menuVisible) {
+      return (
+        <div
+          className="patch-node-menu"
+          onClick={event => {
+            event.stopPropagation();
+          }}
+        >
+          <ul>
+            <li>
+              <a className="set-starting-patch-button">
+                ▶︎ Set as starting patch
+              </a>
+            </li>
+            <li>{this.renderDeleteButton()}</li>
+          </ul>
+        </div>
+      );
+    }
   }
 
   classNames() {
@@ -244,9 +287,11 @@ class PatchNodeView extends React.Component {
             {this.props.body}
           </section>
           <footer className="patch-footer">
-            <span className="patch-id">patch id: {this.props.patchId}</span>
+            <span className="patch-id">id: {this.props.patchId}</span>
             {/*this.renderDeleteButton()*/}
+            {this.renderStartingStatus()}
             {this.renderMenuButton()}
+            {this.renderMenu()}
           </footer>
         </div>
       </div>

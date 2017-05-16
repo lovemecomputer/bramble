@@ -17,6 +17,8 @@ export default function Patch(attributes) {
         attributes.editor.position &&
         attributes.editor.position.y) ||
         0
-    }
+    },
+    isStartingPatch: (attributes.editor && attributes.editor.isStartingPatch) ||
+      false
   };
 }
