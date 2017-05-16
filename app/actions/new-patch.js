@@ -7,6 +7,7 @@ export default function newPatch() {
 
     const newPatch = new Patch({
       patchId: Number(getState().bramble.patchCounter + 1),
+      isStartingPatch: isStarting,
       content: {
         name: '',
         body: '',
@@ -18,8 +19,7 @@ export default function newPatch() {
         position: {
           x: 60,
           y: 60
-        },
-        isStartingPatch: isStarting
+        }
       }
     });
     dispatch({

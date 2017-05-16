@@ -7,6 +7,7 @@ const fs = require('fs');
 
 let examplePatch = new Patch({
   patchId: 0,
+  isStartingPatch: true,
   content: {
     name: 'Example Patch',
     body: 'Welcome to **Bramble** — an app to create interactive fiction, text-based games, or whatever you come up with.\n\nEach individual unit is called a *patch*.\n\nThis is a link to another patch: @Move ahead:1'
@@ -16,13 +17,13 @@ let examplePatch = new Patch({
       x: 60,
       y: 100,
       z: 1
-    },
-    isStartingPatch: true
+    }
   }
 });
 
 let examplePatch2 = new Patch({
   patchId: 1,
+  isStartingPatch: false,
   content: {
     name: 'Second Example Patch',
     body: '## Next steps\n\nIf you are outputting to web, **Bramble** will allow you to *format* your text with Markdown.\n\n---\n\n@Go back.:0\n\n**@Keep going.:2**'
@@ -32,13 +33,13 @@ let examplePatch2 = new Patch({
       x: 360,
       y: 100,
       z: 2
-    },
-    isStartingPatch: false
+    }
   }
 });
 
 let examplePatch3 = new Patch({
   patchId: 2,
+  isStartingPatch: false,
   content: {
     name: 'Third Example Patch',
     body: '# Tell a story~\n\n**Bramble** will allow you to publish in a format that can be easily shared to anyone that can browse the internet.\n\nOr, use **Bramble** as an authoring tool, and export your data do use in other systems.\n\n@Go back to the first patch:0 or @the second patch:1 woohoo.'
@@ -48,8 +49,7 @@ let examplePatch3 = new Patch({
       x: 520,
       y: 400,
       z: 3
-    },
-    isStartingPatch: false
+    }
   }
 });
 
@@ -166,15 +166,12 @@ export default function bramble(currentState, action) {
         currentState.patches
       );
       if (targetIndex !== null) {
-        // var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
-        // updatedPatch.editor.startingPatch = true;
-        // updatedPatches[targetIndex] = updatedPatch;
         var updatedPatches = currentState.patches.slice();
         updatedPatches.forEach(patch => {
           if (patch.patchId === action.patchId) {
-            patch.editor.isStartingPatch = true;
+            patch.isStartingPatch = true;
           } else {
-            patch.editor.isStartingPatch = false;
+            patch.isStartingPatch = false;
           }
         });
         return Object.assign({}, currentState, {

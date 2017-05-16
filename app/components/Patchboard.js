@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import PatchNodeView from './PatchNodeView.js';
 import newPatch from '../actions/new-patch.js';
+import utils from '../utils.js';
 
 class Patchboard extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Patchboard extends React.Component {
     this.handleNewPatch = this.handleNewPatch.bind(this);
     this.handleInitiatePreview = this.handleInitiatePreview.bind(this);
     this.handBringPatchNodeToFront = this.handBringPatchNodeToFront.bind(this);
+    this.handleSetStartingPatch = this.handleSetStartingPatch.bind(this);
     this.dispatchPositionUpdate = this.dispatchPositionUpdate.bind(this);
     this.dispatchMenuOpen = this.dispatchMenuOpen.bind(this);
     this.dispatchMenuClose = this.dispatchMenuClose.bind(this);
@@ -36,7 +38,19 @@ class Patchboard extends React.Component {
   }
 
   handleInitiatePreview() {
-    this.props.history.push('/preview/0');
+    var targetIndex = utils.indexOfObjectWithPropertyValue(
+      'isStartingPatch',
+      true,
+      this.props.bramble.patches
+    );
+    console.log('▶️ preview starting target: ', targetIndex);
+    if (targetIndex === null || targetIndex === undefined) {
+      window.alert(
+        'No starting patch found. Set a patch to be a starting point.'
+      );
+    } else {
+      this.props.history.push('/preview/' + targetIndex);
+    }
   }
 
   handleDeletePatch(patchId) {
@@ -124,7 +138,7 @@ class Patchboard extends React.Component {
                   patchId={patch.patchId}
                   name={patch.content.name}
                   body={patch.content.body}
-                  isStartingPatch={patch.editor.isStartingPatch}
+                  isStartingPatch={patch.isStartingPatch}
                   menuIsOpen={
                     this.props.bramble.menuOpenedPatch === patch.patchId
                   }
