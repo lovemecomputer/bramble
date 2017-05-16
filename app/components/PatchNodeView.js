@@ -204,12 +204,21 @@ class PatchNodeView extends React.Component {
   }
 
   renderMenuButton() {
+    let action = this.props.openMenu;
+    if (this.props.menuIsOpen) action = this.props.closeMenu;
     return (
       <a
         className="menu-button"
         onClick={event => {
           event.stopPropagation();
-          this.handleClickMenu();
+          if (action) action();
+          // this.handleClickMenu();
+          // QUESTION: remove this after clicking?
+          // document
+          //   .getElementsByTagName('body')[0]
+          //   .addEventListener('mousedown', () => {
+          //     this.setState({ menuVisible: false });
+          //   });
         }}
       >
         menu
@@ -223,11 +232,7 @@ class PatchNodeView extends React.Component {
   }
 
   renderMenu() {
-    if (this.state.menuVisible) {
-      // QUESTION: remove this after clicking?
-      // document.getElementsByTagName('body')[0].addEventListener('click', () => {
-      //   this.setState({ menuVisible: false });
-      // });
+    if (this.props.menuIsOpen) {
       return (
         <div
           className="patch-node-menu"
