@@ -153,11 +153,15 @@ export default function bramble(currentState, action) {
       if (targetIndex !== null) {
         // var updatedPatch = Object.assign({}, currentState.patches[targetIndex]);
         // updatedPatch.editor.startingPatch = true;
+        // updatedPatches[targetIndex] = updatedPatch;
         var updatedPatches = currentState.patches.slice();
         updatedPatches.forEach(patch => {
-          // if(patch.)
+          if (patch.patchId === action.patchId) {
+            patch.editor.isStartingPatch = true;
+          } else {
+            patch.editor.isStartingPatch = false;
+          }
         });
-        // updatedPatches[targetIndex] = updatedPatch;
         return Object.assign({}, currentState, {
           patches: updatedPatches
         });
