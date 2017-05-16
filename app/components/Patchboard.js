@@ -116,6 +116,7 @@ class Patchboard extends React.Component {
                   dragFunction={() => {
                     this.handleDragPatch(patch.patchId);
                   }}
+                  patches={this.props.bramble.patches}
                 />
               );
             })}
