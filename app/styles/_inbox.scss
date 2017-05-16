@@ -180,16 +180,17 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
                 0 0 4rem -1.6rem rgba($color-link, .8),
                 0 .8rem 1rem -.6rem rgba($color-dark, .05);
     transition: .3s;
+    border-radius: $border-radius-measurement;
   }
 
   .patch-header {
     height: 2.4rem;
     padding: .6rem 1rem;
-    border-bottom: .1rem solid $color-light;
+    // border-bottom: .1rem solid $color-light;
 
     .patch-title {
-      height: 1.2rem;
-      line-height: 1.2rem;
+      // height: 1.2rem;
+      // line-height: 1.2rem;
       margin: 0;
       padding: 0;
       white-space: nowrap;
@@ -200,7 +201,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
 
   .patch-body {
-    padding: 1rem;
+    padding: 0 1rem;
     font-family: 'Source Code Pro', monospace;
     letter-spacing: -.05rem;
     height: 10.2rem;
@@ -219,8 +220,9 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       linear-gradient(
         0deg,
         rgba(255,255,255,1) 0%,
-        rgba(255,255,255,1) 1%,
-        rgba(255,255,255,.6) 14%,
+        rgba(255,255,255,.9) 1%,
+        rgba(255,255,255,.8) 6%,
+        rgba(255,255,255,.6) 10.5%,
         transparent 15%,
         transparent
         );
@@ -231,7 +233,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     height: 2.4rem;
     padding: .6rem 1rem;
     font-size: 1em;
-    border-top: .1rem solid $color-light;
+    // border-top: .1rem solid $color-light;
     position: relative;
   }
 
@@ -328,9 +330,13 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
 .patch-node-menu {
   background: $color-white;
-  margin: 0;
   padding: .3rem;
-  border-top: .1rem solid $color-light;
+  border-radius: $border-radius-measurement;
+  box-shadow: 0 .8rem .3rem -.3rem rgba($color-background, .2),
+              0 1.4rem 2.4rem -1.2rem rgba($color-link, 1),
+              0 0 .3rem -.1rem rgba($color-dark, .6),
+              0 0 5rem -1rem rgba($color-link, .2),
+              0 1.8rem 2.9rem -.8rem rgba($color-dark, .6);
 
   ul {
     margin: 0;
@@ -341,6 +347,10 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   li {
     margin: 0;
     padding: 0;
+
+    &:last-child a {
+      border: none;
+    }
   }
 
   a {
@@ -361,7 +371,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 }
 
 .patch-footer .patch-node-menu {
-  margin: .4rem -1rem 0 -1rem;
+  margin: .6rem -1rem 0 -1rem;
 }
 
 .delete-button {
@@ -479,6 +489,7 @@ overlays
   background: #fff;
   padding: 4rem; // margin inside of modal
   position: relative;
+  border-radius: $border-radius-measurement;
 }
 .close-modal-button {
   display: block;
