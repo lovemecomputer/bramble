@@ -4,7 +4,7 @@ import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import PatchNodeView from './PatchNodeView.js';
-import newPatch from '../actions/new-patch.js';
+import newPatch from '../actions/newPatch.js';
 import utils from '../utils.js';
 
 class Patchboard extends React.Component {
