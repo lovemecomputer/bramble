@@ -168,6 +168,8 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     background: #fff;
     box-shadow: 0 .3rem .2rem 0 rgba($color-background, .1),
                 0 .3rem .8rem -.4rem rgba($color-link, .2),
+                0 0 .3rem -.1rem rgba($color-dark, .6),
+                0 0 4rem -1.6rem rgba($color-link, .8),
                 0 .8rem 1rem -.6rem rgba($color-dark, .05);
     transition: .3s;
   }
@@ -208,8 +210,9 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       background:
       linear-gradient(
         0deg,
-        #fff 0%,
-        #fff 1.5%,
+        rgba(255,255,255,1) 0%,
+        rgba(255,255,255,1) 1%,
+        rgba(255,255,255,.6) 14%,
         transparent 15%,
         transparent
         );
@@ -241,6 +244,8 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       transition: .1s;
       box-shadow: 0 .1rem .1rem 0rem rgba($color-background, .2),
                   0 .1rem .4rem -.2rem rgba($color-link, 1),
+                  0 0 .3rem -.1rem rgba($color-dark, .6),
+                  0 0 5rem -1rem rgba($color-link, .2),
                   0 .3rem .4rem -.2rem rgba($color-dark, .4);
     }
   }
