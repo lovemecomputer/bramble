@@ -26,6 +26,7 @@ class PatchEdit extends React.Component {
     this.enterNameText = this.enterNameText.bind(this);
     this.auto_grow = this.auto_grow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
+    this.insertLink = this.insertLink.bind(this);
     this.handleDeletePatch = this.handleDeletePatch.bind(this);
     this.toggleFormattedPreview = this.toggleFormattedPreview.bind(this);
 
@@ -33,7 +34,11 @@ class PatchEdit extends React.Component {
     this.renderFormattedPreview = this.renderFormattedPreview.bind(this);
 
     this.state = {
-      closing: false
+      currentPatch: {},
+      currentPatchId: undefined,
+      closing: false,
+      cursorPositionStart: 0,
+      cursorPositionEnd: 0
     };
   }
 
@@ -42,17 +47,19 @@ class PatchEdit extends React.Component {
       type: 'SHOWING_PATCH_EDIT',
       onEscape: this.closePatchEditor,
       onCmdEnter: this.closePatchEditor,
-      onCtrlShiftM: this.toggleFormattedPreview
+      onCtrlShiftM: this.toggleFormattedPreview,
+      onCmdL: this.insertLink
     });
     this.auto_grow(this.refs.patchInput);
+    // TODO: THIS BELOW
+    // this.setState({ cursorPositionStart: currentPatch.content.body.length });
   }
 
   componentDidUpdate(nextProps) {
     this.auto_grow(this.refs.patchInput);
     // if (nextProps.match.url !== this.props.match.url) {
-    //   console.log('auto growing!!');
     //   this.auto_grow(this.refs.patchInput);
-    // }
+    // }=
   }
 
   closePatchEditor() {
@@ -72,6 +79,8 @@ class PatchEdit extends React.Component {
   }
 
   enterBodyText(event) {
+    // console.log(event.target.selectionStart);
+    // this.setState({ cursorPositionStart: event.target.selectionStart });
     this.auto_grow(event.target);
     this.props.dispatch({
       type: 'UPDATE_PATCH_BODY',
@@ -79,6 +88,91 @@ class PatchEdit extends React.Component {
       body: event.target.value
     });
     // this.props.dispatch(updatePatchBody(e));
+  }
+
+  insertLink(options) {
+    console.log('\n\n\n>>> INSERTING LINK!!');
+    // TODO: MUST LOOK UP BODY BY ID I GUESS
+    let lookup = utils.indexesToIds(this.props.bramble.patches);
+    let currentPatchId = this.props.match.params.patchId;
+    let currentPatch = lookup[currentPatchId];
+
+    // inserting into string derived from https://stackoverflow.com/questions/4364881/inserting-string-at-position-x-of-another-string
+    let currentText = currentPatch.content.body;
+    let linkMarkupStartCharacter = '@@';
+    let linkMarkupIdentifyingCharacter = ':';
+    let defaultLinkText = 'link text';
+    let linkInsert = [''];
+    let linkText = '';
+    let linkId = '13';
+    let positionStart = this.state.cursorPositionStart;
+    let positionEnd = this.state.cursorPositionEnd;
+    // use a string type what placement option for cursor e.g. 'inside', 'after'
+    let putCursorHereAfterLinkInsertion = '';
+    let afterInsertionCursorTarget = 0;
+
+    // if end point hasn't been define, there is no selection
+    if (positionEnd === undefined || positionEnd === null)
+      positionEnd = positionStart;
+
+    // BUILD LINK :::::::::
+    linkInsert.push(linkMarkupStartCharacter);
+
+    if (positionEnd === positionStart) {
+      // if standard, single-place cursor position
+      // if clicked the button rather than using a shortcut, put in example text
+      if (options && options.clicked) {
+        // if clicked button, we want to put in example text
+        linkInsert.push(defaultLinkText);
+        putCursorHereAfterLinkInsertion = 'after';
+      } else {
+        // if keyboard shortcut, want to place cursor inside and let ppl type in their own text quickly
+        linkInsert.push('');
+        putCursorHereAfterLinkInsertion = 'inside';
+      }
+    } else {
+      // if we have a text selection!
+      let selectedText = currentPatch.content.body.slice(
+        positionStart,
+        positionEnd
+      );
+      linkInsert.push(selectedText);
+      // puts cursor to end of entire link:
+      putCursorHereAfterLinkInsertion = 'after';
+    }
+
+    linkInsert.push(linkMarkupIdentifyingCharacter);
+    linkInsert.push(linkId);
+
+    let linkInsertString = linkInsert.join('');
+
+    let output = [
+      currentText.slice(0, positionStart),
+      linkInsertString,
+      currentText.slice(positionEnd)
+    ].join('');
+
+    this.props.dispatch({
+      type: 'UPDATE_PATCH_BODY',
+      patchId: Number(currentPatchId),
+      body: output
+    });
+
+    switch (putCursorHereAfterLinkInsertion) {
+      case 'inside':
+        // puts cursor to end of entire link:
+        afterInsertionCursorTarget =
+          Number(positionStart) + linkMarkupStartCharacter.length;
+        break;
+
+      case 'after':
+        // puts cursor inside of link:
+        afterInsertionCursorTarget =
+          Number(positionStart) + linkInsertString.length;
+        break;
+    }
+
+    this.refs.patchInput.selectionEnd = afterInsertionCursorTarget;
   }
 
   handleDeletePatch(patchId) {
@@ -98,8 +192,20 @@ class PatchEdit extends React.Component {
     }
     let renderedHTML = marked(patch.content.body);
 
+    // TODO: escape regex characters
+    // - https://lodash.com/docs/4.17.4#escapeRegExp
+    // - https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+    //  - can add to utils.js:
+    /*  function escapeRegExp(str) {
+              return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+            } */
+
+    // TODO: escape brambleScript characters
+
+    // NOTE: use this tool to test regex: http://scriptular.com/
+
     let htmlWithLinks = renderedHTML.replace(
-      /@([^:]+):(\d)/g,
+      /@@([^:]+):(\d+)/g,
       "<a href='#/patchboard/patch-edit/$2'>$1</a>"
     );
     return { __html: htmlWithLinks };
@@ -120,6 +226,17 @@ class PatchEdit extends React.Component {
   //   );
   // }
 
+  storeCursorpositionInState(positionStart, positionEnd) {
+    this.setState({
+      cursorPositionStart: positionStart,
+      cursorPositionEnd: positionEnd
+    });
+  }
+  // TODO: set curosr position after pasting
+  // setCursorposition;
+  // onInput={event => {
+  //   this.storeCursorpositionInState(event.target.selectionStart, event.target.selectionEnd);
+  // }}
   renderPatchEditor(currentPatch) {
     if (currentPatch !== undefined) {
       return (
@@ -138,12 +255,41 @@ class PatchEdit extends React.Component {
             </a>
             <hr />
             <div className="patch-editor-controls">
-              <a onClick={this.toggleFormattedPreview}>Formatted preview</a>
+              <a onClick={this.toggleFormattedPreview}>❏ Formatted preview</a>
             </div>
             <div className="patch-input-and-preview-container">
               <section className="patch-entry">
+                <div className="pach-input-controls">
+                  <a onClick={() => this.insertLink({ clicked: true })}>
+                    ⚯ Link to patch
+                  </a>
+                </div>
                 <textarea
-                  onChange={this.enterBodyText}
+                  onChange={event => {
+                    this.enterBodyText(event);
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart,
+                      event.target.selectionEnd
+                    );
+                  }}
+                  onKeyUp={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart,
+                      event.target.selectionEnd
+                    );
+                  }}
+                  onFocus={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart,
+                      event.target.selectionEnd
+                    );
+                  }}
+                  onMouseUp={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart,
+                      event.target.selectionEnd
+                    );
+                  }}
                   autoFocus
                   className="patch-input"
                   id="patch-raw-text"
@@ -169,7 +315,7 @@ class PatchEdit extends React.Component {
                     this.handleDeletePatch(currentPatch.patchId);
                   }}
                 >
-                  Delete patch
+                  🗑 Delete patch
                 </a>
               </p>
             </footer>
