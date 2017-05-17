@@ -626,8 +626,7 @@ overlays
     white-space: nowrap;
     position: absolute;
     right: 0;
-    // top: 2.9rem;
-    top: -7.6rem;
+    top: 2.9rem;
 
     opacity: 0;
     transition: .3s opacity ease;
@@ -646,13 +645,12 @@ overlays
       width: 0;
       height: 0;
       position: absolute;
-      // top: -2rem;
-      bottom: -2rem;
+      top: -2rem;
       left: 0;
       right: 0;
       margin: 0 auto;
       border: 1rem solid transparent;
-      border-top-color: $color-dark
+      border-bottom-color: $color-dark
     }
   }
 
@@ -687,6 +685,28 @@ overlays
     font-weight: normal;
     color: $color-light;
     background: rgba($color-medium, .1);
+  }
+}
+
+button, input[type="button"] {
+  &.command {
+    .tooltip {
+      top: 6rem;
+    }
+  }
+}
+
+.pach-input-controls,
+.patch-editor-controls
+{
+  .tooltip {
+    top: -7.6rem;
+    &::before {
+      top: unset;
+      bottom: -2rem;
+      border-color: transparent;
+      border-top-color: $color-dark
+    }
   }
 }
 

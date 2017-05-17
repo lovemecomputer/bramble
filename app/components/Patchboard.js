@@ -114,15 +114,27 @@ class Patchboard extends React.Component {
     return (
       <div className={this.patchboardWrapperClasses()} ref="patchboardWrapper">
         <div className="patchboard-controls">
-          <button type="button" onClick={this.handleNewPatch} tabIndex="1">
+          <button
+            type="button"
+            className="command"
+            onClick={this.handleNewPatch}
+            tabIndex="1"
+          >
             + new patch
+            <span className="tooltip shortcut">
+              <i>⌘ cmd</i> + <i>n</i>
+            </span>
           </button>
           <button
             type="button"
+            className="command"
             onClick={this.handleInitiatePreview}
             tabIndex="1"
           >
-            preview story
+            ▶︎ preview story
+            <span className="tooltip shortcut">
+              <i>⌘ cmd</i> + <i>p</i>
+            </span>
           </button>
         </div>
         <section className="patchboard">

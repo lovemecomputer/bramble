@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 // import { Route } from 'react-router-dom';
 
-// click and drag derived from https://stackoverflow.com/questions/20926551/recommended-way-of-making-react-component-div-draggable
-
 class SvgArrow extends React.Component {
   constructor(props) {
     super(props);
