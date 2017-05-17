@@ -99,7 +99,7 @@ class PatchEdit extends React.Component {
 
     // inserting into string derived from https://stackoverflow.com/questions/4364881/inserting-string-at-position-x-of-another-string
     let currentText = currentPatch.content.body;
-    let linkMarkupStartCharacter = '@';
+    let linkMarkupStartCharacter = '@@';
     let linkMarkupIdentifyingCharacter = ':';
     let defaultLinkText = 'link text';
     let linkInsert = [''];
@@ -164,8 +164,20 @@ class PatchEdit extends React.Component {
     }
     let renderedHTML = marked(patch.content.body);
 
+    // TODO: escape regex characters
+    // - https://lodash.com/docs/4.17.4#escapeRegExp
+    // - https://stackoverflow.com/questions/3446170/escape-string-for-use-in-javascript-regex
+    //  - can add to utils.js:
+    /*  function escapeRegExp(str) {
+              return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+            } */
+
+    // TODO: escape brambleScript characters
+
+    // NOTE: use this tool to test regex: http://scriptular.com/
+
     let htmlWithLinks = renderedHTML.replace(
-      /@([^:]+):(\d)/g,
+      /@@([^:]+):(\d+)/g,
       "<a href='#/patchboard/patch-edit/$2'>$1</a>"
     );
     return { __html: htmlWithLinks };
@@ -215,10 +227,13 @@ class PatchEdit extends React.Component {
             </a>
             <hr />
             <div className="patch-editor-controls">
-              <a onClick={this.toggleFormattedPreview}>Formatted preview</a>
+              <a onClick={this.toggleFormattedPreview}>❏ Formatted preview</a>
             </div>
             <div className="patch-input-and-preview-container">
               <section className="patch-entry">
+                <div className="pach-input-controls">
+                  <a onClick={this.insertLink}>⚯ Link to patch</a>
+                </div>
                 <textarea
                   onChange={event => {
                     this.enterBodyText(event);
@@ -239,25 +254,10 @@ class PatchEdit extends React.Component {
                       event.target.selectionEnd
                     );
                   }}
-                  onBlur={event => {
+                  onMouseUp={event => {
                     this.storeCursorpositionInState(
                       event.target.selectionStart,
                       event.target.selectionEnd
-                    );
-                  }}
-                  onMouseUp={event => {
-                    this.storeCursorpositionInState(
-                      event.target.selectionStart
-                    );
-                  }}
-                  onClick={event => {
-                    this.storeCursorpositionInState(
-                      event.target.selectionStart
-                    );
-                  }}
-                  onDoubleClick={event => {
-                    this.storeCursorpositionInState(
-                      event.target.selectionStart
                     );
                   }}
                   autoFocus
@@ -285,7 +285,7 @@ class PatchEdit extends React.Component {
                     this.handleDeletePatch(currentPatch.patchId);
                   }}
                 >
-                  Delete patch
+                  🗑 Delete patch
                 </a>
               </p>
             </footer>

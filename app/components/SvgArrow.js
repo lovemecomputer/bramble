@@ -31,11 +31,8 @@ class SvgArrow extends React.Component {
     let thisPosition = Object.assign({}, this.props.thisPosition);
 
     let targetingNodeAdjustment = 1;
-
-    if (
-      this.props.bramble.patches[targetPatchIndex] === undefined ||
-      this.props.bramble.patches[targetPatchIndex] === null
-    ) {
+    if (targetPatchIndex === null || targetPatchIndex === undefined) {
+      // if no target exists!
       targetPosition.x = thisPosition.x + nodeWidth / 4 / 10;
       targetPosition.y = thisPosition.y;
       arrowColor = arrowNoTargetColor;

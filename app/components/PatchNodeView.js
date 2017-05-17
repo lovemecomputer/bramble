@@ -258,7 +258,7 @@ class PatchNodeView extends React.Component {
   }
 
   render() {
-    var regexp = /@([^:]+):(\d)/g;
+    var regexp = /@@([^:]+):(\d+)/g;
     var match, matches = [];
     let links = [];
     let linkTargetPositions = [];
