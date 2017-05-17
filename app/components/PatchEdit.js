@@ -24,7 +24,7 @@ class PatchEdit extends React.Component {
     this.closePatchEditor = this.closePatchEditor.bind(this);
     this.enterBodyText = this.enterBodyText.bind(this);
     this.enterNameText = this.enterNameText.bind(this);
-    this.auto_grow = this.auto_grow.bind(this);
+    this.autoGrow = this.autoGrow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
     this.insertLink = this.insertLink.bind(this);
     this.handleDeletePatch = this.handleDeletePatch.bind(this);
@@ -50,17 +50,16 @@ class PatchEdit extends React.Component {
       onCtrlShiftM: this.toggleFormattedPreview,
       onCmdL: this.insertLink
     });
-    this.auto_grow(this.refs.patchInput);
     // TODO: THIS BELOW
     // this.setState({ cursorPositionStart: currentPatch.content.body.length });
   }
 
-  componentDidUpdate(nextProps) {
-    this.auto_grow(this.refs.patchInput);
-    // if (nextProps.match.url !== this.props.match.url) {
-    //   this.auto_grow(this.refs.patchInput);
-    // }=
-  }
+  // componentDidUpdate(nextProps) {
+  //   // this.autoGrow(this.refs.patchInput);
+  //   // if (nextProps.match.url !== this.props.match.url) {
+  //   //   this.autoGrow(this.refs.patchInput);
+  //   // }=
+  // }
 
   closePatchEditor() {
     if (this.props.match.url !== '/') {
@@ -81,7 +80,7 @@ class PatchEdit extends React.Component {
   enterBodyText(event) {
     // console.log(event.target.selectionStart);
     // this.setState({ cursorPositionStart: event.target.selectionStart });
-    this.auto_grow(event.target);
+    // this.autoGrow(event.target);
     this.props.dispatch({
       type: 'UPDATE_PATCH_BODY',
       patchId: Number(this.props.match.params.patchId),
@@ -211,7 +210,7 @@ class PatchEdit extends React.Component {
     return { __html: htmlWithLinks };
   }
 
-  auto_grow(element) {
+  autoGrow(element) {
     if (element) {
       element.style.height = '1.6rem';
       element.style.height = Number(element.scrollHeight + 6) + 'px';
@@ -255,13 +254,24 @@ class PatchEdit extends React.Component {
             </a>
             <hr />
             <div className="patch-editor-controls">
-              <a onClick={this.toggleFormattedPreview}>❏ Formatted preview</a>
+              <a onClick={this.toggleFormattedPreview} className="command">
+                ❏ Formatted preview
+                <span className="tooltip shortcut">
+                  <i>⌃ ctrl</i> + <i>⇧ shift</i> + <i>m</i>
+                </span>
+              </a>
             </div>
             <div className="patch-input-and-preview-container">
               <section className="patch-entry">
                 <div className="pach-input-controls">
-                  <a onClick={() => this.insertLink({ clicked: true })}>
-                    ⚯ Link to patch
+                  <a
+                    onClick={() => this.insertLink({ clicked: true })}
+                    className="command"
+                  >
+                    🔗 Link to passage
+                    <span className="tooltip shortcut">
+                      <i>⌘ cmd</i> + <i>l</i>
+                    </span>
                   </a>
                 </div>
                 <textarea
@@ -345,6 +355,10 @@ class PatchEdit extends React.Component {
   }
 
   render() {
+    // do this ansychronously so all the text can load before resizing
+    setTimeout(() => {
+      this.autoGrow(this.refs.patchInput);
+    }, 0);
     let lookup = utils.indexesToIds(this.props.bramble.patches);
     let currentPatchId = this.props.match.params.patchId;
     let currentPatch = lookup[currentPatchId];
