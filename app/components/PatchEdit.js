@@ -32,6 +32,7 @@ class PatchEdit extends React.Component {
 
     this.renderPatchEditor = this.renderPatchEditor.bind(this);
     this.renderFormattedPreview = this.renderFormattedPreview.bind(this);
+    this.renderPatchesLinksMenu = this.renderPatchesLinksMenu.bind(this);
 
     this.state = {
       currentPatch: {},
@@ -231,11 +232,35 @@ class PatchEdit extends React.Component {
       cursorPositionEnd: positionEnd
     });
   }
-  // TODO: set curosr position after pasting
-  // setCursorposition;
-  // onInput={event => {
-  //   this.storeCursorpositionInState(event.target.selectionStart, event.target.selectionEnd);
-  // }}
+
+  renderPatchesLinksMenu() {
+    // let lookup = utils.indexesToIds(this.props.bramble.patches);
+    // let currentPatchId = this.props.match.params.patchId;
+    // let currentPatch = lookup[currentPatchId];
+    if (true) {
+      return (
+        <div className="patch-links-menu-overlay">
+          <div className="patch-links-menu">
+            <h4>Select target patch:</h4>
+            <ul>
+              {this.props.bramble.patches.map((patch, index) => {
+                return (
+                  <li>
+                    <a className="patch-links-menu-choice">
+                      <div className="patch-name">{patch.content.name}</div>
+                      <div className="patch-body">{patch.content.body}</div>
+                      <div className="patch-id">{patch.patchId}</div>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+  }
+
   renderPatchEditor(currentPatch) {
     if (currentPatch !== undefined) {
       return (
@@ -330,6 +355,7 @@ class PatchEdit extends React.Component {
               </p>
             </footer>
           </div>
+          {this.renderPatchesLinksMenu()}
         </div>
       );
     }
