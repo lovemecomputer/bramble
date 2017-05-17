@@ -382,7 +382,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
 .delete-button {
   &::before {
-    content: 'X';
+    content: '🗑';
     display: inline-block;
     position: absolute;
     left: .4rem;
@@ -392,7 +392,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
 .set-starting-patch-button {
   &::before {
-    content: '▶︎';
+    content: '▶️';
     display: inline-block;
     position: absolute;
     left: .4rem;
