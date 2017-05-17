@@ -26,6 +26,7 @@ class PatchEdit extends React.Component {
     this.enterNameText = this.enterNameText.bind(this);
     this.auto_grow = this.auto_grow.bind(this);
     this.createMarkup = this.createMarkup.bind(this);
+    this.insertLink = this.insertLink.bind(this);
     this.handleDeletePatch = this.handleDeletePatch.bind(this);
     this.toggleFormattedPreview = this.toggleFormattedPreview.bind(this);
 
@@ -33,7 +34,11 @@ class PatchEdit extends React.Component {
     this.renderFormattedPreview = this.renderFormattedPreview.bind(this);
 
     this.state = {
-      closing: false
+      currentPatch: {},
+      currentPatchId: undefined,
+      closing: false,
+      cursorPositionStart: 0,
+      cursorPositionEnd: 0
     };
   }
 
@@ -42,17 +47,19 @@ class PatchEdit extends React.Component {
       type: 'SHOWING_PATCH_EDIT',
       onEscape: this.closePatchEditor,
       onCmdEnter: this.closePatchEditor,
-      onCtrlShiftM: this.toggleFormattedPreview
+      onCtrlShiftM: this.toggleFormattedPreview,
+      onCmdL: this.insertLink
     });
     this.auto_grow(this.refs.patchInput);
+    // TODO: THIS BELOW
+    // this.setState({ cursorPositionStart: currentPatch.content.body.length });
   }
 
   componentDidUpdate(nextProps) {
     this.auto_grow(this.refs.patchInput);
     // if (nextProps.match.url !== this.props.match.url) {
-    //   console.log('auto growing!!');
     //   this.auto_grow(this.refs.patchInput);
-    // }
+    // }=
   }
 
   closePatchEditor() {
@@ -72,6 +79,8 @@ class PatchEdit extends React.Component {
   }
 
   enterBodyText(event) {
+    // console.log(event.target.selectionStart);
+    // this.setState({ cursorPositionStart: event.target.selectionStart });
     this.auto_grow(event.target);
     this.props.dispatch({
       type: 'UPDATE_PATCH_BODY',
@@ -79,6 +88,63 @@ class PatchEdit extends React.Component {
       body: event.target.value
     });
     // this.props.dispatch(updatePatchBody(e));
+  }
+
+  insertLink() {
+    console.log('\n\n\n>>> INSERTING LINK!!');
+    // TODO: MUST LOOK UP BODY BY ID I GUESS
+    let lookup = utils.indexesToIds(this.props.bramble.patches);
+    let currentPatchId = this.props.match.params.patchId;
+    let currentPatch = lookup[currentPatchId];
+
+    // inserting into string derived from https://stackoverflow.com/questions/4364881/inserting-string-at-position-x-of-another-string
+    let currentText = currentPatch.content.body;
+    let linkMarkupStartCharacter = '@';
+    let linkMarkupIdentifyingCharacter = ':';
+    let defaultLinkText = 'link text';
+    let linkInsert = [''];
+    let linkText = '';
+    let linkId = '13';
+    let positionStart = this.state.cursorPositionStart;
+    let positionEnd = this.state.cursorPositionEnd;
+
+    // if end point hasn't been define, there is no selection
+    if (positionEnd === undefined || positionEnd === null)
+      positionEnd = positionStart;
+
+    // build link
+    linkInsert.push(linkMarkupStartCharacter);
+
+    if (positionEnd === positionStart) {
+      // if cursor normal single-place cursor position
+      linkInsert.push(defaultLinkText);
+    } else {
+      let selectedText = currentPatch.content.body.slice(
+        positionStart,
+        positionEnd
+      );
+      console.log('|| selectedText: ', selectedText);
+      linkInsert.push(selectedText);
+    }
+    linkInsert.push(linkMarkupIdentifyingCharacter);
+    linkInsert.push(linkId);
+
+    let linkInsertString = linkInsert.join('');
+
+    console.log('link insert:', linkInsertString);
+
+    let output = [
+      currentText.slice(0, positionStart),
+      linkInsertString,
+      currentText.slice(positionEnd)
+    ].join('');
+    this.props.dispatch({
+      type: 'UPDATE_PATCH_BODY',
+      patchId: Number(currentPatchId),
+      body: output
+    });
+    this.refs.patchInput.selectionEnd =
+      Number(positionStart) + linkInsertString.length;
   }
 
   handleDeletePatch(patchId) {
@@ -120,6 +186,17 @@ class PatchEdit extends React.Component {
   //   );
   // }
 
+  storeCursorpositionInState(positionStart, positionEnd) {
+    this.setState({
+      cursorPositionStart: positionStart,
+      cursorPositionEnd: positionEnd
+    });
+  }
+  // TODO: set curosr position after pasting
+  // setCursorposition;
+  // onInput={event => {
+  //   this.storeCursorpositionInState(event.target.selectionStart, event.target.selectionEnd);
+  // }}
   renderPatchEditor(currentPatch) {
     if (currentPatch !== undefined) {
       return (
@@ -143,7 +220,46 @@ class PatchEdit extends React.Component {
             <div className="patch-input-and-preview-container">
               <section className="patch-entry">
                 <textarea
-                  onChange={this.enterBodyText}
+                  onChange={event => {
+                    this.enterBodyText(event);
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart,
+                      event.target.selectionEnd
+                    );
+                  }}
+                  onKeyUp={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart,
+                      event.target.selectionEnd
+                    );
+                  }}
+                  onFocus={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart,
+                      event.target.selectionEnd
+                    );
+                  }}
+                  onBlur={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart,
+                      event.target.selectionEnd
+                    );
+                  }}
+                  onMouseUp={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart
+                    );
+                  }}
+                  onClick={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart
+                    );
+                  }}
+                  onDoubleClick={event => {
+                    this.storeCursorpositionInState(
+                      event.target.selectionStart
+                    );
+                  }}
                   autoFocus
                   className="patch-input"
                   id="patch-raw-text"

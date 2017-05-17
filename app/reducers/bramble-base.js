@@ -222,7 +222,8 @@ export default function bramble(currentState, action) {
       return Object.assign({}, currentState, {
         onEscape: action.onEscape,
         onCmdEnter: action.onCmdEnter,
-        onCtrlShiftM: action.onCtrlShiftM
+        onCtrlShiftM: action.onCtrlShiftM,
+        onCmdL: action.onCmdL
       });
 
     case 'SHOWING_PATCHBOARD':
@@ -252,6 +253,11 @@ export default function bramble(currentState, action) {
         action.withCtrl
       ) {
         functionToRun = currentState.onCtrlShiftM;
+      } else if (
+        (action.key === 'l' || action.key === 'L') &&
+        action.withMeta
+      ) {
+        functionToRun = currentState.onCmdL;
       }
       if (functionToRun) {
         setTimeout(() => {
