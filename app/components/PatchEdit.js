@@ -90,7 +90,7 @@ class PatchEdit extends React.Component {
     // this.props.dispatch(updatePatchBody(e));
   }
 
-  insertLink() {
+  insertLink(options) {
     console.log('\n\n\n>>> INSERTING LINK!!');
     // TODO: MUST LOOK UP BODY BY ID I GUESS
     let lookup = utils.indexesToIds(this.props.bramble.patches);
@@ -107,44 +107,72 @@ class PatchEdit extends React.Component {
     let linkId = '13';
     let positionStart = this.state.cursorPositionStart;
     let positionEnd = this.state.cursorPositionEnd;
+    // use a string type what placement option for cursor e.g. 'inside', 'after'
+    let putCursorHereAfterLinkInsertion = '';
+    let afterInsertionCursorTarget = 0;
 
     // if end point hasn't been define, there is no selection
     if (positionEnd === undefined || positionEnd === null)
       positionEnd = positionStart;
 
-    // build link
+    // BUILD LINK :::::::::
     linkInsert.push(linkMarkupStartCharacter);
 
     if (positionEnd === positionStart) {
-      // if cursor normal single-place cursor position
-      linkInsert.push(defaultLinkText);
+      // if standard, single-place cursor position
+      // if clicked the button rather than using a shortcut, put in example text
+      if (options && options.clicked) {
+        // if clicked button, we want to put in example text
+        linkInsert.push(defaultLinkText);
+        putCursorHereAfterLinkInsertion = 'after';
+      } else {
+        // if keyboard shortcut, want to place cursor inside and let ppl type in their own text quickly
+        linkInsert.push('');
+        putCursorHereAfterLinkInsertion = 'inside';
+      }
     } else {
+      // if we have a text selection!
       let selectedText = currentPatch.content.body.slice(
         positionStart,
         positionEnd
       );
-      console.log('|| selectedText: ', selectedText);
       linkInsert.push(selectedText);
+      // puts cursor to end of entire link:
+      putCursorHereAfterLinkInsertion = 'after';
     }
+
     linkInsert.push(linkMarkupIdentifyingCharacter);
     linkInsert.push(linkId);
 
     let linkInsertString = linkInsert.join('');
-
-    console.log('link insert:', linkInsertString);
 
     let output = [
       currentText.slice(0, positionStart),
       linkInsertString,
       currentText.slice(positionEnd)
     ].join('');
+
     this.props.dispatch({
       type: 'UPDATE_PATCH_BODY',
       patchId: Number(currentPatchId),
       body: output
     });
-    this.refs.patchInput.selectionEnd =
-      Number(positionStart) + linkInsertString.length;
+
+    switch (putCursorHereAfterLinkInsertion) {
+      case 'inside':
+        // puts cursor to end of entire link:
+        afterInsertionCursorTarget =
+          Number(positionStart) + linkMarkupStartCharacter.length;
+        break;
+
+      case 'after':
+        // puts cursor inside of link:
+        afterInsertionCursorTarget =
+          Number(positionStart) + linkInsertString.length;
+        break;
+    }
+
+    this.refs.patchInput.selectionEnd = afterInsertionCursorTarget;
   }
 
   handleDeletePatch(patchId) {
@@ -232,7 +260,9 @@ class PatchEdit extends React.Component {
             <div className="patch-input-and-preview-container">
               <section className="patch-entry">
                 <div className="pach-input-controls">
-                  <a onClick={this.insertLink}>⚯ Link to patch</a>
+                  <a onClick={() => this.insertLink({ clicked: true })}>
+                    ⚯ Link to patch
+                  </a>
                 </div>
                 <textarea
                   onChange={event => {
