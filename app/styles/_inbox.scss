@@ -289,6 +289,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
       // transform: rotateX(10deg) translateY(-.4em) scale(1.03);
       box-shadow: 0 .8rem .3rem -.3rem rgba($color-background, .2),
                   0 1.4rem 2.4rem -1.2rem rgba($color-link, 1),
+                  0 0 .8rem -.3rem rgba($color-dark, .4),
                   0 1.8rem 2.9rem -.8rem rgba($color-dark, .6);
     }
   }
@@ -412,7 +413,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   text-transform: uppercase;
   border-radius: .2rem;
   padding: .3rem .5rem .2rem .5rem;
-  margin: -.3rem 1rem -.3rem 1.2rem;
+  margin: -.3rem 1rem -.3rem 1.3rem;
   // display: block;
   // position: absolute;
   // width: 5.4rem;
@@ -613,6 +614,79 @@ overlays
     hyphens: auto;
     padding: 4rem;
     border: .1rem solid $color-light;
+  }
+}
+
+.command {
+  position: relative;
+
+  .tooltip {
+    pointer-events: none;
+    display: inline-block;
+    white-space: nowrap;
+    position: absolute;
+    right: 0;
+    // top: 2.9rem;
+    top: -7.6rem;
+
+    opacity: 0;
+    transition: .3s opacity ease;
+
+    background: rgba($color-dark, .95);
+    color: $color-light;
+    padding: 1.5rem;
+    border-radius: $border-radius-measurement;
+    margin-left: 1rem;
+    font-weight: 600;
+    line-height: 1.2rem;
+
+    &::before {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      position: absolute;
+      // top: -2rem;
+      bottom: -2rem;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      border: 1rem solid transparent;
+      border-top-color: $color-dark
+    }
+  }
+
+  &:hover {
+    .tooltip {
+      opacity: 1;
+      transition: .2s opacity ease;
+    }
+  }
+}
+
+.shortcut {
+  display: inline-block;
+  background: $color-dark;
+  color: $color-white;
+  font-size: .8rem;
+  padding: 1.5em;
+  border-radius: $border-radius-measurement;
+  margin-left: 1em;
+  font-weight: 600;
+  line-height: 1.2em;
+  font-family: 'Source Code Pro', monospace;
+
+  i {
+    display: inline-block;
+    padding: 1em;
+    border-radius: $border-radius-measurement;
+    border: .1em solid rgba($color-medium, .5);
+    border-bottom-color: rgba($color-medium, .2);
+    font-size: 1.3em;
+    font-style: normal;
+    font-weight: normal;
+    color: $color-light;
+    background: rgba($color-medium, .1);
   }
 }
 
