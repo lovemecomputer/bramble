@@ -149,7 +149,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 // }
 .svg-arrow {
   position: absolute;
-  top: $patch-node-size / 2;
+  top: $patch-node-size / 2 - .3;
   left: $patch-node-size / 2;
   pointer-events:none;
   z-index: 1;
@@ -318,12 +318,18 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 .patch-node-animation-leave.patch-node-animation-leave-active {
   pointer-events:none;
   opacity: 0.01;
-  outline: .1rem solid $color-medium;
   transition: opacity 1500ms ease-out;
-  background: rgba($color-light, .35);
+
   .patch-node-wrapper {
     opacity: 0.01;
     transition: opacity 200ms ease-in;
+    background: rgba($color-light, .35);
+    outline: .1rem solid $color-medium;
+    .patch-body {
+      &::after {
+        display: none;
+      }
+    }
   }
 
 }
