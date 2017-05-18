@@ -51,6 +51,8 @@ textarea {
 
 button, input[type="button"], input[type="submit"] {
   -webkit-appearance: none;
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
   appearance: none;
   font-size: inherit;
   border-radius: $radius-standard;
