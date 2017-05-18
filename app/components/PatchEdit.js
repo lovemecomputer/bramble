@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import marked from 'marked';
 import utils from '../utils.js';
+import newPatch from '../actions/newPatch.js';
 // import updatePatchBody from '../actions/update-patch-body.js';
 // import { Route, Link, NavLink } from 'react-router-dom';
 // import container from '../../containers/all.js';
@@ -197,11 +198,6 @@ class PatchEdit extends React.Component {
     }
 
     this.refs.patchInput.focus();
-    console.log(
-      '>>> targets',
-      afterInsertionCursorTargetStart,
-      afterInsertionCursorTargetEnd
-    );
     setTimeout(() => {
       this.refs.patchInput.setSelectionRange(
         afterInsertionCursorTargetStart,
@@ -283,7 +279,24 @@ class PatchEdit extends React.Component {
         <div className="patch-links-menu-overlay">
           <div className="patch-links-menu">
             <h4>Select target patch:</h4>
-            <a ref="patchLinksListNew" tabIndex="100">➕ Create new</a>
+            <a
+              ref="patchLinksListNew"
+              tabIndex="100"
+              onClick={() => {
+                this.props.dispatch(newPatch());
+
+                setTimeout(() => {
+                  console.log(this.props.bramble.patches);
+                  doLinkInsert(
+                    this.props.bramble.patches[
+                      this.props.bramble.patches.length - 1
+                    ].patchId
+                  );
+                }, 0);
+              }}
+            >
+              ➕ Create new
+            </a>
             <ul ref="patchLinksList">
               {this.props.bramble.patches.map((patch, index) => {
                 return (
