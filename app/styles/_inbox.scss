@@ -372,7 +372,8 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     border-bottom: .1rem solid $color-light;
     position: relative;
 
-    &:hover {
+    &:hover, &:focus {
+      outline: none;
       background: $color-light;
     }
   }
@@ -452,7 +453,7 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     padding: 1rem;
   }
 
-  .patch-links-menu .patch-links-menu-choice {
+  .patch-links-menu-choice {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
