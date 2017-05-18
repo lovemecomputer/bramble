@@ -44,7 +44,7 @@ export default () => (
           component={ClosingModal}
         />
         <Route exact path="/preview" component={Preview} />
-        <Route exact path="/preview/:id" component={Preview} />
+        <Route exact path="/preview/:patchId" component={Preview} />
       </div>
     </App>
   </Router>

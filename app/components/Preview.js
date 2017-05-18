@@ -21,9 +21,6 @@ class Preview extends React.Component {
   constructor(props) {
     super(props);
     this.closePreview = this.closePreview.bind(this);
-    this.state = {
-      currentPatch: this.props.bramble.patches[this.props.match.params.id || 0]
-    };
   }
   componentWillUpdate(nextProps) {
     console.log('old props', this.props);
@@ -36,15 +33,6 @@ class Preview extends React.Component {
         currentPatch: this.props.bramble.patches[newPatchID]
       });
     }
-  }
-
-  componentDidMount() {
-    // this.props.dispatch({
-    //   type: 'SHOWING_PATCH',
-    //   onEscape: this.closePatchEditor,
-    //   onCmdEnter: this.closePatchEditor,
-    //   onToggleMarkdownPreview: this.toggleMarkdownPreview
-    // });
   }
 
   closePreview() {
@@ -60,19 +48,26 @@ class Preview extends React.Component {
     let renderedHTML = marked(patch.content.body);
 
     let htmlWithLinks = renderedHTML.replace(
-      /@([^:]+):(\d)/g,
+      /@@([^:]+):(\d+)/g,
       "<a href='#/preview/$2'>$1</a>"
     );
     return { __html: htmlWithLinks };
   }
 
   overlayShadeClassNames() {
-    let classNames = 'overlay-wrapper';
-    if (this.state.closing) classNames += ' closing';
+    let classNames = 'modal-and-overlay-wrapper overlay-wrapper';
+    // if (this.state.closing) classNames += ' closing';
     return classNames;
   }
 
   render() {
+    var currentPatchIndex = utils.indexOfObjectWithPropertyValue(
+      'patchId',
+      Number(this.props.match.params.patchId),
+      this.props.bramble.patches
+    );
+    let currentPatch = this.props.bramble.patches[currentPatchIndex];
+
     var marked = require('marked');
     return (
       <div className={this.overlayShadeClassNames()} key="overlayWrapper">
@@ -82,19 +77,8 @@ class Preview extends React.Component {
             <div className="story-preview-wrapper">
               <div
                 className="patch-body"
-                dangerouslySetInnerHTML={this.createMarkup(
-                  this.state.currentPatch
-                )}
+                dangerouslySetInnerHTML={this.createMarkup(currentPatch)}
               />
-              {/*this.props.bramble.patches.map((patch, index) => {
-                return (
-                  <div
-                    key={patch.patchId}
-                    className="patch-body"
-                    dangerouslySetInnerHTML={this.createMarkup(patch.body)}
-                  />
-                );
-              })*/}
             </div>
           </div>
         </div>

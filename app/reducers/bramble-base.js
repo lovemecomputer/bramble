@@ -66,7 +66,7 @@ const newState = {
   projectId: '',
   projectName: 'New Project',
   patches: [],
-  patchCounter: 0, // used to make IDs until autocomplete & unique ID system is implemented
+  patchCounter: -1, // used to make IDs until autocomplete & unique ID system is implemented
   displayFormattedPreview: true,
   menuOpenedPatch: -1
 };
