@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import stateReturn from '../store/state-return.js';
 import marked from 'marked';
 import utils from '../utils.js';
+import newPatch from '../actions/newPatch.js';
 // import updatePatchBody from '../actions/update-patch-body.js';
 // import { Route, Link, NavLink } from 'react-router-dom';
 // import container from '../../containers/all.js';
@@ -29,16 +30,19 @@ class PatchEdit extends React.Component {
     this.insertLink = this.insertLink.bind(this);
     this.handleDeletePatch = this.handleDeletePatch.bind(this);
     this.toggleFormattedPreview = this.toggleFormattedPreview.bind(this);
+    this.bringUpLinkMenu = this.bringUpLinkMenu.bind(this);
 
     this.renderPatchEditor = this.renderPatchEditor.bind(this);
     this.renderFormattedPreview = this.renderFormattedPreview.bind(this);
+    this.renderPatchesLinksMenu = this.renderPatchesLinksMenu.bind(this);
 
     this.state = {
       currentPatch: {},
       currentPatchId: undefined,
       closing: false,
       cursorPositionStart: 0,
-      cursorPositionEnd: 0
+      cursorPositionEnd: 0,
+      inserLinkMenuVisible: false
     };
   }
 
@@ -48,7 +52,7 @@ class PatchEdit extends React.Component {
       onEscape: this.closePatchEditor,
       onCmdEnter: this.closePatchEditor,
       onCtrlShiftM: this.toggleFormattedPreview,
-      onCmdL: this.insertLink
+      onCmdL: this.bringUpLinkMenu
     });
     // TODO: THIS BELOW
     // this.setState({ cursorPositionStart: currentPatch.content.body.length });
@@ -89,28 +93,39 @@ class PatchEdit extends React.Component {
     // this.props.dispatch(updatePatchBody(e));
   }
 
-  insertLink(options) {
-    console.log('\n\n\n>>> INSERTING LINK!!');
-    // TODO: MUST LOOK UP BODY BY ID I GUESS
+  bringUpLinkMenu() {
+    this.setState({ inserLinkMenuVisible: true });
+    setTimeout(() => {
+      this.refs.patchLinksListNew.focus();
+    }, 0);
+  }
+
+  // handleClickInsertLink(options) {
+  //   insertLink
+  // }
+
+  insertLink(target, options) {
+    // find info for current patch in state, which we're going to modify the body of
     let lookup = utils.indexesToIds(this.props.bramble.patches);
     let currentPatchId = this.props.match.params.patchId;
     let currentPatch = lookup[currentPatchId];
 
-    // inserting into string derived from https://stackoverflow.com/questions/4364881/inserting-string-at-position-x-of-another-string
     let currentText = currentPatch.content.body;
     let linkMarkupStartCharacter = '@@';
     let linkMarkupIdentifyingCharacter = ':';
     let defaultLinkText = 'link text';
     let linkInsert = [''];
     let linkText = '';
-    let linkId = '13';
+    let linkId = String(target);
     let positionStart = this.state.cursorPositionStart;
     let positionEnd = this.state.cursorPositionEnd;
-    // use a string type what placement option for cursor e.g. 'inside', 'after'
-    let putCursorHereAfterLinkInsertion = '';
-    let afterInsertionCursorTarget = 0;
+    // use a string type what placement option for cursor
+    // 'inside', 'after', 'select'
+    let putCursorHereAfterLinkInsertion = 'select';
+    let afterInsertionCursorTargetStart = 0;
+    let afterInsertionCursorTargetEnd = 0;
 
-    // if end point hasn't been define, there is no selection
+    // if end point hasn't been defined, there is no highlighted selection
     if (positionEnd === undefined || positionEnd === null)
       positionEnd = positionStart;
 
@@ -119,16 +134,17 @@ class PatchEdit extends React.Component {
 
     if (positionEnd === positionStart) {
       // if standard, single-place cursor position
-      // if clicked the button rather than using a shortcut, put in example text
-      if (options && options.clicked) {
-        // if clicked button, we want to put in example text
-        linkInsert.push(defaultLinkText);
-        putCursorHereAfterLinkInsertion = 'after';
-      } else {
-        // if keyboard shortcut, want to place cursor inside and let ppl type in their own text quickly
-        linkInsert.push('');
-        putCursorHereAfterLinkInsertion = 'inside';
-      }
+      linkInsert.push(defaultLinkText);
+      putCursorHereAfterLinkInsertion = 'select';
+      // if (options && options.clicked) { // if clicked the command button rather than using a shortcut
+      //   // we want to put in example text and move cursor after the whole thing
+      //   linkInsert.push(defaultLinkText);
+      //   putCursorHereAfterLinkInsertion = 'after';
+      // } else {
+      //   // if keyboard shortcut, want to place cursor inside and let ppl type in their own text quickly
+      //   linkInsert.push('');
+      //   putCursorHereAfterLinkInsertion = 'inside';
+      // }
     } else {
       // if we have a text selection!
       let selectedText = currentPatch.content.body.slice(
@@ -160,18 +176,34 @@ class PatchEdit extends React.Component {
     switch (putCursorHereAfterLinkInsertion) {
       case 'inside':
         // puts cursor to end of entire link:
-        afterInsertionCursorTarget =
+        afterInsertionCursorTargetStart =
           Number(positionStart) + linkMarkupStartCharacter.length;
+        afterInsertionCursorTargetEnd = afterInsertionCursorTargetStart;
         break;
 
       case 'after':
         // puts cursor inside of link:
-        afterInsertionCursorTarget =
+        afterInsertionCursorTargetStart =
           Number(positionStart) + linkInsertString.length;
+        afterInsertionCursorTargetEnd = afterInsertionCursorTargetStart;
+        break;
+
+      case 'select':
+        // highlights text that was put into link to easily type over it
+        afterInsertionCursorTargetStart =
+          Number(positionStart) + linkMarkupStartCharacter.length;
+        afterInsertionCursorTargetEnd =
+          afterInsertionCursorTargetStart + defaultLinkText.length;
         break;
     }
 
-    this.refs.patchInput.selectionEnd = afterInsertionCursorTarget;
+    this.refs.patchInput.focus();
+    setTimeout(() => {
+      this.refs.patchInput.setSelectionRange(
+        afterInsertionCursorTargetStart,
+        afterInsertionCursorTargetEnd
+      );
+    });
   }
 
   handleDeletePatch(patchId) {
@@ -231,11 +263,70 @@ class PatchEdit extends React.Component {
       cursorPositionEnd: positionEnd
     });
   }
-  // TODO: set curosr position after pasting
-  // setCursorposition;
-  // onInput={event => {
-  //   this.storeCursorpositionInState(event.target.selectionStart, event.target.selectionEnd);
-  // }}
+
+  renderPatchesLinksMenu() {
+    // let lookup = utils.indexesToIds(this.props.bramble.patches);
+    // let currentPatchId = this.props.match.params.patchId;
+    // let currentPatch = lookup[currentPatchId];
+
+    const doLinkInsert = patchId => {
+      this.setState({ inserLinkMenuVisible: false });
+      this.insertLink(patchId);
+    };
+
+    if (this.state.inserLinkMenuVisible) {
+      return (
+        <div className="patch-links-menu-overlay">
+          <div className="patch-links-menu">
+            <h4>Select target patch:</h4>
+            <a
+              ref="patchLinksListNew"
+              tabIndex="100"
+              onClick={() => {
+                this.props.dispatch(newPatch());
+
+                setTimeout(() => {
+                  console.log(this.props.bramble.patches);
+                  doLinkInsert(
+                    this.props.bramble.patches[
+                      this.props.bramble.patches.length - 1
+                    ].patchId
+                  );
+                }, 0);
+              }}
+            >
+              ➕ Create new
+            </a>
+            <ul ref="patchLinksList">
+              {this.props.bramble.patches.map((patch, index) => {
+                return (
+                  <li key={patch.patchId}>
+                    <a
+                      onClick={() => {
+                        doLinkInsert(patch.patchId);
+                      }}
+                      onKeyPress={event => {
+                        if (event.key === 'Enter') {
+                          doLinkInsert(patch.patchId);
+                        }
+                      }}
+                      className="patch-links-menu-choice"
+                      tabIndex="100"
+                    >
+                      <div className="patch-name">{patch.content.name}</div>
+                      <div className="patch-body">{patch.content.body}</div>
+                      <div className="patch-id">{patch.patchId}</div>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+      );
+    }
+  }
+
   renderPatchEditor(currentPatch) {
     if (currentPatch !== undefined) {
       return (
@@ -265,7 +356,10 @@ class PatchEdit extends React.Component {
               <section className="patch-entry">
                 <div className="pach-input-controls">
                   <a
-                    onClick={() => this.insertLink({ clicked: true })}
+                    onClick={() => {
+                      // this.insertLink({ clicked: true })
+                      this.bringUpLinkMenu();
+                    }}
                     className="command"
                   >
                     🔗 Link to passage
@@ -330,6 +424,7 @@ class PatchEdit extends React.Component {
               </p>
             </footer>
           </div>
+          {this.renderPatchesLinksMenu()}
         </div>
       );
     }

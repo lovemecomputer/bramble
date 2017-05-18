@@ -335,7 +335,8 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
 }
 
-.patch-node-menu {
+
+.patch-node-menu, .patch-links-menu {
   background: $color-white;
   padding: .3rem;
   border-radius: $border-radius-measurement;
@@ -371,7 +372,8 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
     border-bottom: .1rem solid $color-light;
     position: relative;
 
-    &:hover {
+    &:hover, &:focus {
+      outline: none;
       background: $color-light;
     }
   }
@@ -430,6 +432,59 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
   color: #a6dfa9;
   color: #96c399;
 }
+
+.patch-links-menu-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba($color-medium, .3);
+  padding: 6rem 2rem;
+}
+
+.patch-links-menu {
+  max-width: 60rem;
+  margin: 0 auto 0 auto;
+  overflow-y: scroll;
+
+  h4 {
+    margin: 0;
+    padding: 1rem;
+  }
+
+  .patch-links-menu-choice {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .patch-id {
+    width: 2rem;
+    text-align: right;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .patch-name {
+    flex: 2;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 2rem;
+    min-width: 18rem;
+  }
+  .patch-body {
+    flex: 3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 18rem;
+  }
+}
+
+
 
 /*
 
