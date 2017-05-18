@@ -726,7 +726,8 @@ overlays
   &:hover {
     .tooltip {
       opacity: 1;
-      transition: .2s opacity ease;
+      transition: .25s opacity ease;
+      transition-delay: .5s;
     }
   }
 }
