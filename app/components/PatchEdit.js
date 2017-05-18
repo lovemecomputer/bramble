@@ -29,6 +29,7 @@ class PatchEdit extends React.Component {
     this.insertLink = this.insertLink.bind(this);
     this.handleDeletePatch = this.handleDeletePatch.bind(this);
     this.toggleFormattedPreview = this.toggleFormattedPreview.bind(this);
+    this.bringUpLinkMenu = this.bringUpLinkMenu.bind(this);
 
     this.renderPatchEditor = this.renderPatchEditor.bind(this);
     this.renderFormattedPreview = this.renderFormattedPreview.bind(this);
@@ -39,7 +40,8 @@ class PatchEdit extends React.Component {
       currentPatchId: undefined,
       closing: false,
       cursorPositionStart: 0,
-      cursorPositionEnd: 0
+      cursorPositionEnd: 0,
+      inserLinkMenuVisible: false
     };
   }
 
@@ -49,7 +51,7 @@ class PatchEdit extends React.Component {
       onEscape: this.closePatchEditor,
       onCmdEnter: this.closePatchEditor,
       onCtrlShiftM: this.toggleFormattedPreview,
-      onCmdL: this.insertLink
+      onCmdL: this.bringUpLinkMenu
     });
     // TODO: THIS BELOW
     // this.setState({ cursorPositionStart: currentPatch.content.body.length });
@@ -90,9 +92,18 @@ class PatchEdit extends React.Component {
     // this.props.dispatch(updatePatchBody(e));
   }
 
-  insertLink(options) {
-    console.log('\n\n\n>>> INSERTING LINK!!');
-    // TODO: MUST LOOK UP BODY BY ID I GUESS
+  bringUpLinkMenu() {
+    this.setState({ inserLinkMenuVisible: true });
+    setTimeout(() => {
+      this.refs.patchLinksListNew.focus();
+    }, 0);
+  }
+
+  // handleClickInsertLink(options) {
+  //   insertLink
+  // }
+
+  insertLink(target, options) {
     let lookup = utils.indexesToIds(this.props.bramble.patches);
     let currentPatchId = this.props.match.params.patchId;
     let currentPatch = lookup[currentPatchId];
@@ -104,7 +115,7 @@ class PatchEdit extends React.Component {
     let defaultLinkText = 'link text';
     let linkInsert = [''];
     let linkText = '';
-    let linkId = '13';
+    let linkId = String(target);
     let positionStart = this.state.cursorPositionStart;
     let positionEnd = this.state.cursorPositionEnd;
     // use a string type what placement option for cursor e.g. 'inside', 'after'
@@ -172,7 +183,10 @@ class PatchEdit extends React.Component {
         break;
     }
 
-    this.refs.patchInput.selectionEnd = afterInsertionCursorTarget;
+    this.refs.patchInput.focus();
+    setTimeout(() => {
+      this.refs.patchInput.selectionEnd = afterInsertionCursorTarget;
+    }, 0);
   }
 
   handleDeletePatch(patchId) {
@@ -237,16 +251,34 @@ class PatchEdit extends React.Component {
     // let lookup = utils.indexesToIds(this.props.bramble.patches);
     // let currentPatchId = this.props.match.params.patchId;
     // let currentPatch = lookup[currentPatchId];
-    if (true) {
+
+    const doLinkInsert = patchId => {
+      this.setState({ inserLinkMenuVisible: false });
+      this.insertLink(patchId);
+    };
+
+    if (this.state.inserLinkMenuVisible) {
       return (
         <div className="patch-links-menu-overlay">
           <div className="patch-links-menu">
             <h4>Select target patch:</h4>
-            <ul>
+            <a ref="patchLinksListNew" tabIndex="100">Create new</a>
+            <ul ref="patchLinksList">
               {this.props.bramble.patches.map((patch, index) => {
                 return (
-                  <li>
-                    <a className="patch-links-menu-choice">
+                  <li key={patch.patchId}>
+                    <a
+                      onClick={() => {
+                        doLinkInsert(patch.patchId);
+                      }}
+                      onKeyPress={event => {
+                        if (event.key === 'Enter') {
+                          doLinkInsert(patch.patchId);
+                        }
+                      }}
+                      className="patch-links-menu-choice"
+                      tabIndex="100"
+                    >
                       <div className="patch-name">{patch.content.name}</div>
                       <div className="patch-body">{patch.content.body}</div>
                       <div className="patch-id">{patch.patchId}</div>
