@@ -35,9 +35,9 @@ class Header extends React.Component {
       <div className="app-top-area">
         <header className="app-header">
           <h1 id="app-title" className="app-title">bramble</h1>
-          <span className="project-name">
+          {/*<span className="project-name">
             📄 {this.props.bramble.projectName}
-          </span>
+          </span>*/}
           <div className="main-header-controls">
             <a onClick={this.saveProject}>save</a>
             <a onClick={this.openProject}>open</a>

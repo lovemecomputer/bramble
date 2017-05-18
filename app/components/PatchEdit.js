@@ -294,6 +294,18 @@ class PatchEdit extends React.Component {
                   );
                 }, 0);
               }}
+              onKeyPress={() => {
+                this.props.dispatch(newPatch());
+
+                setTimeout(() => {
+                  console.log(this.props.bramble.patches);
+                  doLinkInsert(
+                    this.props.bramble.patches[
+                      this.props.bramble.patches.length - 1
+                    ].patchId
+                  );
+                }, 0);
+              }}
             >
               ➕ Create new
             </a>
