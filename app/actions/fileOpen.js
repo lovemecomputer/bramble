@@ -29,6 +29,7 @@ export default function fileOpen() {
           loadedState.patches = loadedState.patches.map((patch, index) => {
             return new Patch({
               patchId: patch.patchId,
+              isStartingPatch: patch.isStartingPatch,
               content: {
                 name: patch.content.name,
                 body: patch.content.body,
