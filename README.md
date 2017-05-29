@@ -16,13 +16,13 @@ Heavily in alpha. Approaching a point of testing, feedback, and input if you wou
 
 A native desktop app running in Electron. Started from this boilerplate: https://github.com/chentsulin/electron-react-boilerplate
 
+---
+
 #### Running in dev mode:
 
-This starts the renderer process in hot-module-replacement mode and starts a server sends hot updates to the renderer process:
+This starts the renderer process in hot-module-replacement mode and starts a server sends hot updates to the renderer process (seems like this only needs to be run once?):
 
 `$ npm run dev`
-
-(seems like this only needs to be run once?)
 
 Run these two commands simultaneously in different console tabs to initiate dev rendering & hot-swap:
 
