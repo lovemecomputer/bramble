@@ -351,6 +351,8 @@ $majorGidLineColor: rgba(255, 255, 255, $majorGridLineOpacity);
 
 
 .patch-node-menu, .patch-links-menu {
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
   background: $color-white;
   padding: .3rem;
   border-radius: $border-radius-measurement;

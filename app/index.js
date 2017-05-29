@@ -18,7 +18,7 @@ const listenToPresses = e => {
     withCtrl: e.ctrlKey
   });
   // e.stopPropagation();
-  // TODO: PREVENT SOME KEYSTOKES WITH ELECTRON API
+  // TODO: USE ELECTRON ACCELERATORS
 };
 document.addEventListener('keydown', listenToPresses);
 document.addEventListener('mousedown', event => {

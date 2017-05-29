@@ -237,14 +237,17 @@ export default function bramble(currentState, action) {
       if (action.key === 'Escape') {
         // escape key to close
         functionToRun = currentState.onEscape;
-      } else if (action.key === 'Enter' && action.withMeta) {
+      } else if (
+        action.key === 'Enter' &&
+        (action.withMeta || action.withCtrl)
+      ) {
         functionToRun = currentState.onCmdEnter;
-      } else if (action.key === 'n' && action.withMeta) {
+      } else if (action.key === 'n' && (action.withMeta || action.withCtrl)) {
         // cmd + n for new patch
         functionToRun = currentState.onCmdN;
       } else if (
         (action.key === 'p' || action.key === 'P') &&
-        action.withMeta
+        (action.withMeta || action.withCtrl)
       ) {
         functionToRun = currentState.onCmdP;
       } else if (
@@ -255,7 +258,7 @@ export default function bramble(currentState, action) {
         functionToRun = currentState.onCtrlShiftM;
       } else if (
         (action.key === 'l' || action.key === 'L') &&
-        action.withMeta
+        (action.withMeta || action.withCtrl)
       ) {
         functionToRun = currentState.onCmdL;
       }
