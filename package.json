@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
+  "name": "bramble",
+  "productName": "Bramble",
   "version": "0.11.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Interactive fiction authoring and editing tool.",
   "main": "main.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js",
@@ -32,7 +32,7 @@
   },
   "browserslist": "electron 1.4",
   "build": {
-    "productName": "ElectronReact",
+    "productName": "Bramble",
     "appId": "org.develar.ElectronReact",
     "files": [
       "dist/",
