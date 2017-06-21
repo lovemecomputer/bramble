@@ -34,8 +34,8 @@ class Header extends React.Component {
     return (
       <div className="app-top-area">
         <header className="app-header">
-          <h1 id="app-title" className="app-title">bramble</h1>
-          {/*<span className="project-name">
+          {/*<h1 id="app-title" className="app-title">bramble</h1>
+          <span className="project-name">
             📄 {this.props.bramble.projectName}
           </span>*/}
           <div className="main-header-controls">

@@ -52,7 +52,9 @@ app.on('ready', async () => {
     show: false,
     width: 1024,
     height: 728,
-    titleBarStyle: 'hidden'
+    titleBarStyle: 'hidden',
+    icon: __dirname + '/app/icon.png',
+    backgroundColor: '#ebedf4'
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
