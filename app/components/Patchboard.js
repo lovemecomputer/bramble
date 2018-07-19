@@ -49,7 +49,7 @@ class Patchboard extends React.Component {
         'No starting patch found. Set a patch to be a starting point.'
       );
     } else {
-      this.props.history.push('/preview/' + targetIndex);
+      this.props.history.push('\n/preview/' + targetIndex);
     }
   }
 

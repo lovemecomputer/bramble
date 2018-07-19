@@ -62,7 +62,7 @@ class PatchEdit extends React.Component {
   //   // this.autoGrow(this.refs.patchInput);
   //   // if (nextProps.match.url !== this.props.match.url) {
   //   //   this.autoGrow(this.refs.patchInput);
-  //   // }=
+  //   // }
   // }
 
   closePatchEditor() {
