@@ -21,6 +21,7 @@ class PatchNodeView extends React.Component {
     this.renderStartingStatus = this.renderStartingStatus.bind(this);
     this.classNames = this.classNames.bind(this);
 
+
     this.state = {
       menuVisible: false,
       linkCoordinates: [],

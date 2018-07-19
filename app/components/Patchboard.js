@@ -19,6 +19,7 @@ class Patchboard extends React.Component {
     this.dispatchMenuOpen = this.dispatchMenuOpen.bind(this);
     this.dispatchMenuClose = this.dispatchMenuClose.bind(this);
   }
+  
 
   componentDidMount() {
     this.props.dispatch({
